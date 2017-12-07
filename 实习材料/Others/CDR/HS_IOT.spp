@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Folder FolderName="XML Files" ExtStr="xml;cml;math;rdf;smil;svg;wml">
+		<File FilePath="C:\Users\Administrator\Desktop\Others\CDR_EncounterSample_v1.xml" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="XSL Files" ExtStr="xsl;xslt">
+		<File FilePath="01_MedicalRecordSummary.xsl" HomeFolder="Yes"/>
+		<File FilePath="CDA-Support-Files\Export\IOT\CDAHeader.xsl" HomeFolder="Yes"/>
+		<File FilePath="CDA-Support-Files\Export\IOT\Diagnosis.xsl" HomeFolder="Yes"/>
+		<File FilePath="CDA-Support-Files\Export\IOT\Encounter.xsl" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="XQuery Files" ExtStr="xq;xql;xquery"/>
+	<Folder FolderName="HTML Files" ExtStr="html;htm;xhtml;asp"/>
+	<Folder FolderName="DTD/Schemas" ExtStr="dtd;dcd;xdr;biz;xsd"/>
+	<Folder FolderName="Entities" ExtStr="ent"/>
+</Project>

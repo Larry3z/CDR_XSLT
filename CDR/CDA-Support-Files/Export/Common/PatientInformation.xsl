@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns="urn:hl7-org:v3" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:isc="http://extension-functions.intersystems.com" xmlns:exsl="http://exslt.org/common" xmlns:set="http://exslt.org/sets" exclude-result-prefixes="isc sdtc exsl set">
-	<!--ID-->
-	<!--why the following test doesn't work??
-	<xsl:template  match="MPIID" mode="PatientID">
-		<test></test>
-		<xsl:choose>
-			<xsl:when test="Patient/MPIID">
-				<id root="{$健康档案编号标识}">
-					<xsl:attribute name="extension"><xsl:value-of select="MPIID"/></xsl:attribute>
-				</id>
-			</xsl:when>
-			<xsl:when test="HealthCardNumber">
-				<id root="{$健康卡号标识}">
-					<xsl:attribute name="extension"><xsl:value-of select="text()"/></xsl:attribute>
-				</id>
-			</xsl:when>
-		</xsl:choose>
-	</xsl:template-->
+<xsl:stylesheet version="2.0" xmlns="urn:hl7-org:v3" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:isc="http://extension-functions.intersystems.com"
+                xmlns:exsl="http://exslt.org/common" xmlns:set="http://exslt.org/sets" exclude-result-prefixes="isc sdtc exsl set">
+	<!--患者医疗号码-->
+	<xsl:template match="*" mode="IDNo">
+		<xsl:comment>患者身份证号标识</xsl:comment>
+		<id root="{$患者身份证号标识}" extension="{IDNo/Code}"/>
+	</xsl:template>
+	<xsl:template match="*" mode="MPIID">
+		<xsl:comment>MPIID</xsl:comment>
+		<id root="2.16.156.10011.1.13" extension="{MPIID}"/>
+	</xsl:template>
+	<xsl:template match="*" mode="HealthCardNumber">
+		<xsl:comment>健康卡号</xsl:comment>
+		<id root="2.16.156.10011.1.19" extension="{HealthCardNumber}"/>
+	</xsl:template>
+	<xsl:template match="*" mode="OutpatientID">
+		<xsl:comment>门急诊号</xsl:comment>
+		<id root="{$门急诊号标识}">
+			<id root="2.16.156.10011.1.12" extension="{OutpatientID}"/>
+		</id>
+	</xsl:template>
+	<xsl:template match="*" mode="InpatientID">
+		<xsl:comment>住院号</xsl:comment>
+		<id root="2.16.156.10011.1.12" extension="{InpatientID}"/>
+	</xsl:template>
 	<!--姓名-->
-	
-	<xsl:template match="Patient" mode="CDRName">
+	<xsl:template match="Patient" mode="Name">
 		<xsl:comment>患者姓名</xsl:comment>
 		<Name>
 			<xsl:variable name="FirstName" select="FirstName"/>
@@ -28,21 +34,24 @@
 		</Name>
 	</xsl:template>
 	<!--性别-->
-	<xsl:template match="*" mode="CDRGender">
+	<xsl:template match="*" mode="Gender">
 		<xsl:comment>患者性别</xsl:comment>
-		<xsl:variable name="genderCode" select="Code"/>
-		<xsl:variable name="genderDescription" select="Name"/>
+		<xsl:variable name="genderCode" select="Gender/Code"/>
+		<xsl:variable name="genderDescription" select="Gender/Name"/>
 		<administrativeGenderCode code="{$genderCode}" codeSystemName="生理性别代码表(GB/T 2261.1)" codeSystem="{$生理性别代码表}" displayName="{$genderDescription}"/>
 	</xsl:template>
 	<!--生日 BirthTime-->
-	<xsl:template match="BirthTime" mode="BirthTime">
+	<xsl:template match="*" mode="BirthTime">
 		<xsl:comment>患者出生时间</xsl:comment>
 		<birthTime>
-			<xsl:attribute name="value"><xsl:apply-templates select="." mode="xmlToHL7TimeStamp"/></xsl:attribute>
+			<!--xsl:attribute name="value">
+				<xsl:apply-templates select="." mode="xmlToHL7TimeStamp"/>
+			</xsl:attribute-->
 		</birthTime>
 	</xsl:template>
 	<!--地址 Address-->
-	<xsl:template match="*" mode="CDRAddress">
+	<xsl:template match="*" mode="Address">
+		<xsl:comment>住址</xsl:comment>
 		<addr use="H">
 			<houseNumber>
 				<xsl:value-of select="HouseNumber"/>
@@ -68,49 +77,60 @@
 		</addr>
 	</xsl:template>
 	<!--PhoneNumber-->
-	<xsl:template match="PhoneNumber">
-		<xsl:choose>
-			<xsl:when test="'true'">
-				<xsl:variable name="telecomHomePhone">
-					<xsl:value-of select="."/>
-				</xsl:variable>
-				<telecom use="HP" value="{concat('tel:', $telecomHomePhone)}"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<telecom nullFlavor="UNK"/>
-			</xsl:otherwise>
-		</xsl:choose>
+	<xsl:template match="*" mode="PhoneNumber">
+		<xsl:comment>电话</xsl:comment>
+		<telecom value="{PhoneNumber}"/>
 	</xsl:template>
-	<xsl:template match="MPIID" mode="PatientMPIID">
-		<id root="{$健康档案编号标识}">
-			<xsl:attribute name="extension"><xsl:value-of select="."/></xsl:attribute>
-		</id>
+
+	<!-- 籍贯信息 -->
+	<xsl:template match="*" mode="Jiguan">
+		<nativePlace>
+			<place classCode="PLC" determinerCode="INSTANCE">
+				<addr>
+					<city>无</city>
+					<state>河北省</state>
+				</addr>
+			</place>
+		</nativePlace>
 	</xsl:template>
-	<xsl:template match="HealthCardNumber" mode="PatientHealthCardNumber">
-		<id root="{$健康卡号标识}">
-			<xsl:attribute name="extension"><xsl:value-of select="."/></xsl:attribute>
-		</id>
+	<!-- 出生地 -->
+	<xsl:template match="*" mode="BirthPlace">
+		<birthplace>
+			<place classCode="PLC" determinerCode="INSTANCE">
+				<addr>
+					<county>学院路30号12楼301</county>
+					<city>无</city>
+					<state>河北省</state>
+					<postalCode>无</postalCode>
+				</addr>
+			</place>
+		</birthplace>
 	</xsl:template>
-	<xsl:template match="OutpatientID" mode="OutpatientID">
-		<id root="{$门急诊号标识}">
-			<xsl:attribute name="extension"><xsl:value-of select="."/></xsl:attribute>
-		</id>
+	<!-- 户口 -->
+	<xsl:template match="*" mode="Hukou">
+		<household>
+			<place classCode="PLC" determinerCode="INSTANCE">
+				<addr>
+					<houseNumber>学院路30号12楼301</houseNumber>
+					<streetName>无</streetName>
+					<township>无</township>
+					<county>无</county>
+					<city>无</city>
+					<state>河北省</state>
+					<postalCode>123456</postalCode>
+				</addr>
+			</place>
+		</household>
 	</xsl:template>
-	<xsl:template match="InpatientID" mode="InpatientID">
-		<id root="{$住院号标识}">
-			<xsl:attribute name="extension"><xsl:value-of select="."/></xsl:attribute>
-		</id>
-	</xsl:template>
-	<xsl:template match="IDNo" mode="IDNo">
-		<xsl:comment>患者身份证号标识</xsl:comment>
-		<id root="{$患者身份证号标识}">
-			<xsl:attribute name="extension"><xsl:value-of select="."/></xsl:attribute>
-		</id>
-	</xsl:template>
+
+
+	
 	<!--Age-->
-	<xsl:template match="Age" mode="Age">
+	<xsl:template match="*" mode="Age">
 		<age unit="岁">
-			<xsl:attribute name="value"><xsl:value-of select="."/></xsl:attribute>
+			<xsl:attribute name="value">
+				<xsl:value-of select="."/>
+			</xsl:attribute>
 		</age>
 	</xsl:template>
 	<!--employerOrganization-->
@@ -119,7 +139,9 @@
 		<EmployerOrganization>
 			<xsl:copy-of select="name"/>
 			<telecom>
-				<xsl:attribute name="value"><xsl:value-of select="PhoneNumber"/></xsl:attribute>
+				<xsl:attribute name="value">
+					<xsl:value-of select="PhoneNumber"/>
+				</xsl:attribute>
 			</telecom>
 		</EmployerOrganization>
 	</xsl:template>
@@ -130,12 +152,12 @@
 		</xsl:variable>
 		<xsl:variable name="ethnicDesc">
 			<xsl:value-of select="EthnicGroup/Name">
-                        </xsl:value-of>
+			</xsl:value-of>
 		</xsl:variable>
 		<ethnicGroupCode code="{$ethnicCode}" displayName="{$ethnicDesc}" codeSystem="2.16.156.10011.2.3.3.3" codeSystemName="民族类别代码表(GB 3304)"/>
 	</xsl:template>
 	<!--MaritalStatus-->
-	<xsl:template match="MaritalStatus" mode="code-maritalStatus">
+	<xsl:template match="*" mode="code-maritalStatus">
 		<xsl:variable name="MaritalCode">
 			<xsl:value-of select="Code"/>
 		</xsl:variable>
@@ -145,10 +167,9 @@
 		<maritalStatusCode code="{$MaritalCode}" displayNme="{Maritaldisplay}" codeSystem="{$婚姻状况代码表}" displayName="婚姻状况代码表(GB/T 2261.2)"/>
 	</xsl:template>
 	<!--Occupation-->
-	<xsl:template match="Occupation" mode="Occupation">
-		<xsl:variable name="Code" select="Code"/>
-		<xsl:variable name="Name" select="Name"/>
-		<maritalStatusCode code="{$Code}" displayNme="{Name}" codeSystem="2.16.156.10011.2.3.3.13" codeSystemName="从业状况(个人身体)代码表(GB/T 2261.4)"/>
+	<xsl:template match="*" mode="Occupation">
+		<xsl:comment>职业</xsl:comment>
+		<maritalStatusCode code="{Occupation/Code}" displayNme="{Occupatuion/Name}" codeSystem="2.16.156.10011.2.3.3.13" codeSystemName="从业状况(个人身体)代码表(GB/T 2261.4)"/>
 	</xsl:template>
 	<!--联系人1..*, @typeCode: NOT(ugent notification contact)，固定值，表示不同的参与者-->
 	<xsl:template match="SupportContact" mode="CDRSupportContacts">
@@ -173,4 +194,15 @@
 			</associatedEntity>
 		</participant>
 	</xsl:template>
-</xsl:stylesheet>
+</xsl:stylesheet><!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
+
+<metaInformation>
+	<scenarios/>
+	<MapperMetaTag>
+		<MapperInfo srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
+		<MapperBlockPosition></MapperBlockPosition>
+		<TemplateContext></TemplateContext>
+		<MapperFilter side="source"></MapperFilter>
+	</MapperMetaTag>
+</metaInformation>
+-->

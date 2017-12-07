@@ -6,10 +6,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/OIDs-IOT.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Common/CDAHeader.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-
-
+	<xsl:include href="CDA-Support-Files/Export/Common/PatientMedicalHistories.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -17,17 +14,37 @@
 			<xsl:comment>病人信息</xsl:comment>
 			<recordTarget contextControlCode="OP" typeCode="RCT">
 				<patientRole classCode="PAT">
+					<!-- 健康卡号 -->
+					<xsl:apply-templates select="Encounter/Patient" mode="HealthCardNumber"/>
 					<!-- 住院号标识 -->
 					<xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/>
+					<!-- 病案号标识 -->
+					<xsl:comment>病案号</xsl:comment>
+					<id root="2.16.156.10011.1.13" extension="{Encounter/EncounterNumber}"/>
+					<!-- 住址电话 -->
+					<xsl:apply-templates select="Encounter/Patient/Address" mode="Address"/>
+					<xsl:apply-templates select="Encounter/Patient" mode="PhoneNumber"/>
 					<patient classCode="PSN" determinerCode="INSTANCE">
 						<!--患者身份证号-->
 						<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Name"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Gender"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
-						<!--xsl:apply-templates select="Encounter/Patient" mode="Age"/-->
+						<xsl:apply-templates select="Encounter/Patient" mode="code-maritalStatus"/>
+						<xsl:apply-templates select="Encounter/Patient" mode="code-ethnicGroup-patient"/>
+						<!--下面这些cdr没有，先放置
+						<xsl:apply-templates select="Encounter/Patient" mode="BirthPlace"/>
+						<xsl:apply-templates select="Encounter/Patient" mode="Citizenship"/>
+						<xsl:apply-templates select="Encounter/Patient" mode="Age"/>
+						<xsl:apply-templates select="Encounter/Patient" mode="EmployerOrganization"/>
+						<xsl:apply-templates select="Encounter/Patient" mode="Hukou"/>
+						<xsl:apply-templates select="Encounter/Patient" mode="Age"/>
+						<xsl:apply-templates select="Encounter/Patient" mode="Jiguan"/-->
+						<xsl:apply-templates select="Encounter/Patient" mode="Occupation"/>
 					</patient>
 				</patientRole>
+				<!--提供患者服务机构-->
+				<!--xsl:apply-templates select="." mode="Provider"/-->
 			</recordTarget>
 			<!--以下省略很多机构签名等等 -->
 			<relatedDocument typeCode="RPLC">
@@ -39,29 +56,11 @@
 					<versionNumber/>
 				</parentDocument>
 			</relatedDocument>
-			<!-- 病床号、病房、病区、科室和医院的关联 -->
+			<!--文档中医疗卫生事件的就诊场景,即入院场景记录-->
+			<componentOf typeCode="COMP">
+				<!--就诊-->
+			</componentOf>
 
-			<!--文档体-->
-			<component>
-				<structuredBody>
-					<!--主诉章节-->
-					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					
-					<!--治疗计划章节-->
-					<component>
-						<section>
-							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-							<text/>
-							<!--诊疗计划-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-							<!--治则治法-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
-							
-						</section>
-					</component>
-					
-				</structuredBody>
-			</component>
 		</ClinicalDocument>
 	</xsl:template>
 </xsl:stylesheet><!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.

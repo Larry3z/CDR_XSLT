@@ -1,5 +1,5 @@
 <xsl:stylesheet version="1.0" xmlns="urn:hl7-org:v3" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:isc="http://extension-functions.intersystems.com" xmlns:exsl="http://exslt.org/common" xmlns:set="http://exslt.org/sets" exclude-result-prefixes="isc sdtc exsl set">
-	<xsl:template match="Patient" name="CDAHeader">
+	<xsl:template match="Document" name="CDAHeader">
 		<xsl:param name="documentTypeNumber"/>
 		<xsl:param name="documentName"/>
 		<!-- 头两行固定值， "CN" 代表中国 -->

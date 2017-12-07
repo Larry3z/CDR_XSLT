@@ -2,10 +2,10 @@
 <Document>
 	<CreationTime>2017-07-18T11:04:34Z</CreationTime>
 	<ID>1</ID>
-	<Title>病人李四的首次病程记录</Title>
+	<Title>病人李四日常病程记录第一天</Title>
 	<Type>
 		<Code>C0037</Code>
-		<Name>首次病程记录</Name>
+		<Name>日常病程记录</Name>
 	</Type>
 	<Author>
 		<Name>张三</Name>

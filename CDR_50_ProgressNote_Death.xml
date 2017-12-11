@@ -1,15 +1,15 @@
-
 <Document>
 	<CreationTime>2017-07-18T11:04:34Z</CreationTime>
 	<ID>1</ID>
-	<Title>病人李四日常病程记录第一天</Title>
+	<Title>病人李四的死亡记录</Title>
 	<Type>
-		<Code>C0037</Code>
-		<Name>日常病程记录</Name>
+		<Code>C0050</Code>
+		<Name>死亡记录</Name>
+		<TemplateID>2.16.156.10011.2.1.1.70</TemplateID>
 	</Type>
 	<Author>
-		<Name>张三</Name>
-		<Id>001</Id>
+		<Name>蒙古大夫</Name>
+		<Id>010</Id>
 		<Title>住院医师</Title>
 	</Author>
 	<Practitioners>
@@ -19,8 +19,12 @@
 			<qualification>主任</qualification>
 		</Practitioner>
 	</Practitioners>
-	<Confidentiality>普通</Confidentiality>
-	<Status></Status>
+	<Practitioners/>
+	<Confidentiality>
+		<Code>N</Code>
+		<Name>正常访问保密级别</Name>
+	</Confidentiality>
+	<Status/>
 	<Encounter>
 		<AdmissionLocation>心胸外科</AdmissionLocation>
 		<AdmissionLocationNo>51</AdmissionLocationNo>
@@ -74,8 +78,8 @@
 			<OutpatientID>7315457372</OutpatientID>
 			<InpatientID>DL4948997831</InpatientID>
 			<IDNo>
-				<Code>05</Code>
-				<Name>驾驶证</Name>
+				<Code>123456789123456</Code>
+				<Name>身份证</Name>
 			</IDNo>
 			<FirstName>梓舒</FirstName>
 			<LastName>计</LastName>
@@ -295,6 +299,11 @@
 		</Observation>
 	</Observations>
 	<Sections>
+		<Section>
+			<SectionCode>DE04.01.119.00</SectionCode>
+			<SectionName>主诉</SectionName>
+			<textContent>腹痛</textContent>
+		</Section>
 		<Section>
 			<SectionCode>DE05.01.025.00</SectionCode>
 			<SectionName>诊疗计划</SectionName>

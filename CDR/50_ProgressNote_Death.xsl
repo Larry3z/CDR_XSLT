@@ -6,6 +6,8 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/SurgicalOperation.xsl"/>
+	
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -17,27 +19,18 @@
 					<xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/>
 					<patient classCode="PSN" determinerCode="INSTANCE">
 						<!--患者身份证号-->
-						<id root="2.16.156.10011.1.3" extension="{Encounter/Patient/IDNo/Name}"/>
-						<!--xsl:apply-templates select="Encounter/Patient" mode="IDNo"/-->
+						<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Name"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Gender"/>
-						<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
 						<!--xsl:apply-templates select="Encounter/Patient" mode="Age"/-->
 					</patient>
 				</patientRole>
 			</recordTarget>
 			<component>
 				<structuredBody>
-					<!--治疗计划章节-->
-					
-					<component>
-						<section>
-							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-							<text/>
-							<!--辨证论治-->
-							<xsl:apply-templates select="Sections/Section[SectionName='诊疗计划']" mode="TreatmentPlanEntry"/>
-						</section>
-					</component>
+					<!-- 信息章节  -->
+					<xsl:apply-templates select="ID" mode="SurOp16"/>
+					<component/>
 				</structuredBody>
 			</component>
 		</ClinicalDocument>

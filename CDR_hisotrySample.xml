@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Container>
+	<FamilyHistories>
+		<FamilyHistory>
+			<UpdatedOn>2017-11-22T16:35:10Z</UpdatedOn>
+			<FamilyMember>
+				<Code>GF</Code>
+				<Description>GrandFather</Description>
+			</FamilyMember>
+			<Diagnosis>
+				<Code>I21.9</Code>
+				<Description>Acute myocardial infarction, unspecified</Description>
+			</Diagnosis>
+			<Status>A</Status>
+			<EnteredBy>
+				<Code>Zabala, Nerio C.</Code>
+				<Description>Zabala, Nerio C.</Description>
+			</EnteredBy>
+			<FromTime>2014-07-20T13:32:57Z</FromTime>
+		</FamilyHistory>
+		<FamilyHistory>
+			<UpdatedOn>2017-11-22T16:35:10Z</UpdatedOn>
+			<FamilyMember>
+				<Code>REL</Code>
+				<Description>Relative</Description>
+			</FamilyMember>
+			<Diagnosis>
+				<Code>G46</Code>
+				<Description>Vascular syndromes of brain in cerebrovascular diseases</Description>
+			</Diagnosis>
+			<NoteText>maternal side</NoteText>
+			<Status>A</Status>
+			<EnteredBy>
+				<Code>Zabala, Nerio C.</Code>
+				<Description>Zabala, Nerio C.</Description>
+			</EnteredBy>
+			<FromTime>2014-07-20T13:32:33Z</FromTime>
+		</FamilyHistory>
+		<FamilyHistory>
+			<UpdatedOn>2017-11-22T16:35:10Z</UpdatedOn>
+			<FamilyMember>
+				<Code>M</Code>
+				<Description>Mother</Description>
+			</FamilyMember>
+			<Diagnosis>
+				<Code>I10</Code>
+				<Description>Essential (primary) hypertension</Description>
+			</Diagnosis>
+			<Status>A</Status>
+			<EnteredBy>
+				<Code>Zabala, Nerio C.</Code>
+				<Description>Zabala, Nerio C.</Description>
+			</EnteredBy>
+			<FromTime>2014-07-20T13:31:53Z</FromTime>
+		</FamilyHistory>
+	</FamilyHistories>
+	<IllnessHistories>
+		<IllnessHistory>
+			<UpdatedOn>2017-11-22T16:35:10Z</UpdatedOn>
+			<Condition>
+				<Code>Cardio10</Code>
+				<Description>Hypertension</Description>
+			</Condition>
+			<Clinician>
+				<Code>6420</Code>
+				<Description>6420</Description>
+			</Clinician>
+			<EnteredBy>
+				<Code>Permejo, Chito C.</Code>
+				<Description>Permejo, Chito C.</Description>
+			</EnteredBy>
+			<FromTime>2015-01-17T04:24:16Z</FromTime>
+		</IllnessHistory>
+		<IllnessHistory>
+			<UpdatedOn>2017-11-22T16:35:10Z</UpdatedOn>
+			<Condition>
+				<Code>Cardio16</Code>
+				<Description>Dyslipidemia</Description>
+			</Condition>
+			<Clinician>
+				<Code>6420</Code>
+				<Description>6420</Description>
+			</Clinician>
+			<EnteredBy>
+				<Code>Permejo, Chito C.</Code>
+				<Description>Permejo, Chito C.</Description>
+			</EnteredBy>
+			<FromTime>2015-01-17T04:24:04Z</FromTime>
+		</IllnessHistory>
+		<IllnessHistory>
+			<UpdatedOn>2017-11-22T16:35:10Z</UpdatedOn>
+			<Condition>
+				<Code>Cardio8</Code>
+				<Description>Diabetes</Description>
+			</Condition>
+			<Clinician>
+				<Code>6420</Code>
+				<Description>6420</Description>
+			</Clinician>
+			<EnteredBy>
+				<Code>Permejo, Chito C.</Code>
+				<Description>Permejo, Chito C.</Description>
+			</EnteredBy>
+			<FromTime>2015-01-17T04:23:51Z</FromTime>
+		</IllnessHistory>
+		<IllnessHistory>
+			<UpdatedOn>2017-11-22T16:35:10Z</UpdatedOn>
+			<Condition>
+				<Code>Cardio13</Code>
+				<Description>Coronary Artery Disease</Description>
+			</Condition>
+			<Clinician>
+				<Code>6420</Code>
+				<Description>6420</Description>
+			</Clinician>
+			<EnteredBy>
+				<Code>Permejo, Chito C.</Code>
+				<Description>Permejo, Chito C.</Description>
+			</EnteredBy>
+			<FromTime>2015-01-17T04:23:33Z</FromTime>
+		</IllnessHistory>
+		<IllnessHistory>
+			<UpdatedOn>2017-11-22T16:35:10Z</UpdatedOn>
+			<Condition>
+				<Code>Pedia12</Code>
+				<Description>Arterioslerotic Heart Disease</Description>
+			</Condition>
+			<Clinician>
+				<Code>6420</Code>
+				<Description>Willis, Lafayette</Description>
+				<Name>
+					<FamilyName>Willis</FamilyName>
+					<GivenName>Lafayette</GivenName>
+				</Name>
+				<CareProviderType>
+					<Code>FR</Code>
+					<Description>Fellow/Resident</Description>
+				</CareProviderType>
+			</Clinician>
+			<EnteredBy>
+				<Code>Permejo, C.</Code>
+				<Description>Permejo, C.</Description>
+			</EnteredBy>
+			<FromTime>2015-01-17T04:23:20Z</FromTime>
+		</IllnessHistory>
+	</IllnessHistories>
+	<SocialHistories>
+		<SocialHistory>
+			<UpdatedOn>2017-11-22T16:35:10Z</UpdatedOn>
+			<SocialHabit>
+				<Code>SM</Code>
+				<Description>Smoking, Active</Description>
+			</SocialHabit>
+			<SocialHabitQty>
+				<Code>20</Code>
+				<Description>20 per Day</Description>
+			</SocialHabitQty>
+			<Status>A</Status>
+			<EnteredBy>
+				<Code>Zabala, Nerio C.</Code>
+				<Description>Zabala, Nerio C.</Description>
+			</EnteredBy>
+			<FromTime>2013-10-23T00:00:00Z</FromTime>
+		</SocialHistory>
+	</SocialHistories>
+</Container>

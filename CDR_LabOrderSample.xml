@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LabOrder>
+	<PlacerId>HOS9002</PlacerId>
+	<FillerId>HOS9002</FillerId>
+	<OrderItem>
+		<Code>CBCD</Code>
+		<Description>CBC+ AUTOMATED DIFFERENTIAL</Description>
+		<SDACodingStandard>L</SDACodingStandard>
+	</OrderItem>
+	<OrderedBy>
+		<Code>BJ0099</Code>
+		<Description>Farrell, Sam</Description>
+		<SDACodingStandard>PHLS</SDACodingStandard>
+		<Name>
+			<FamilyName>Farrell</FamilyName>
+			<GivenName>Sam</GivenName>
+		</Name>
+	</OrderedBy>
+	<EnteringOrganization>
+		<Code>CGH</Code>
+		<Description>CGH</Description>
+		<Organization>
+			<Code>CGH</Code>
+			<Description>CGH</Description>
+		</Organization>
+	</EnteringOrganization>
+	<Specimen>Blood</Specimen>
+	<SpecimenCollectedTime>2017-08-21T19:00:00Z</SpecimenCollectedTime>
+	<Status>E</Status>
+	<Priority>
+		<Code>N</Code>
+		<Description>Normal</Description>
+	</Priority>
+	<EnteredAt>
+		<Description>CGH</Description>
+	</EnteredAt>
+	<EnteredOn>2017-08-21T18:00:00Z</EnteredOn>
+	<FromTime>2017-08-21T18:00:00Z</FromTime>
+	<EncounterNumber>HSVN00007</EncounterNumber>
+	<Result>
+		<ResultType>AT</ResultType>
+		<ResultItems>
+			<LabResultItem>
+				<TestItemCode>
+					<Code>WBC</Code>
+					<Description>WHITE BLOOD CELL COUNT</Description>
+					<IsNumeric>true</IsNumeric>
+				</TestItemCode>
+				<ResultValue>5.1</ResultValue>
+				<ResultValueUnits>10(9)/L</ResultValueUnits>
+				<ResultNormalRange>4.0-10.6</ResultNormalRange>
+				<TestItemStatus>F</TestItemStatus>
+				<ObservationValueType>NM</ObservationValueType>
+				<ObservationTime>2017-08-21T19:00:00Z</ObservationTime>
+			</LabResultItem>
+			<LabResultItem>
+				<TestItemCode>
+					<Code>RBC</Code>
+					<Description>RED BLOOD CELL COUNT</Description>
+					<IsNumeric>true</IsNumeric>
+				</TestItemCode>
+				<ResultValue>3.99</ResultValue>
+				<ResultValueUnits>10x12/L</ResultValueUnits>
+				<ResultNormalRange>4.5-5.9</ResultNormalRange>
+				<TestItemStatus>F</TestItemStatus>
+				<ObservationValueType>NM</ObservationValueType>
+				<ObservationTime>2017-08-21T19:00:00Z</ObservationTime>
+			</LabResultItem>
+			<LabResultItem>
+				<TestItemCode>
+					<Code>HGB</Code>
+					<Description>HEMOGLOBIN</Description>
+					<IsNumeric>true</IsNumeric>
+				</TestItemCode>
+				<ResultValue>13.7</ResultValue>
+				<ResultValueUnits>g/dL</ResultValueUnits>
+				<ResultNormalRange>12.0-16.0</ResultNormalRange>
+				<TestItemStatus>F</TestItemStatus>
+				<ObservationValueType>NM</ObservationValueType>
+				<ObservationTime>2017-08-21T19:00:00Z</ObservationTime>
+			</LabResultItem>
+		</ResultItems>
+		<ResultTime>2017-08-21T20:00:00Z</ResultTime>
+		<ResultStatus>K</ResultStatus>
+		<ResultInterpretation>A</ResultInterpretation>
+	</Result>
+</LabOrder>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Medications>
+	<Medication>
+		<PlacerId>HOS100319001</PlacerId>
+		<FillerId>HOS100319001</FillerId>
+		<OrderItem>
+			<Code>Panadeine Forte Tablets</Code>
+			<Description>Panadeine Forte Tablets</Description>
+		</OrderItem>
+		<OrderedBy>
+			<Code>BJ0099</Code>
+			<Description>Farrell, Sam</Description>
+			<SDACodingStandard>PHLS</SDACodingStandard>
+			<Name>
+				<FamilyName>Farrell</FamilyName>
+				<GivenName>Sam</GivenName>
+			</Name>
+		</OrderedBy>
+		<EnteringOrganization>
+			<Code>CGH</Code>
+			<Description>CGH</Description>
+			<Organization>
+				<Code>CGH</Code>
+				<Description>CGH</Description>
+			</Organization>
+		</EnteringOrganization>
+		<Status>V</Status>
+		<Priority>
+			<Code>PRN</Code>
+			<Description>PRN</Description>
+		</Priority>
+		<EnteredAt>
+			<Description>CGH</Description>
+		</EnteredAt>
+		<EnteredOn>2017-08-20T12:12:00Z</EnteredOn>
+		<FromTime>2017-08-20T12:12:00Z</FromTime>
+		<DrugProduct>
+			<Code>Panadeine Forte Tablets</Code>
+			<Description>Panadeine Forte Tablets</Description>
+		</DrugProduct>
+		<DoseQuantity>100</DoseQuantity>
+		<Route>
+			<Code>Oral</Code>
+			<Description>Oral</Description>
+		</Route>
+		<EncounterNumber>HSVN00007</EncounterNumber>
+	</Medication>
+	<Medication>
+		<PlacerId>GP1100319001</PlacerId>
+		<FillerId>GP1100319001</FillerId>
+		<OrderItem>
+			<Code>Amoxil Oral Capsules</Code>
+			<Description>Amoxil Oral Capsules</Description>
+		</OrderItem>
+		<OrderedBy>
+			<Code>ISCGP001</Code>
+			<Description>Moore, James</Description>
+			<Name>
+				<FamilyName>Moore</FamilyName>
+				<GivenName>James</GivenName>
+			</Name>
+		</OrderedBy>
+		<EnteringOrganization>
+			<Code>GP1</Code>
+			<Description>GP1</Description>
+			<Organization>
+				<Code>HC6</Code>
+				<Description>HC6</Description>
+			</Organization>
+		</EnteringOrganization>
+		<Frequency>
+			<Code>QID</Code>
+			<Description>QID</Description>
+			<Factor>2</Factor>
+		</Frequency>
+		<Duration>
+			<Code>7 Days</Code>
+			<Description>7 Days</Description>
+			<Factor>7</Factor>
+		</Duration>
+		<Status>V</Status>
+		<Priority>
+			<Code>Normal</Code>
+			<Description>Normal</Description>
+		</Priority>
+		<EnteredAt>
+			<Description>GP1</Description>
+		</EnteredAt>
+		<EnteredOn>2017-08-13T09:45:00Z</EnteredOn>
+		<FromTime>2017-08-13T09:45:00Z</FromTime>
+		<DrugProduct>
+			<Code>Amoxil Oral Capsules</Code>
+			<Description>Amoxil Oral Capsules</Description>
+		</DrugProduct>
+		<DoseQuantity>500</DoseQuantity>
+		<DoseUoM>
+			<Code>mg</Code>
+			<Description>mg</Description>
+		</DoseUoM>
+		<Route>
+			<Code>Oral</Code>
+			<Description>Oral</Description>
+		</Route>
+		<EncounterNumber>HSVN00006</EncounterNumber>
+	</Medication>
+</Medications>

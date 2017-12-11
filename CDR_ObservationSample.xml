@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Observations>
+	<Observation>
+		<EncounterNumber>HSVN00007</EncounterNumber>
+		<ObservationTime>2017-08-22T14:45:00Z</ObservationTime>
+		<ObservationCode>
+			<Code>8867-4</Code>
+			<Description>Heart Rate</Description>
+		</ObservationCode>
+		<ObservationValue>92</ObservationValue>
+		<ObservationValueType>NM</ObservationValueType>
+	</Observation>
+	<Observation>
+		<EncounterNumber>HSVN00007</EncounterNumber>
+		<ObservationTime>2017-08-22T14:45:00Z</ObservationTime>
+		<ObservationCode>
+			<Code>8310-5</Code>
+			<Description>Body Temperature</Description>
+		</ObservationCode>
+		<ObservationValue>101.5</ObservationValue>
+		<ObservationValueType>NM</ObservationValueType>
+	</Observation>
+	<Observation>
+		<EncounterNumber>HSVN00007</EncounterNumber>
+		<ObservationTime>2017-08-22T14:45:00Z</ObservationTime>
+		<ObservationCode>
+			<Code>9279-1</Code>
+			<Description>Respiratory Rate</Description>
+		</ObservationCode>
+		<ObservationValue>21</ObservationValue>
+		<ObservationValueType>NM</ObservationValueType>
+	</Observation>
+</Observations>

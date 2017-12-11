@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Encounter>
+	<EndTime>2017-03-23T10:00:00Z</EndTime>
+	<ExternalId>OP415573</ExternalId>
+	<FromTime>2017-03-23T09:46:00Z</FromTime>
+	<ToTime>2017-03-23T10:00:00Z</ToTime>
+	<EncounterType>O</EncounterType>
+	<HealthCareFacility>
+		<Code>SDA</Code>
+		<Organization>
+			<Code>SDA</Code>
+			<Description>SDA Hospital</Description>
+		</Organization>
+	</HealthCareFacility>
+	<AdmittingClinician>
+		<Code>314</Code>
+		<Description>Eden, Lowell</Description>
+		<Name>
+			<FamilyName>Eden</FamilyName>
+			<GivenName>Lowell</GivenName>
+		</Name>
+		<CareProviderType>
+			<Code>MS</Code>
+			<Description>Medical Staff</Description>
+		</CareProviderType>
+	</AdmittingClinician>
+	<AttendingClinicians>
+		<CareProvider>
+			<Code>314</Code>
+			<Description>Eden, Lowell</Description>
+			<CareProviderType>
+				<Code>MS</Code>
+				<Description>Medical Staff</Description>
+			</CareProviderType>
+		</CareProvider>
+	</AttendingClinicians>
+	<ConsultingClinicians>
+		<CareProvider>
+			<Code>314</Code>
+			<Description>Eden, Lowell</Description>
+			<CareProviderType>
+				<Code>MS</Code>
+				<Description>Medical Staff</Description>
+			</CareProviderType>
+		</CareProvider>
+	</ConsultingClinicians>
+	<EncounterNumber>OP415573</EncounterNumber>
+	<AccountNumber>XWWYEMJRCR</AccountNumber>
+	<HealthFunds>
+		<HealthFund>
+			<HealthFund>
+				<Code>01</Code>
+				<Description>Cash</Description>
+			</HealthFund>
+			<HealthFundPlan>
+				<Code>01</Code>
+				<Description>Cash</Description>
+			</HealthFundPlan>
+			<InsuredName>
+				<FamilyName>Burns</FamilyName>
+				<GivenName>Steve</GivenName>
+			</InsuredName>
+		</HealthFund>
+	</HealthFunds>
+</Encounter>

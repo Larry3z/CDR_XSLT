@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PhysicalExams>
+    <PhysicalExam>
+      <EncounterNumber>OP415921</EncounterNumber>
+      <PhysExamCode>
+        <Code>CARDIO9</Code>
+      </PhysExamCode>
+      <EnteredBy>
+        <Code>Aragones, Helen</Code>
+      </EnteredBy>
+      <PhysExamTime>2017-08-11T11:20:20Z</PhysExamTime>
+      <PhysExamObsValue>
+        <Code>U</Code>
+        <Description>Unremarkable</Description>
+      </PhysExamObsValue>
+    </PhysicalExam>
+    <PhysicalExam>
+      <EncounterNumber>OP415921</EncounterNumber>
+      <PhysExamCode>
+        <Code>CARDIO7</Code>
+      </PhysExamCode>
+      <PhysExamObs>
+        <Code>HL</Code>
+        <Description>Heave/Lift</Description>
+      </PhysExamObs>
+      <EnteredBy>
+        <Code>Aragones, Helen</Code>
+      </EnteredBy>
+      <PhysExamTime>2017-08-11T11:20:20Z</PhysExamTime>
+      <PhysExamObsValue>
+        <Code>Pedia</Code>
+        <Description>Negative</Description>
+      </PhysExamObsValue>
+    </PhysicalExam>
+    <PhysicalExam>
+      <EncounterNumber>OP415921</EncounterNumber>
+      <PhysExamCode>
+        <Code>CARDIO7</Code>
+      </PhysExamCode>
+      <PhysExamObs>
+        <Code>HL</Code>
+        <Description>Heave/Lift</Description>
+      </PhysExamObs>
+      <PhysExamObsQualifier>
+        <Code>QualCode</Code>
+      </PhysExamObsQualifier>
+      <EnteredBy>
+        <Code>Aragones, Helen</Code>
+      </EnteredBy>
+      <PhysExamTime>2017-08-11T11:20:20Z</PhysExamTime>
+      <PhysExamObsValue>
+        <Code>Pedia</Code>
+        <Description>Negative</Description>
+      </PhysExamObsValue>
+    </PhysicalExam>
+  </PhysicalExams>

@@ -4,7 +4,7 @@
 	<!--患者医疗号码-->
 	<xsl:template match="*" mode="IDNo">
 		<xsl:comment>患者身份证号标识</xsl:comment>
-		<id root="{$患者身份证号标识}" extension="{IDNo/Code}"/>
+		<id root="2.16.156.10011.1.3" extension="{IDNo/Code}"/>
 	</xsl:template>
 	<xsl:template match="*" mode="MPIID">
 		<xsl:comment>MPIID</xsl:comment>

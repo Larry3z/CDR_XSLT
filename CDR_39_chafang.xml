@@ -1,20 +1,20 @@
-
 <Document>
 	<CreationTime>2017-07-18T11:04:34Z</CreationTime>
 	<ID>1</ID>
-	<Title>病人李四的首次病程记录</Title>
+	<Title>上级医师查房</Title>
 	<Type>
-		<Code>C0037</Code>
-		<Name>首次病程记录</Name>
+		<Code>C0039</Code>
+		<Name>上级医师查房</Name>
+		<templateId root="2.16.156.10011.2.1.1.59"/>
 	</Type>
 	<Author>
-		<Name>张三</Name>
-		<Id>001</Id>
+		<Name>戴文彪</Name>
+		<Id>006</Id>
 		<Title>住院医师</Title>
 	</Author>
-	<Practitioners></Practitioners>
+	<Practitioners/>
 	<Confidentiality>普通</Confidentiality>
-	<Status></Status>
+	<Status/>
 	<Encounter>
 		<AdmissionLocation>心胸外科</AdmissionLocation>
 		<AdmissionLocationNo>51</AdmissionLocationNo>
@@ -288,7 +288,22 @@
 			</ReferenceRange>
 		</Observation>
 	</Observations>
+	<!--治疗计划章节-->
+	<TreatmentPlans>
+		<TreatmentPlan>这里显示治疗计划</TreatmentPlan>
+		<DialecticalTreatment>这里显示辩证论治</DialecticalTreatment>
+	</TreatmentPlans>
+	<!--健康评估章节-->
+	<AssessmentNote>这里显示健康评估</AssessmentNote>
+	<!--用药章节-->
+	<Medication>
+		<DecoctionDescription>这里显示中药煎煮方法描述</DecoctionDescription>
+		<TookDescription>这里显示中药用药方法描述</TookDescription>
+	</Medication>
 	<Sections>
+		<Section>
+			<ProviderOrders>哈哈哈哈</ProviderOrders>
+		</Section>
 		<Section>
 			<SectionCode>DE05.01.025.00</SectionCode>
 			<SectionName>诊疗计划</SectionName>

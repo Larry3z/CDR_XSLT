@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	
+<xsl:stylesheet version="1.0" xmlns="urn:hl7-org:v3" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:isc="http://extension-functions.intersystems.com"
+                xmlns:exsl="http://exslt.org/common" xmlns:set="http://exslt.org/sets" exclude-result-prefixes="isc sdtc exsl set">
 	
 	<!--一般护理记录、危重（病危）护理记录-->
 	<xsl:template match="AssessmentNote" mode="Assessment1">
@@ -117,7 +117,7 @@
           <entry> 
             <observation classCode="OBS" moodCode="EVN"> 
               <code code="DE06.00.181.00" displayName="查房记录" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>  
-              <value xsi:type="ST">对患者查房结果和诊疗相关意见的详细描述</value> 
+              <value xsi:type="ST"><xsl:value-of select="."/></value> 
             </observation> 
           </entry> 
         </section> 

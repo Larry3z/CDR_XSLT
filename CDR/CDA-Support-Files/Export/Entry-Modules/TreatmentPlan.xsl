@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<xsl:stylesheet version="1.0" xmlns="urn:hl7-org:v3" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:isc="http://extension-functions.intersystems.com"
+                xmlns:exsl="http://exslt.org/common" xmlns:set="http://exslt.org/sets" exclude-result-prefixes="isc sdtc exsl set">
 	<!--门急诊病历，急诊留观病历,治疗计划-->
 	<xsl:template match="*" mode="TreatmentPlanEntry">
 		<entry>
@@ -333,7 +334,7 @@
 		</component>
 	</xsl:template>
 	<!--上级医师查房，治疗计划-->
-	<xsl:template match="TreatmentPlan" mode="TP13">
+	<xsl:template match="TreatmentPlans" mode="TP13">
 		<component>
 			<section>
 				<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
@@ -342,17 +343,17 @@
 				<entry>
 					<observation classCode="OBS" moodCode="INT ">
 						<code code="DE05.01.025.00" displayName="诊疗计划"/>
-						<value xsi:type="ST">具体的检查、中医治疗措施及中医调护</value>
+						<value xsi:type="ST"><xsl:value-of select="TreatmentPlan"/></value>
 					</observation>
 				</entry>
 				<!--辩证论治详细描述-->
 				<entry>
 					<observation classCode="OBS" moodCode="INT">
 						<code code="DE05.10.131.00" displayName="辩证论治"/>
-						<value xsi:type="ST">对辨证分型的名称、主要依据和采用的治则治法的详 细描述</value>
+						<value xsi:type="ST"><xsl:value-of select="DialecticalTreatment"/></value>
 					</observation>
 				</entry>
-			</section> c
+			</section> 
       </component>
 	</xsl:template>
 	<!--交接班记录,转科记录，治疗计划-->

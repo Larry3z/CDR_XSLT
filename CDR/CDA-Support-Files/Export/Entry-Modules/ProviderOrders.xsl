@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions">
+<xsl:stylesheet version="1.0" xmlns="urn:hl7-org:v3" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:isc="http://extension-functions.intersystems.com"
+                xmlns:exsl="http://exslt.org/common" xmlns:set="http://exslt.org/sets" exclude-result-prefixes="isc sdtc exsl set">
 	
 <!--适用文档  ：门急诊病历-->
 	<xsl:template match="ProviderOrders" mode="PO1">
@@ -247,7 +248,6 @@ Orders" codeSystemName="LOINC"/>
 			</section>
 		</component>
 	</xsl:template>
-	
 <!--适用文档  ：日常病程   上级医师查房-->
 	<xsl:template match="ProviderOrders" mode="PO4">
 		<component>
@@ -257,7 +257,7 @@ Orders" codeSystemName="LOINC"/>
 				<entry>
 					<observation classCode="OBS" moodCode="EVN">
 						<code code="DE06.00.287.00" displayName="医嘱内容" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目"/>
-						<value xsi:type="ST">xxx</value>
+						<value xsi:type="ST"><xsl:value-of select="."/></value>
 					</observation>
 				</entry>
 			</section>
@@ -274,7 +274,7 @@ Orders" codeSystemName="LOINC"/>
 				<entry>
 					<observation classCode="OBS" moodCode="EVN">
 						<code code="DE08.50.047.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="中药煎煮方法"/>
-						<value xsi:type="ST">xxx</value>
+						<value xsi:type="ST"></value>
 					</observation>
 				</entry>
 				<entry>

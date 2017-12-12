@@ -82,7 +82,6 @@
 							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
 						</section>
 					</component>
-
 				</structuredBody>
 			</component>
 		</ClinicalDocument>

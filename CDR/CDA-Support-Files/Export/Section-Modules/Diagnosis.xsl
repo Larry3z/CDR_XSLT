@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!--诊断编码条目，用于多个模板，code=DE05.01.024.00, 但displayName在因不同的诊断类型有变化， for Prescription-->
+	<xsl:template match="*" mode="DiagnosisEntry1">
+		<xsl:variable name="displayName">
+			<xsl:choose>
+				<xsl:when test="DiagnosisType ='初步诊断'">初步诊断-西医诊断编码</xsl:when>
+				<xsl:otherwise>诊断编码</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<entry>
+			<observation classCode="OBS" moodCode="EVN">
+				<code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="{$displayName}"/>
+				<value xsi:type="CD" code="{DiagnosisCode/Code}" displayName="{DiagnosisCode/Name}" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/>
+			</observation>
+		</entry>
+	</xsl:template>
+	<!--诊断编码条目,只有诊断名称，没有ICD编码,dispalyName多变， 用于多个模板，包括：首次病程-->
+	<xsl:template match="*" mode="DiagnosisEntry2">
+		<entry>
+			<observation classCode="OBS" moodCode="EVN ">
+				<code code="DE05.01.025.00" displayName="鉴别诊断-西医诊断名称" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+				<value xsi:type="ST"><xsl:value-of select="DiagnosisCode/Name"/></value>
+			</observation>
+		</entry>
+	</xsl:template>
 	<!-- Mode1: 卫计委西医诊断名字+ICD10疾病编码+病情转归，用于:病例概要 -->
 	<xsl:template match="*" mode="DiagnosisMode1">
 		<text/>
@@ -16,25 +40,11 @@
 					<observation classCode="OBS" moodCode="EVN">
 						<code code="DE05.10.113.00" displayName="病情转归代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
 						<value xsi:type="CD" codeSystem="2.16.156.10011.2.3.1.148" codeSystemName="病情转归代码表">
-							<xsl:attribute name="code">
-								<xsl:value-of select="Outcome/Code"/>
-							</xsl:attribute>
-							<xsl:attribute name="displayName">
-								<xsl:value-of select="Outcome/Name"/>
-							</xsl:attribute>
+							<xsl:attribute name="code"><xsl:value-of select="Outcome/Code"/></xsl:attribute>
+							<xsl:attribute name="displayName"><xsl:value-of select="Outcome/Name"/></xsl:attribute>
 						</value>
 					</observation>
 				</entryRelationship>
-			</observation>
-		</entry>
-	</xsl:template>
-	<!--Mode2: 诊断编码条目诊断条目 for Prescription-->
-	<xsl:template match="*" mode="DiagnosisMode2">
-		<entry>
-			<observation classCode="OBS" moodCode="EVN">
-				<!--术前诊断编码-->
-				<code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="诊断编码"/>
-				<value xsi:type="CD" code="{DiagnosisCode/Code}" displayName="{DiagnosisCode/Name}" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/>
 			</observation>
 		</entry>
 	</xsl:template>
@@ -59,7 +69,6 @@
 			</entry>
 		</section>
 	</xsl:template>
-
 	<xsl:template match="*" mode="GeneralDiagnosisEntry">
 		<section>
 			<code code="29548-5" displayName="西医诊断编码" codeSystem="2.16.840.1.11883.6.1" codeSystemName="LOINC"/>
@@ -68,12 +77,8 @@
 				<observation classCode="OBS" moodCode="EVN">
 					<code code="DE05.01.024.00" displayName="诊断代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
 					<value xsi:type="CD" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="病情转归代码表">
-						<xsl:attribute name="code">
-							<xsl:value-of select="DiagnosisStatusCode/Code"/>
-						</xsl:attribute>
-						<xsl:attribute name="displayName">
-							<xsl:value-of select="DiagnosisStatusCode/Name"/>
-						</xsl:attribute>
+						<xsl:attribute name="code"><xsl:value-of select="DiagnosisStatusCode/Code"/></xsl:attribute>
+						<xsl:attribute name="displayName"><xsl:value-of select="DiagnosisStatusCode/Name"/></xsl:attribute>
 					</value>
 				</observation>
 			</entry>
@@ -314,35 +319,4 @@
 			</organizer>
 		</entry>
 	</xsl:template>
-</xsl:stylesheet><!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
-
-<metaInformation>
-	<scenarios>
-		<scenario default="yes" name="Scenario1" userelativepaths="yes" externalpreview="no" url="..\..\..\..\..\DataIn\CDR_EncounterSample_v1.xml" htmlbaseurl="" outputurl="" processortype="saxon8" useresolver="no" profilemode="0" profiledepth=""
-		          profilelength="" urlprofilexml="" commandline="" additionalpath="" additionalclasspath="" postprocessortype="none" postprocesscommandline="" postprocessadditionalpath="" postprocessgeneratedext="" validateoutput="no" validator="internal"
-		          customvalidator="">
-			<advancedProp name="bSchemaAware" value="false"/>
-			<advancedProp name="xsltVersion" value="2.0"/>
-			<advancedProp name="schemaCache" value="||"/>
-			<advancedProp name="iWhitespace" value="0"/>
-			<advancedProp name="bWarnings" value="true"/>
-			<advancedProp name="bXml11" value="false"/>
-			<advancedProp name="bUseDTD" value="false"/>
-			<advancedProp name="bXsltOneIsOkay" value="true"/>
-			<advancedProp name="bTinyTree" value="true"/>
-			<advancedProp name="bGenerateByteCode" value="true"/>
-			<advancedProp name="bExtensions" value="true"/>
-			<advancedProp name="iValidation" value="0"/>
-			<advancedProp name="iErrorHandling" value="fatal"/>
-			<advancedProp name="sInitialTemplate" value=""/>
-			<advancedProp name="sInitialMode" value=""/>
-		</scenario>
-	</scenarios>
-	<MapperMetaTag>
-		<MapperInfo srcSchemaPathIsRelative="yes" srcSchemaInterpretAsXML="no" destSchemaPath="" destSchemaRoot="" destSchemaPathIsRelative="yes" destSchemaInterpretAsXML="no"/>
-		<MapperBlockPosition></MapperBlockPosition>
-		<TemplateContext></TemplateContext>
-		<MapperFilter side="source"></MapperFilter>
-	</MapperMetaTag>
-</metaInformation>
--->
+</xsl:stylesheet>

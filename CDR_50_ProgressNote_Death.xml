@@ -1,21 +1,30 @@
-
 <Document>
 	<CreationTime>2017-07-18T11:04:34Z</CreationTime>
 	<ID>1</ID>
-	<Title>病人李四的首次病程记录</Title>
+	<Title>病人李四的死亡记录</Title>
 	<Type>
-		<Code>C0037</Code>
-		<Name>首次病程记录</Name>
-		<TemplateID>2.16.156.10011.2.1.1.57</TemplateID>
+		<Code>C0050</Code>
+		<Name>死亡记录</Name>
+		<TemplateID>2.16.156.10011.2.1.1.70</TemplateID>
 	</Type>
 	<Author>
-		<Name>张三</Name>
-		<Id>001</Id>
+		<Name>蒙古大夫</Name>
+		<Id>010</Id>
 		<Title>住院医师</Title>
 	</Author>
-	<Practitioners></Practitioners>
-	<Confidentiality><Code>N</Code><Name>正常访问保密级别</Name></Confidentiality>
-	<Status></Status>
+	<Practitioners>
+		<Practitioner>
+			<PractionerRole>医生</PractionerRole>
+			<Name>wang</Name>
+			<qualification>主任</qualification>
+		</Practitioner>
+	</Practitioners>
+	<Practitioners/>
+	<Confidentiality>
+		<Code>N</Code>
+		<Name>正常访问保密级别</Name>
+	</Confidentiality>
+	<Status/>
 	<Encounter>
 		<AdmissionLocation>心胸外科</AdmissionLocation>
 		<AdmissionLocationNo>51</AdmissionLocationNo>

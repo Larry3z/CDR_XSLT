@@ -140,8 +140,6 @@
 				<structuredBody>
 					<!--主诉章节-->
 					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					
-					
 					<xsl:comment>入院诊断章节(暂无可调用模板)</xsl:comment>
 					<component>
 						<section>
@@ -155,7 +153,6 @@
 									<value xsi:type="ST">一般</value>
 								</observation>
 							</entry-->
-							
 							<!--入院诊断-西医诊断编码-->
 							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
 							<!--entry>
@@ -174,61 +171,70 @@
 							</entry-->
 							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
 							<!--入院诊断-中医证候代码-->
-							
 							<!--entry>
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE05.10.130.00" displayName="入院诊断-中医证候代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
 									<value xsi:type="CD" code="BNP051" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表（ GB/T 15657）" displayName="暴吐病"/>
 								</observation>
 							</entry-->
-							
 						</section>
 					</component>
-					
 					<xsl:comment>治疗诊断章节</xsl:comment>
-					<component> 
-        <section> 
-          <code code="29548-5" displayName="Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>  
-          <text/>  
-          <!--条目:目前情况-->  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN "> 
-              <code code="DE06.00.184.00" displayName="目前情况" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>  
-              <value xsi:type="ST">高血压病</value> 
-            </observation> 
-          </entry>  
-          <!--目前诊断-->  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE05.01.024.00" displayName="目前诊断-西医诊断编码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>  
-              <value xsi:type="CD" code="B95.100" displayName="B族链球菌感染"  codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/> 
-            </observation> 
-          </entry>  
-          <!--目前诊断-中医病名代码-->  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE05.10.130.00" displayName="目前诊断-中医病名代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>  
-              <value xsi:type="CD" code="BNG020" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)" displayName="黄疽病"/> 
-            </observation> 
-          </entry>  
-          <!--目前诊断-中医证候代码-->  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE05.10.130.00" displayName="目前诊断-中医证候代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>  
-              <value xsi:type="CD" code="BNP051" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)" displayName="暴吐病"/> 
-            </observation> 
-          </entry>  
-          <!--中医“四诊”观察结果-->  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN "> 
-              <code code="DE02.10.028.00" displayName="中医“四诊”观察结果" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>  
-              <value xsi:type="ST">舌红，苔薄腻，脉弦</value> 
-            </observation> 
-          </entry> 
-        </section> 
-      </component>  
-					
-					
+					<component>
+						<section>
+							<code code="29548-5" displayName="Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<text/>
+							<!--条目:目前情况-->
+							
+							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
+							<!--entry>
+								<observation classCode="OBS" moodCode="EVN ">
+									<code code="DE06.00.184.00" displayName="目前情况" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">高血压病</value>
+								</observation>
+							</entry-->
+							<!--目前诊断-->
+							
+							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
+							
+							
+							<!--entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE05.01.024.00" displayName="目前诊断-西医诊断编码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="CD" code="B95.100" displayName="B族链球菌感染" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/>
+								</observation>
+							</entry-->
+							<!--目前诊断-中医病名代码-->
+							
+							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
+							
+							<!--entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE05.10.130.00" displayName="目前诊断-中医病名代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="CD" code="BNG020" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)" displayName="黄疽病"/>
+								</observation>
+							</entry-->
+							
+							<!--目前诊断-中医证候代码-->
+							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
+							
+							<!--entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE05.10.130.00" displayName="目前诊断-中医证候代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="CD" code="BNP051" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)" displayName="暴吐病"/>
+								</observation>
+							</entry-->
+							<!--中医“四诊”观察结果-->
+							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
+							
+							<!--entry>
+								<observation classCode="OBS" moodCode="EVN ">
+									<code code="DE02.10.028.00" displayName="中医“四诊”观察结果" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">舌红，苔薄腻，脉弦</value>
+								</observation>
+							</entry-->
+						</section>
+					</component>
 					<xsl:comment>治疗计划章节</xsl:comment>
 					<component>
 						<section>
@@ -240,7 +246,25 @@
 							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
 						</section>
 					</component>
-					<xsl:comment>住院过程章节(暂无可调用模板)</xsl:comment>
+					<xsl:comment>住院过程章节</xsl:comment>
+					
+					<component>
+						<section>
+							<code code="8648-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Hospital Course"/>
+							<text/>
+							
+							<!--诊疗过程描述-->
+							
+							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
+							<!--entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.296.00" displayName="诊疗过程描述" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">对患者诊疗过程的详细描述</value>
+								</observation>
+							</entry-->
+						</section>
+					</component>
+					
 				</structuredBody>
 			</component>
 		</ClinicalDocument>

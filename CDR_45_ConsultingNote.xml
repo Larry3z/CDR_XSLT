@@ -2,14 +2,16 @@
 <Document>
 	<CreationTime>2017-07-18T11:04:34Z</CreationTime>
 	<ID>1</ID>
-	<Title>病人李四的首次病程记录</Title>
+	<Title>会诊记录</Title>
 	<Type>
-		<Code>C0037</Code>
-		<Name>首次病程记录</Name>
+		<Code>C0045</Code>
+		<Name>会诊记录</Name>
+		<TemplateID>2.16.156.10011.2.1.1.65</TemplateID>
+
 	</Type>
 	<Author>
-		<Name>张三</Name>
-		<Id>001</Id>
+		<Name>符芳铭</Name>
+		<Id>007</Id>
 		<Title>住院医师</Title>
 	</Author>
 	<Practitioners></Practitioners>

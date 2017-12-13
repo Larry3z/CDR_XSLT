@@ -99,7 +99,7 @@
 						<section>
 							
 							<!--入院诊断编码 1..* R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
+							<xsl:apply-templates select="Diagnoses/Diagnosis[DiagnosisType='入院诊断']" mode="DiagnosisEntry3"/>
 							<!--入院日期时间 1..1 R -->
 							<xsl:apply-templates select="Sections/Section" mode="mode"/>
 							<!--阳性辅助检查结果 0..* R2 -->
@@ -133,7 +133,7 @@
 							<!--出院诊断-西医诊断名称 1..* R -->
 							<xsl:apply-templates select="Sections/Section" mode="mode"/>
 							<!--出院诊断-西医诊断编码 1..* R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
+							<xsl:apply-templates select="Diagnoses/Diagnosis[DiagnosisType='出院诊断']" mode="DiagnosisEntry3"/>
 							<!--出院诊断-中医病名名称 0..* O -->
 							<xsl:apply-templates select="Sections/Section" mode="mode"/>
 							<!--出院诊断-中医病名代码 0..* O -->

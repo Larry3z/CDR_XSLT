@@ -26,16 +26,19 @@
 					</patient>
 				</patientRole>
 			</recordTarget>
-			<!--以下省略很多机构签名等等 -->
-			<relatedDocument typeCode="RPLC">
-				<!--文档中医疗卫生事件的就诊场景,即入院场景记录-->
-				<parentDocument>
-					<id/>
-					<setId/>
-					<versionNumber/>
-				</parentDocument>
-			</relatedDocument>
+			<!--作者，保管机构-->
+			<xsl:apply-templates select="Author" mode="Author1"/>
+			<xsl:apply-templates select="Custodian" mode="Custodian"/>
+			<!--主要参与者签名 legalAuthenticator--><xsl:comment>kaishi</xsl:comment>
+			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole='医师']" mode="legalAuthenticator"/>
+			<!--次要参与者签名 Authenticator-->
+			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
+			<!--相关文档，暂时不用-->
+			<xsl:call-template name="relatedDocument"/>
 			<!-- 病床号、病房、病区、科室和医院的关联 -->
+			<componentOf>
+			<xsl:apply-templates select="Encounter" mode="Hosipitalization1"/>
+			</componentOf>
 			<!--文档体-->
 			<component>
 				<structuredBody>

@@ -192,6 +192,22 @@
 				<xsl:apply-templates select="Diagnoses" mode="PhyE1"/>
 				<xsl:comment>体格检查章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="PhysicalExamination.xsl"/>
+				<component>
+					<section>
+				<xsl:comment>特殊检查标志1..1R</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="2"/>
+				<xsl:comment>检查方法名称1..1R</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="2"/>
+				<xsl:comment>检查类别1..1R</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="2"/>
+				<xsl:comment>检查项目1..*R</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="2"/>
+
+</section>
+				</component>
+
+
+				
 				<xsl:comment>其他处置章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="2"/>
 				<xsl:comment>检查报告章节</xsl:comment>
@@ -199,15 +215,20 @@
 					<section>
 						<code displayName="检查报告"/>
 						<text/>
-						<!-- 1..1 R3 -->
+						<xsl:comment>检查报告结果-客观所见 0..1 R2</xsl:comment>
+						<!--检查报告结果-客观所见 0..1 R2 -->
 						<xsl:apply-templates select="Diagnoses" mode="2"/>
-						<!-- 1..1 R3 -->
+						<xsl:comment>检查报告结果-主观提示0..1 R2</xsl:comment>
+						<!-- 检查报告结果-主观提示0..1 R2-->
 						<xsl:apply-templates select="Diagnoses" mode="2"/>
-						<!-- 1..1 R3 -->
+						<xsl:comment> 检查报告科室名称1..1 R </xsl:comment>
+						<!-- 检查报告科室名称1..1 R -->
 						<xsl:apply-templates select="Diagnoses" mode="2"/>
-						<!-- 1..1 R3 -->
+						<xsl:comment>检查报告机构名称1..1 R3</xsl:comment>
+						<!-- 检查报告机构名称1..1 R3-->
 						<xsl:apply-templates select="Diagnoses" mode="2"/>
-						<!-- 1..1 R3 -->
+						<xsl:comment>检查报告备注0..1 R2</xsl:comment>
+						<!--检查报告备注0..1 R2 -->
 						<xsl:apply-templates select="Diagnoses" mode="2"/>
 					</section>
 				</component>

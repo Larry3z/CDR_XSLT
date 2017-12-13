@@ -1,4 +1,3 @@
-
 <Document>
 	<CreationTime>2017-07-18T11:04:34Z</CreationTime>
 	<ID>1</ID>
@@ -13,9 +12,31 @@
 		<Id>001</Id>
 		<Title>住院医师</Title>
 	</Author>
-	<Practitioners></Practitioners>
-	<Confidentiality><Code>N</Code><Name>正常访问保密级别</Name></Confidentiality>
-	<Status></Status>
+	<Custodian>
+		<Organization>
+			<id>C0001</id>
+			<name/>海南农垦总医院
+			<type>Healthcare Provider</type>
+		</Organization>
+	</Custodian>
+	<Practitioners>
+		<Practitioner>
+			<Name>赵一</Name>
+			<identifier>H001</identifier>
+			<PractitionerRole>医师</PractitionerRole>
+		</Practitioner>
+		<Practitioner>
+			<Name>赵二</Name>
+			<identifier>H002</identifier>
+			<PractitionerRole>住院医师</PractitionerRole>
+		</Practitioner>
+	</Practitioners>
+	<Confidentiality>
+		<Code>N</Code>
+		<Name>正常访问保密级别</Name>
+	</Confidentiality>
+	
+	<Status/>
 	<Encounter>
 		<AdmissionLocation>心胸外科</AdmissionLocation>
 		<AdmissionLocationNo>51</AdmissionLocationNo>
@@ -24,6 +45,7 @@
 			<Name>其他</Name>
 		</AdmissionType>
 		<Class>住院</Class>
+		<Hospitalization><Location><bed>3</bed><ward>骨科</ward></Location></Hospitalization>
 		<Status>完成</Status>
 		<VisitDescription>头疼</VisitDescription>
 		<PatientId>DL4495186495</PatientId>

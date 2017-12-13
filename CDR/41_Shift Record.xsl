@@ -26,7 +26,7 @@
 				</patientRole>
 			</recordTarget>
 			<xsl:comment>文档创作者</xsl:comment>
-			<author typeCode="AUT" contextControlCode="OP">
+			<!--author typeCode="AUT" contextControlCode="OP">
 				<xsl:variable name="cTime" select="/CreationTime"/>
 				<time value="{$cTime}"/>
 				<assignedAuthor classCode="ASSIGNED">
@@ -36,8 +36,10 @@
 						<name>王圣林[苏允裕]</name>
 					</assignedPerson>
 				</assignedAuthor>
-			</author>
+			</author-->
 			<!--xsl:apply-templates select="/assignedPerson" mode="Creator"/-->
+			<!--xsl:comment>保管机构</xsl:comment-->
+			<xsl:apply-templates select="Creator" mode="Creator"/>			
 			<xsl:comment>保管机构</xsl:comment>
 			<xsl:call-template name="Custodian"/>
 			<!-- 签名 -->
@@ -78,7 +80,7 @@
 			</relatedDocument>
 			<componentOf>
 				<encompassingEncounter>
-					<code displayName="入院日期时间11"/>
+					<code displayName="入院日期时间"/>
 					<!--<xsl:value-of select="format-dateTime(RequestDate,'[M01]/[D01]/[Y0001]')" />-->
 					<xsl:variable name="AdminTime" select="/Document/Encounter/AdmissionTime"/>
 					<effectiveTime value="{$AdminTime}"/>

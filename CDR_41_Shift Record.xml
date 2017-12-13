@@ -6,6 +6,15 @@
 	<assignedPersonID>HYFE1001</assignedPersonID>
 	<ID>RN001</ID>
 	
+	<Custodian>
+		<Organization>
+			<id>C0001</id>
+			<Name>海南农垦总医院</Name>
+			<type>Healthcare Provider</type>
+		</Organization>
+	</Custodian>
+	
+	
 	<Title>交接班记录</Title>
 	<Type>
 		<Code>C0041</Code>

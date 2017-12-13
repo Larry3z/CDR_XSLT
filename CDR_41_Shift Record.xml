@@ -1,51 +1,47 @@
+
 <Document>
-	<CreationTime>2017-07-18T11:04:34Z</CreationTime>
-	<ID>1</ID>
-	<Title>病人李四的首次病程记录</Title>
+	<CreationTime>20120909112212</CreationTime>
+	<Creator>李中华</Creator>
+	<assignedPerson>陈XX</assignedPerson>
+	<assignedPersonID>HYFE1001</assignedPersonID>
+	<ID>RN001</ID>
+	
+	<Title>交接班记录</Title>
 	<Type>
-		<Code>C0037</Code>
-		<Name>首次病程记录</Name>
-		<TemplateID>2.16.156.10011.2.1.1.57</TemplateID>
+		<Code>C0041</Code>
+		<Name>交接班记录</Name>
+		<TemplateID>2.16.156.10011.2.1.1.61</TemplateID>
 	</Type>
+	<assignedPersonCode1>445</assignedPersonCode1>
+	<assignedPerson1>刘二奇</assignedPerson1>
+	<assignedPersonCode2>446</assignedPersonCode2>
+	<assignedPerson2>赵三</assignedPerson2>
 	<Author>
 		<Name>张三</Name>
 		<Id>001</Id>
 		<Title>住院医师</Title>
 	</Author>
-	<Custodian>
-		<Organization>
-			<id>C0001</id>
-			<name/>海南农垦总医院
-			<type>Healthcare Provider</type>
-		</Organization>
-	</Custodian>
-	<Practitioners>
-		<Practitioner>
-			<Name>赵一</Name>
-			<identifier>H001</identifier>
-			<PractitionerRole>医师</PractitionerRole>
-		</Practitioner>
-		<Practitioner>
-			<Name>赵二</Name>
-			<identifier>H002</identifier>
-			<PractitionerRole>住院医师</PractitionerRole>
-		</Practitioner>
-	</Practitioners>
-	<Confidentiality>
-		<Code>N</Code>
-		<Name>正常访问保密级别</Name>
-	</Confidentiality>
+	<Practitioners></Practitioners>
+	<Confidentiality><Code>N</Code><Name>正常访问保密级别</Name></Confidentiality>
+	<Status></Status>
 	
-	<Status/>
+	<authenticator>
+	  <ShiftTime>20171211223344</ShiftTime>
+	  <ShiftPersonCode>nk2245</ShiftPersonCode>
+	  <ShiftPersonName>李中华医生</ShiftPersonName>
+	</authenticator>
+	
+	
 	<Encounter>
 		<AdmissionLocation>心胸外科</AdmissionLocation>
 		<AdmissionLocationNo>51</AdmissionLocationNo>
+		<wholeOrganization>外科(病区)</wholeOrganization>
+		<wholeOrganizationNo>BQ02</wholeOrganizationNo>
 		<AdmissionType>
 			<Code>9</Code>
 			<Name>其他</Name>
 		</AdmissionType>
 		<Class>住院</Class>
-		<Hospitalization><Location><bed>3</bed><ward>骨科</ward></Location></Hospitalization>
 		<Status>完成</Status>
 		<VisitDescription>头疼</VisitDescription>
 		<PatientId>DL4495186495</PatientId>
@@ -65,8 +61,10 @@
 		<DischargeLocationNo>51</DischargeLocationNo>
 		<VisitDescription>科主任不认为计梓舒的病情在缓解.</VisitDescription>
 		<EncounterMRN>MRN4774824615</EncounterMRN>
-		<AdmissionTime>1990-03-22T05:51:16Z</AdmissionTime>
-		<DischargeTime>1990-04-06T07:10:16Z</DischargeTime>
+		<AdmissionTime>20170101223344</AdmissionTime>
+		<DischargeTime>20170101223344</DischargeTime>
+		<Bed>7</Bed>
+		<Ward>305</Ward>
 		<DischargeDisposition>治愈</DischargeDisposition>
 		<EncounterBill>
 			<CreationTime>2017-08-05T10:25:55Z</CreationTime>
@@ -115,7 +113,6 @@
 			<BloodABO>2</BloodABO>
 			<BloodRH>1</BloodRH>
 			<Citizenship>银川</Citizenship>
-			<Age>44</Age>
 			<Address>
 				<CreationTime>2017-07-28T11:32:14Z</CreationTime>
 				<Province>河南</Province>
@@ -317,11 +314,6 @@
 			<SectionCode>DE04.01.119.00</SectionCode>
 			<SectionName>主诉</SectionName>
 			<textContent>腹痛</textContent>
-		</Section>
-		<Section>
-			<SectionCode>DE05.10.133.00</SectionCode>
-			<SectionName>病例特点</SectionName>
-			<textContent>病例特点描述</textContent>
 		</Section>
 		<Section>
 			<SectionCode>DE05.01.025.00</SectionCode>

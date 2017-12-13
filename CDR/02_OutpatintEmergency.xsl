@@ -21,7 +21,7 @@
 						<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Name"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Gender"/>
-						<!--xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/-->
+						<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Age"/>
 					</patient>
 				</patientRole>

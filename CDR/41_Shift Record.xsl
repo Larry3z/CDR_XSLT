@@ -25,23 +25,10 @@
 					</patient>
 				</patientRole>
 			</recordTarget>
-			<xsl:comment>文档创作者</xsl:comment>
-			<!--author typeCode="AUT" contextControlCode="OP">
-				<xsl:variable name="cTime" select="/CreationTime"/>
-				<time value="{$cTime}"/>
-				<assignedAuthor classCode="ASSIGNED">
-					<id root="2.16.156.10011.1.7" extension="-"/>
-					<code displayName="文档创作者"/>
-					<assignedPerson>
-						<name>王圣林[苏允裕]</name>
-					</assignedPerson>
-				</assignedAuthor>
-			</author-->
-			<!--xsl:apply-templates select="/assignedPerson" mode="Creator"/-->
-			<!--xsl:comment>保管机构</xsl:comment-->
-			<xsl:apply-templates select="Creator" mode="Creator"/>			
-			<xsl:comment>保管机构</xsl:comment>
-			<xsl:call-template name="Custodian"/>
+			<!-- 作者 -->
+			<xsl:apply-templates select="Author" mode="Author1"/>			 
+			<!-- 保管机构 -->
+			<xsl:apply-templates select="Custodian" mode="Custodian"/>			 
 			<!-- 签名 -->
 			<authenticator>
 				<!--交班日期时间-->

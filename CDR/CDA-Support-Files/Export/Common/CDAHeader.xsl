@@ -44,7 +44,7 @@
 				<representedCustodianOrganization classCode="ORG" determinerCode="INSTANCE">
 					<id root="2.16.156.10011.1.5" extension="{Organization/id}"/>
 					<name>
-						<xsl:value-of select="Organization/Name"/>
+						<xsl:value-of select="Organization/name"/>
 					</name>
 				</representedCustodianOrganization>
 			</assignedCustodian>
@@ -148,25 +148,25 @@
 		</encompassingEncounter>
 	</xsl:template>
 	<!--reserved-->
-	<xsl:template match="Creator" mode="Creator">
+	<xsl:template match="*" mode="Creator">
 		<!--创建者-->
 		<author typeCode="AUT" contextControlCode="OP">
 			<!--建档日期时间1..1， 格式20120909112212-->
-			<time value="20120909112212"/>
+			<time ><xsl:value-of select="CreationTime"/></time>
 			<assignedAuthor classCode="ASSIGNED">
 				<id root="2.16.156.10011.1.7">
-					<xsl:attribute name="id"><xsl:value-of select="id"/></xsl:attribute>
+					<xsl:attribute name="id"><xsl:value-of select="ID"/></xsl:attribute>
 				</id>
 				<!--建档者姓名-->
 				<assignedPerson>
 					<name>
-						<xsl:value-of select="Name"/>
+						<xsl:value-of select="Creator"/>
 					</name>
 				</assignedPerson>
 				<!--建档机构-->
 				<representedOrganization>
 					<id root="2.16.156.10011.1.5" extension="1234567890"/>
-					<name>xx医院</name>
+					<name><xsl:value-of select="Encounter/HealthCareFacility"/></name>
 				</representedOrganization>
 			</assignedAuthor>
 		</author>

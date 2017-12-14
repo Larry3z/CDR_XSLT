@@ -59,10 +59,10 @@
 			<signatureCode/>
 			<assignedEntity>
 				<id root="2.16.156.10011.1.4" extension="{identifier}"/>
-				<code displayName="上级医师"/>
+				<code displayName="{PractitionerRole}"/>
 				<assignedPerson classCode="PSN" determinerCode="INSTANCE">
 					<name>
-						<xsl:value-of select="name"/>
+						<xsl:value-of select="Name"/>
 					</name>
 				</assignedPerson>
 			</assignedEntity>
@@ -76,10 +76,10 @@
 			<signatureCode/>
 			<assignedEntity>
 				<id root="2.16.156.10011.1.4" extension="{identifier}"/>
-				<code displayName="住院医师"/>
+				<code displayName="{PractitionerRole}"/>
 				<assignedPerson classCode="PSN" determinerCode="INSTANCE">
 					<name>
-						<xsl:value-of select="name"/>
+						<xsl:value-of select="Name"/>
 					</name>
 				</assignedPerson>
 			</assignedEntity>

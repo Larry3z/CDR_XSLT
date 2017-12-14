@@ -36,6 +36,36 @@
 			<!--次要参与者签名 Authenticator-->
 			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
 			
+			  <!-- 检查申请机构及科室 -->  
+						<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
+			
+  
+  <!--participant typeCode="PRF"> 
+    <time/>
+    <associatedEntity classCode="ASSIGNED"> 
+      <scopingOrganization> 
+        <id root="2.16.156.10011.1.26" extension="{/Document/assignedPersonCode1}"/>
+        <name>
+        							<xsl:value-of select="name1"/>
+</name>  
+        <asOrganizationPartOf> 
+          <wholeOrganization> 
+            <id root="2.16.156.10011.1.5" extension="{/Document/assignedPersonCode1}"/>
+            <name>							<xsl:value-of select="name2"/>
+</name> 
+          </wholeOrganization> 
+        </asOrganizationPartOf> 
+      </scopingOrganization> 
+    </associatedEntity> 
+  </participant>  
+  <relatedDocument typeCode="RPLC"> 
+    <parentDocument> 
+      <id/>  
+      <setId/>  
+      <versionNumber/> 
+    </parentDocument> 
+  </relatedDocument-->  
+
 <!-- 病床号、病房、病区、科室和医院的关联 -->
 			<componentOf>
 			<xsl:apply-templates select="Encounter" mode="Hosipitalization1"/>

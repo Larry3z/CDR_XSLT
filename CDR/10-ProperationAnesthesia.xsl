@@ -29,10 +29,6 @@
 			<!--作者，保管机构-->
 			<xsl:apply-templates select="Author" mode="Author1"/>
 			<xsl:apply-templates select="Custodian" mode="Custodian"/>
-						<!--主要参与者签名 legalAuthenticator--><xsl:comment>kaishi</xsl:comment>
-			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole='医师']" mode="legalAuthenticator"/>
-							<!--次要参与者签名 Authenticator-->
-			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
 			<!--次要参与者签名 Authenticator-->
 			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
 			
@@ -54,64 +50,116 @@
 			</relatedDocument>
 			<!-- 病床号、病房、病区、科室和医院的关联 -->
 			<!--文档体-->
-		<component>
+		
+	<component>
 			<structuredBody>
-				<xsl:comment>诊断记录章节</xsl:comment>
+				<xsl:comment>术前诊断章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="D1"/>
-				<xsl:comment>主诉章节</xsl:comment>
+								<component>
+					<section>
+				<xsl:comment>术前诊断条目1..1R</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				<xsl:comment>术前合并疾病中用药0..*R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				
+
+</section>
+				</component>
+
+				
+				<xsl:comment>现病史章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="Complaint"/>
-				<xsl:comment>症状章节</xsl:comment>
+				<xsl:comment>既往史章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="Problem"/>
-				<xsl:comment>手术操作</xsl:comment>
+				<xsl:comment>体格检查</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="PhyE1"/>
-				<xsl:comment>体格检查章节</xsl:comment>
+								<component>
+					<section>
+				<xsl:comment>体重0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				<xsl:comment>一般状况检查结果0..*R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				
+				<xsl:comment>精神状态正常标志0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				<xsl:comment>心脏听诊结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				<xsl:comment>肺部听诊结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				<xsl:comment>四肢检查结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+										<xsl:comment>术前用药0..*R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				<xsl:comment>脊柱检查结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+										<xsl:comment>术前用药0..*R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				<xsl:comment>肺部检查结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+										<xsl:comment>气管检查结果0..*R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				<xsl:comment>牙齿检查结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+
+
+
+
+</section>
+				</component>
+
+				
+				<xsl:comment>实验室检查章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="PhysicalExamination.xsl"/>
 				<component>
 					<section>
-						<code displayName="体格检查"/>
-						<text/>
-						<!-- 特殊检查标志1..1 R -->
+				<xsl:comment>血型1..1R</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查方法名称1..1 R -->
+				<xsl:comment>心电图检查结果0..1R2</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查类别1..1 R -->
+						<xsl:comment>胸部X线检查结果0..1R2</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查项目1..* R -->
+				<xsl:comment>CT检查结果0..1R2</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-					</section>
-				</component>
+						<xsl:comment>B超检查结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				<xsl:comment>MRI检擦结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+						<xsl:comment>肺功能检查结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				<xsl:comment>血常规检查结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+						<xsl:comment>凝血功能检查结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+com				<xsl:comment>肝功能检查结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+						<xsl:comment>血气分析检查结果0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				
+				</section>
+				</component>:
 
-				<xsl:comment>其他处置章节</xsl:comment>
+				
+				<xsl:comment>治疗计划章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="a"/>
-				<xsl:comment>检查报告章节</xsl:comment>
-				<component>
+								<component>
 					<section>
-						<code displayName="检查报告"/>
-						<text/>
-						<!-- 检查报告结果—客观所见条目0..1 R2 -->
+				<xsl:comment>拟实施手术及操作编码1..*R</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查报告结果-主观提示条目0..1 R2 -->
+				<xsl:comment>拟实施手术麻醉方法代码1..*R</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查报告科室名称1..1 R -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!--检查报告机构名称 1..1 R-->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查报告备注0..1 R2 -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-					</section>
-				</component>
+				</section>
+				</component>:
+
+
+	
+				
 			</structuredBody>
 		</component>
+
 		</ClinicalDocument>
 	</xsl:template>
 </xsl:stylesheet>
-<!-- Stylesheet edited using Stylus Studio - (c) 2004-2009. Progress Software Corporation. All rights reserved. -->	
-	
-	
-	
-	
-	
-	
+<!-- Stylesheet edited using Stylus Studio - (c) 2004-2009. Progress Software Corporation. All rights reserved. -->
 
 
 
@@ -141,3 +189,5 @@
 
 
 
+
+		

@@ -36,7 +36,7 @@
 			</observation>
 		</entry>
 	</xsl:template>
-	<!--诊断DE05.01.025.00 + DE05.01.024.00，名称+条目entryRelationship：首次病程-->
+	<!--诊断DE05.01.025.00 + DE05.01.024.00，名称+条目entryRelationship：-->
 	<xsl:template match="*" mode="DiagnosisEntry3">
 		<entry>
 			<observation classCode="OBS" moodCode="EVN">

@@ -29,10 +29,6 @@
 			<!--作者，保管机构-->
 			<xsl:apply-templates select="Author" mode="Author1"/>
 			<xsl:apply-templates select="Custodian" mode="Custodian"/>
-						<!--主要参与者签名 legalAuthenticator--><xsl:comment>kaishi</xsl:comment>
-			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole='医师']" mode="legalAuthenticator"/>
-							<!--次要参与者签名 Authenticator-->
-			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
 			<!--次要参与者签名 Authenticator-->
 			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
 			
@@ -54,90 +50,57 @@
 			</relatedDocument>
 			<!-- 病床号、病房、病区、科室和医院的关联 -->
 			<!--文档体-->
-		<component>
+		
+	<component>
 			<structuredBody>
-				<xsl:comment>诊断记录章节</xsl:comment>
+				<xsl:comment>既往史章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="D1"/>
-				<xsl:comment>主诉章节</xsl:comment>
+								<component>
+					<section>
+				<xsl:comment>有创诊疗操作标志0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				<xsl:comment>过敏史条目0..1R2</xsl:comment>
+						<xsl:apply-templates select="Diagnoses" mode="a"/>
+				
+</section>
+				</component>
+
+
+
+				
+				<xsl:comment>生命体征章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="Complaint"/>
-				<xsl:comment>症状章节</xsl:comment>
+				<xsl:comment>入院诊断章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="Problem"/>
-				<xsl:comment>手术操作</xsl:comment>
+				<xsl:comment>手术操作章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="PhyE1"/>
-				<xsl:comment>体格检查章节</xsl:comment>
+				<xsl:comment>治疗计划章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="PhysicalExamination.xsl"/>
 				<component>
 					<section>
-						<code displayName="体格检查"/>
-						<text/>
-						<!-- 特殊检查标志1..1 R -->
+				<xsl:comment>处理及指导意见0..1R2</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查方法名称1..1 R -->
+				<xsl:comment>医嘱使用备注0..1R2</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查类别1..1 R -->
+				<xsl:comment>今后治疗方案0..1R2</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查项目1..* R -->
+				<xsl:comment>随访条目0..*R2</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-					</section>
+
+</section>
 				</component>
 
-				<xsl:comment>其他处置章节</xsl:comment>
+
+				
+				<xsl:comment>用药管理章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="a"/>
-				<xsl:comment>检查报告章节</xsl:comment>
-				<component>
-					<section>
-						<code displayName="检查报告"/>
-						<text/>
-						<!-- 检查报告结果—客观所见条目0..1 R2 -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查报告结果-主观提示条目0..1 R2 -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查报告科室名称1..1 R -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!--检查报告机构名称 1..1 R-->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查报告备注0..1 R2 -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-					</section>
-				</component>
 			</structuredBody>
 		</component>
+
 		</ClinicalDocument>
 	</xsl:template>
 </xsl:stylesheet>
-<!-- Stylesheet edited using Stylus Studio - (c) 2004-2009. Progress Software Corporation. All rights reserved. -->	
-	
-	
-	
-	
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- Stylesheet edited using Stylus Studio - (c) 2004-2009. Progress Software Corporation. All rights reserved. -->
 
 
 

@@ -44,9 +44,8 @@
 	<xsl:template match="*" mode="BirthTime">
 		<xsl:comment>患者出生时间</xsl:comment>
 		<birthTime>
-			<!--xsl:attribute name="value">
-				<xsl:apply-templates select="." mode="xmlToHL7TimeStamp"/>
-			</xsl:attribute-->
+			
+				<xsl:value-of select="BirthTime"/>
 		</birthTime>
 	</xsl:template>
 	<!--地址 Address-->

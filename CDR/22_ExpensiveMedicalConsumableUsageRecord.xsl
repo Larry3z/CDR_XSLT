@@ -25,12 +25,19 @@
 					</patient>
 				</patientRole>
 			</recordTarget>
-			<!--作者，文档生成机构-->
+			<!--作者，保管机构1..1-->
 			<xsl:apply-templates select="Author" mode="Author1"/>
 			<xsl:apply-templates select="Custodian" mode="Custodian"/>
-			<!--签名 Authenticator-->
-			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
-			<!--关联活动信息 1..R-->
+			<!-- 签名 1..1 -->
+			<authenticator>
+				<!--签名日期时间 1..1-->
+				<xsl:apply-templates select="Sections/Section" mode="mode"/>
+				<!--医生签名 1..1-->
+				<xsl:apply-templates select="Sections/Section" mode="mode"/>
+				<!--职务类别代码 1..1 +displayName 1..1-->
+				<xsl:apply-templates select="Sections/Section" mode="mode"/>
+			</authenticator>
+			<!--文档中医疗卫生事件的就诊场景,即入院场景记录 1..1R-->
 			<componentOf>
 				<encompassingEncounter>
 					<!--入院时间 1..1-->
@@ -55,56 +62,29 @@
 					</location>
 				</encompassingEncounter>
 			</componentOf>
-			<xsl:apply-templates select="Encounter" mode="Hosipitalization1"/>
 			<!--文档体-->
 			<component>
-				<structuredBody>
-					<!--1..1R--><!--诊断记录章节-->
-					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					<!--1..1R--><!--生命体征章节-->
-				    <xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-				    <!--1..1R--><!--护理记录章节-->
-				    <xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-				    <component>
-						<section>
-							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-							<text/>
-							<!--1..1R--><!--护理等级-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-							<!--1..1R--><!--护理类型-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
-						</section>
-					</component>
-				    <!--1..1R--><!--护理观察章节-->
-				    <xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-				    <component>
-						<section>
-							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-							<text/>
-							<!--1..*R--><!--护理观察项目名称-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-							<!--1..*R--><!--护理观察结果描述-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
-						</section>
-					</component>
-				    <!--1..1R--><!--护理操作章节-->
-				    <xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-				    <!--0..1R2--><!--用药章节-->
-				    <xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-				    <!--1..1R--><!--护理标志章节-->
-				    <xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-				    <component>
-						<section>
-							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-							<text/>
-							<!--1..1R--><!--呕吐标志-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-							<!--1..1R--><!--排尿困难标志-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
-						</section>
-					</component>
-				</structuredBody>
-			</component>
+		<structuredBody>
+			<!--诊断记录章节 1..1 R-->
+			<xsl:comment>诊断记录章节</xsl:comment>
+			<xsl:apply-templates select="Sections/Section" mode="mode"/>
+			<!--component>
+				<section>
+					<code code="29548-5" displayName="Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="疾病诊断编码"/>
+							<value xsi:type="CD"  code="B95.100" displayName="B族链球菌感染"  codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/>
+						</observation>
+					</entry>
+				</section>
+			</component-->
+			<!--高值耗材章节（同用药章节） 1..1 R-->
+			<xsl:comment>高值耗材章节</xsl:comment>
+			<xsl:apply-templates select="Sections/Section" mode="mode"/>
+		</structuredBody>
+	</component>
 		</ClinicalDocument>
 	</xsl:template>
 </xsl:stylesheet>

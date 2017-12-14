@@ -35,6 +35,31 @@
 		<Code>N</Code>
 		<Name>正常访问保密级别</Name>
 	</Confidentiality>
+	  <!-- 检查申请机构及科室 -->  
+  <participant typeCode="PRF"> 
+    <time/>
+    <associatedEntity classCode="ASSIGNED"> 
+      <scopingOrganization> 
+        <id root="2.16.156.10011.1.26" extension="-"/>  
+        <name>美容成形</name>  
+        <asOrganizationPartOf> 
+          <wholeOrganization> 
+            <id root="2.16.156.10011.1.5" extension="0000000000"/>  
+            <name>北京大学第三医院</name> 
+          </wholeOrganization> 
+        </asOrganizationPartOf> 
+      </scopingOrganization> 
+    </associatedEntity> 
+  </participant>  
+  <relatedDocument typeCode="RPLC"> 
+    <parentDocument> 
+      <id/>  
+      <setId/>  
+      <versionNumber/> 
+    </parentDocument> 
+  </relatedDocument>  
+
+  
 	
 	<Status/>
 	<Encounter>

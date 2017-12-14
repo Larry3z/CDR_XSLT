@@ -14,10 +14,6 @@
 			<xsl:comment>病人信息</xsl:comment>
 			<recordTarget contextControlCode="OP" typeCode="RCT">
 				<patientRole classCode="PAT">
-				    <!--门诊号标识-->
-				    <!--xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/-->
-			        <!--电子申请单编号-->
-			        <!--xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/-->
 					<!-- 住院号标识 -->
 					<xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/>
 					<patient classCode="PSN" determinerCode="INSTANCE">
@@ -25,78 +21,65 @@
 						<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Name"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Gender"/>
-						<!--xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/-->
-						<xsl:apply-templates select="Encounter/Patient" mode="Age"/>
+						<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
+						<!--xsl:apply-templates select="Encounter/Patient" mode="Age"/-->
 					</patient>
 				</patientRole>
 			</recordTarget>
-			<!--作者，保管机构-->
-			<xsl:apply-templates select="Author" mode="Author1"/>
-			<xsl:apply-templates select="Custodian" mode="Custodian"/>
-			<!--主要参与者签名 legalAuthenticator--><!--xsl:comment>kaishi</xsl:comment-->
-			<!--xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole='医师']" mode="legalAuthenticator"/-->
-			<!--麻醉师签名 Authenticator-->
-			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
-			<!--相关文档，暂时不用-->
-			<!--xsl:call-template name="relatedDocument"/-->
+			<!--以下省略很多机构签名等等 -->
+			<relatedDocument typeCode="RPLC">
+				<!--文档中医疗卫生事件的就诊场景,即入院场景记录-->
+				<parentDocument>
+					<id/>
+					<setId/>
+					<versionNumber/>
+				</parentDocument>
+			</relatedDocument>
 			<!-- 病床号、病房、病区、科室和医院的关联 -->
-			<componentOf>
-			<xsl:apply-templates select="Encounter" mode="Hosipitalization1"/>
-			</componentOf>
 			<!--文档体-->
 			<component>
 				<structuredBody>
-					<!--实验室检查章节-->
+					<!--过敏史章节-->
 					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					<!--术前诊断章节-->
+					<!--诊断记录章节-->
 					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					<!--术后诊断章节-->
-					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					<!--用药管理章节-->
-					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					<!--输液章节-->
-					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					<!--输血章节-->
-					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					<!--麻醉章节-->
-					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					<!--主要健康问题章节-->
-					<xsl:comment>主要健康问题章节</xsl:comment>
-					<component>
-						<section>
-							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-							<text/>
-							<!--常规监测项目条目 1..* R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-							<!--特殊监测项目条目 0..* R2-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
-						</section>
-					</component>
 					<!--生命体征章节-->
 					<xsl:comment>生命体征章节</xsl:comment>
 					<component>
 						<section>
 							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
 							<text/>
-							<!--体重条目 0..1 R2-->
+							<!--体重条目 1..1 R-->
 							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-							<!--体温条目 1..* R-->
+							<!--体温条目 1..1 R-->
 							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
-							<!--脉率条目 0..1 R2-->
+							<!--呼吸频率条目 1..1 R-->
 							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-							<!--呼吸频率条目 1..* R-->
+							<!--心率条目 1..1 R-->
 							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
-							<!--心率条目 1..* R-->
+							<!--血压条目 1..1 R-->
 							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-							<!--血压条目 1..* R-->
+							<!--血糖检测值条目 1..1 R-->
 							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
 						</section>
 					</component>
-					<!--手术操作章节-->
+					<!--健康评估章节-->
 					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					<!--失血章节-->
+					<!--护理记录章节-->
+					<xsl:comment>护理记录章节</xsl:comment>
+					<component>
+						<section>
+							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<text/>
+							<!--护理等级条目 1..1 R-->
+							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
+							<!--护理类型条目 1..1 R-->
+							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
+						</section>
+					</component>
+					<!--护理观察章节-->
 					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					<!--术后去向章节-->
+					<!--护理操作章节-->
 					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
 				</structuredBody>
 			</component>

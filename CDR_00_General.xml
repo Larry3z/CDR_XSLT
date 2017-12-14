@@ -2,16 +2,16 @@
 <Document>
 	<CreationTime>2017-07-18T11:04:34Z</CreationTime>
 	<ID>1</ID>
-	<Title>病人李四的西药处方</Title>
+	<Title>ToBeFillIn</Title>
 	<Type>
-		<Code>C0004</Code>
-		<Name>西药处方</Name>
-		<TemplateID>2.16.156.10011.2.1.1.24</TemplateID>
+		<Code>ToBeFillIn</Code>
+		<Name>ToBeFillIn</Name>
+		<TemplateID>ToBeFillIn</TemplateID>
 	</Type>
 	<Author>
 		<Name>张三</Name>
 		<Id>001</Id>
-		<Title>处方开立医师</Title>
+		<Title>ToBeFillIn</Title>
 	</Author>
 	<Custodian>
 		<Organization>
@@ -20,8 +20,7 @@
 			<type>Healthcare Provider</type>
 		</Organization>
 	</Custodian>
-	<!--西药处方的practitioners来着medication部分的各个属性，如果用cdr生成处方文档，需要把这些数据从medication写到document的Practitioners,
-	当然，直接从medication取数据也可以， 不过就无法用通用的模板而已。既然怎么都要生成一个document, 最好就是现在这种处理-->
+	<!--各部分的PractitionerRole不一样，要填入， 下面的是例子-->
 	<Practitioners>
 		<Practitioner>
 			<Name>赵一</Name>
@@ -293,7 +292,6 @@
 						<GivenName>James</GivenName>
 					</Name>
 				</OrderedBy>
-				
 				<Status>V</Status>
 				<Priority>
 					<Code>Normal</Code>
@@ -308,13 +306,207 @@
 				<Route>
 					<Code>Oral</Code>
 					<Name>Oral</Name>
-				</Route><PrescriptionValidDays>7</PrescriptionValidDays>
+				</Route>
+				<PrescriptionValidDays>7</PrescriptionValidDays>
 				<DrugGroupNumber>44</DrugGroupNumber>
 				<PrescriptionMemo>多吃有奖</PrescriptionMemo>
 				<RateAmount>1</RateAmount>
 				<DosageForm>灌汤剂</DosageForm>
 				<SumDoseQuantity>1000kg</SumDoseQuantity>
 			</Medication>
+			<RadOrder>
+				<LabOrder>
+					<Display>患者 廖志祥的医嘱: </Display>
+					<LastModified>2017-10-14T21:32:46Z</LastModified>
+					<LastModifiedBy>_Ensemble</LastModifiedBy>
+					<CreationTime>2017-10-14T21:32:46Z</CreationTime>
+					<Creator>_Ensemble</Creator>
+					<OrderId>LABS20090114LJD003</OrderId>
+					<EncounterId>IP211901</EncounterId>
+					<PlacerId>LABS20090114LJD003</PlacerId>
+					<FillerId>20090114LJD003</FillerId>
+					<OrderItemCode>[LJD]</OrderItemCode>
+					<OrderCategory>LAB</OrderCategory>
+					<OrderQuantity>1</OrderQuantity>
+					<StartDateTime>2009-01-14T10:00:58Z</StartDateTime>
+					<EndDateTime>2009-01-14T10:12:46Z</EndDateTime>
+					<Status>F</Status>
+					<AuthorizationTime>2009-01-14T10:01:37Z</AuthorizationTime>
+					<ReceivingLocation>东湖外科</ReceivingLocation>
+					<Results>
+						<Result>
+							<Display>患者 廖志祥的医嘱: 的结果是: </Display>
+							<LastModified>2017-10-14T21:32:46Z</LastModified>
+							<LastModifiedBy>_Ensemble</LastModifiedBy>
+							<CreationTime>2017-10-14T21:32:46Z</CreationTime>
+							<Creator>_Ensemble</Creator>
+							<ResultID>20090114LJD003||0</ResultID>
+							<ResultType>C</ResultType>
+							<ResultItems>
+								<Observation>
+									<Display>患者 廖志祥的检验/检查项目: 凝血酶原时间(PT) 结果是 15.5 H</Display>
+									<LastModified>2017-10-14T21:32:47Z</LastModified>
+									<LastModifiedBy>_Ensemble</LastModifiedBy>
+									<CreationTime>2017-10-14T21:32:47Z</CreationTime>
+									<Creator>_Ensemble</Creator>
+									<ObsId>20090114LJD003||0085||)||0</ObsId>
+									<EncounterId>IP211901</EncounterId>
+									<ObservationTime>2009-01-14T10:04:55Z</ObservationTime>
+									<ObservationGroup>LAB</ObservationGroup>
+									<ObservationCode>PT</ObservationCode>
+									<ObservationDesc>凝血酶原时间(PT)</ObservationDesc>
+									<ResultInterpretation>H</ResultInterpretation>
+									<ResultType>NM</ResultType>
+									<Value>15.5</Value>
+									<ValueUnits>秒</ValueUnits>
+									<Status>F</Status>
+									<ReferenceRange>
+										<Low>11</Low>
+										<High>15</High>
+									</ReferenceRange>
+								</Observation>
+								<Observation>
+									<Display>患者 廖志祥的检验/检查项目: 活化部分凝血活酶时间(APTT) 结果是 28.4 </Display>
+									<LastModified>2017-10-14T21:32:47Z</LastModified>
+									<LastModifiedBy>_Ensemble</LastModifiedBy>
+									<CreationTime>2017-10-14T21:32:47Z</CreationTime>
+									<Creator>_Ensemble</Creator>
+									<ObsId>20090114LJD003||0086||)||0</ObsId>
+									<EncounterId>IP211901</EncounterId>
+									<ObservationTime>2009-01-14T10:04:55Z</ObservationTime>
+									<ObservationGroup>LAB</ObservationGroup>
+									<ObservationCode>APTT</ObservationCode>
+									<ObservationDesc>活化部分凝血活酶时间(APTT)</ObservationDesc>
+									<ResultType>NM</ResultType>
+									<Value>28.4</Value>
+									<ValueUnits>秒</ValueUnits>
+									<Status>F</Status>
+									<ReferenceRange>
+										<Low>23</Low>
+										<High>40</High>
+									</ReferenceRange>
+								</Observation>
+								<Observation>
+									<Display>患者 廖志祥的检验/检查项目: 凝血酶时间(TT) 结果是 16.3 </Display>
+									<LastModified>2017-10-14T21:32:47Z</LastModified>
+									<LastModifiedBy>_Ensemble</LastModifiedBy>
+									<CreationTime>2017-10-14T21:32:47Z</CreationTime>
+									<Creator>_Ensemble</Creator>
+									<ObsId>20090114LJD003||0087||)||0</ObsId>
+									<EncounterId>IP211901</EncounterId>
+									<ObservationTime>2009-01-14T10:04:55Z</ObservationTime>
+									<ObservationGroup>LAB</ObservationGroup>
+									<ObservationCode>TT</ObservationCode>
+									<ObservationDesc>凝血酶时间(TT)</ObservationDesc>
+									<ResultType>NM</ResultType>
+									<Value>16.3</Value>
+									<ValueUnits>秒</ValueUnits>
+									<Status>F</Status>
+									<ReferenceRange>
+										<Low>8</Low>
+										<High>19</High>
+									</ReferenceRange>
+								</Observation>
+								<Observation>
+									<Display><![CDATA[患者 廖志祥的检验/检查项目: 纤维蛋白原(Fbg) 结果是 >450 ]]></Display>
+									<LastModified>2017-10-14T21:32:47Z</LastModified>
+									<LastModifiedBy>_Ensemble</LastModifiedBy>
+									<CreationTime>2017-10-14T21:32:47Z</CreationTime>
+									<Creator>_Ensemble</Creator>
+									<ObsId>20090114LJD003||0088||)||0</ObsId>
+									<EncounterId>IP211901</EncounterId>
+									<ObservationTime>2009-01-14T10:04:55Z</ObservationTime>
+									<ObservationGroup>LAB</ObservationGroup>
+									<ObservationCode>Fbg</ObservationCode>
+									<ObservationDesc>纤维蛋白原(Fbg)</ObservationDesc>
+									<ResultType>NM</ResultType>
+									<Value><![CDATA[>450]]></Value>
+									<ValueUnits>g/L</ValueUnits>
+									<Status>F</Status>
+								</Observation>
+								<Observation>
+									<Display>患者 廖志祥的检验/检查项目: 3P试验 结果是 阴性 </Display>
+									<LastModified>2017-10-14T21:32:47Z</LastModified>
+									<LastModifiedBy>_Ensemble</LastModifiedBy>
+									<CreationTime>2017-10-14T21:32:47Z</CreationTime>
+									<Creator>_Ensemble</Creator>
+									<ObsId>20090114LJD003||4949||)||0</ObsId>
+									<EncounterId>IP211901</EncounterId>
+									<ObservationTime>2009-01-14T10:04:55Z</ObservationTime>
+									<ObservationGroup>LAB</ObservationGroup>
+									<ObservationCode>3P试验</ObservationCode>
+									<ObservationDesc>3P试验</ObservationDesc>
+									<ResultType>NM</ResultType>
+									<Value>阴性</Value>
+									<ValueUnits> </ValueUnits>
+									<Status>F</Status>
+									<ReferenceRange>
+										<Low>阴性</Low>
+									</ReferenceRange>
+								</Observation>
+							</ResultItems>
+							<VerifiedBy>肖友书</VerifiedBy>
+							<ResultTime>2009-01-14T10:12:56Z</ResultTime>
+							<Comments>血液</Comments>
+							<AuthorizationTime>2009-01-14T10:01:37Z</AuthorizationTime>
+							<PerformedAt>东湖临检室</PerformedAt>
+							<FromTime>2009-01-14T10:00:58Z</FromTime>
+							<ToTime>2009-01-14T10:12:46Z</ToTime>
+							<EncounterNumber>IP211901</EncounterNumber>
+							<PatientId>IP211901</PatientId>
+						</Result>
+					</Results>
+				</LabOrder>
+				<OrderedBy>
+					<Name>赵一</Name>
+					<identifier>H001</identifier>
+					<PractitionerRole>处方审核药剂师</PractitionerRole>
+				</OrderedBy>
+				<Specimen>
+					<Type>标本类型</Type>
+					<Subject>标本固定液名称</Subject>
+					<Status>状态描述</Status>
+				</Specimen>
+				<Results>
+					<Result>
+						<ResultInterpretation>blahblah</ResultInterpretation>
+						<ResultText>正常</ResultText>
+					</Result>
+					<Result>
+						<ResultItems>
+							<Observation>
+								<CreationTime>2017-07-18T11:04:34Z</CreationTime>
+								<ObsId>J612076230844805</ObsId>
+								<EncounterId>ORD4745177920K</EncounterId>
+								<ObservationTime>1990-03-23T08:39:31Z</ObservationTime>
+								<ObservationGroup>B超</ObservationGroup>
+								<ObservationCode>XX01-1</ObservationCode>
+								<ObservationDesc>临床试验 - STK</ObservationDesc>
+								<ResultInterpretation>临床医生不认为的病情还需观察.</ResultInterpretation>
+								<BodySite>
+									<Code>19</Code>
+									<Name>左大腿</Name>
+								</BodySite>
+								<ResultType>NM</ResultType>
+								<Value>127.41</Value>
+								<ValueUnits>PG</ValueUnits>
+								<SubId>J61207623084480509</SubId>
+								<Comments>的检验/检查项目: 临床试验 - STK 结果是 127.41 临床医生不认为的病情还需观察.</Comments>
+								<Clinician>纪子珍</Clinician>
+								<PerformedAt>贵阳第一铁路医院</PerformedAt>
+								<Status>F</Status>
+								<ReferenceRange>
+									<Units>PG</Units>
+									<Low>98.41</Low>
+									<High>262.41</High>
+									<Meaning>主管医师不认为的病情还需观察.</Meaning>
+									<Description>科主任不认为的病情在缓解.</Description>
+								</ReferenceRange>
+							</Observation>
+						</ResultItems>
+					</Result>
+				</Results>
+			</RadOrder>
 		</Orders>
 	</Encounter>
 	<Diagnoses>
@@ -340,6 +532,9 @@
 			</Outcome>
 		</Diagnosis>
 	</Diagnoses>
+	<Observations>
+		<Observation/>
+	</Observations>
 	<Sections>
 		<Section>
 			<SectionCode>DE04.01.119.00</SectionCode>

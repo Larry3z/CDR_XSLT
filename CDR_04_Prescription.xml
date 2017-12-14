@@ -1,10 +1,12 @@
+
 <Document>
 	<CreationTime>2017-07-18T11:04:34Z</CreationTime>
 	<ID>1</ID>
-	<Title>病人李四的首次病程记录</Title>
+	<Title>病人李四的西药处方</Title>
 	<Type>
-		<Code>C0037</Code>
-		<Name>首次病程记录</Name>
+		<Code>C0004</Code>
+		<Name>西药处方</Name>
+		<TemplateID>2.16.156.10011.2.1.1.24</TemplateID>
 	</Type>
 	<Author>
 		<Name>张三</Name>
@@ -18,9 +20,35 @@
 			<type>Healthcare Provider</type>
 		</Organization>
 	</Custodian>
-	<Practitioners/>
-	<Confidentiality>普通</Confidentiality>
-	<Status/>
+	<!--西药处方的practitioners来着medication部分的各个属性，如果用cdr生成处方文档，需要把这些数据从medication写到document的Practitioners,
+	当然，直接从medication取数据也可以， 不过就无法用通用的模板而已。既然怎么都要生成一个document, 最好就是现在这种处理-->
+	<Practitioners>
+		<Practitioner>
+			<Name>赵一</Name>
+			<identifier>H001</identifier>
+			<PractitionerRole>处方审核药剂师</PractitionerRole>
+		</Practitioner>
+		<Practitioner>
+			<Name>赵二</Name>
+			<identifier>H002</identifier>
+			<PractitionerRole>处方调配药剂师</PractitionerRole>
+		</Practitioner>
+		<Practitioner>
+			<Name>赵3</Name>
+			<identifier>H003</identifier>
+			<PractitionerRole>处方核对药剂师</PractitionerRole>
+		</Practitioner>
+		<Practitioner>
+			<Name>赵4</Name>
+			<identifier>H004</identifier>
+			<PractitionerRole>处方发药药剂师</PractitionerRole>
+		</Practitioner>
+	</Practitioners>
+	<Confidentiality>
+		<Code>N</Code>
+		<Name>正常访问保密级别</Name>
+	</Confidentiality>
+	
 	<Encounter>
 		<AdmissionLocation>心胸外科</AdmissionLocation>
 		<AdmissionLocationNo>51</AdmissionLocationNo>
@@ -29,12 +57,7 @@
 			<Name>其他</Name>
 		</AdmissionType>
 		<Class>住院</Class>
-		<Hospitalization>
-			<Location>
-				<bed>3</bed>
-				<ward>骨科</ward>
-			</Location>
-		</Hospitalization>
+		<Hospitalization><Location><bed>3</bed><ward>骨科</ward></Location></Hospitalization>
 		<Status>完成</Status>
 		<VisitDescription>头疼</VisitDescription>
 		<PatientId>DL4495186495</PatientId>
@@ -80,8 +103,8 @@
 			<OutpatientID>7315457372</OutpatientID>
 			<InpatientID>DL4948997831</InpatientID>
 			<IDNo>
-				<Code>05</Code>
-				<Name>驾驶证</Name>
+				<Code>123456789123456</Code>
+				<Name>身份证</Name>
 			</IDNo>
 			<FirstName>梓舒</FirstName>
 			<LastName>计</LastName>
@@ -104,6 +127,7 @@
 			<BloodABO>2</BloodABO>
 			<BloodRH>1</BloodRH>
 			<Citizenship>银川</Citizenship>
+			<Age>44</Age>
 			<Address>
 				<CreationTime>2017-07-28T11:32:14Z</CreationTime>
 				<Province>河南</Province>
@@ -227,89 +251,14 @@
 				<Name>没好</Name>
 			</Outcome>
 		</Diagnosis>
-		<Diagnosis>
-			<CreationTime>2017-07-18T11:04:34Z</CreationTime>
-			<DiagnosisId>UORD4745177920K47264</DiagnosisId>
-			<EncounterId>ORD4745177920K</EncounterId>
-			<DiagnosingClinician>耿斌蔚</DiagnosingClinician>
-			<DiagnosisCode>
-				<Code>G31.901</Code>
-				<Name>心脏病</Name>
-			</DiagnosisCode>
-			<DiagnosisDesc>临床医生不认为患者的病情还需观察.</DiagnosisDesc>
-			<DiagnosisType>出院诊断</DiagnosisType>
-			<IdentificationTime>1990-03-29T05:48:33Z</IdentificationTime>
-			<Status>活动</Status>
-			<OnsetTime>1990-04-06T07:10:16Z</OnsetTime>
-			<IsPrimary>false</IsPrimary>
-		</Diagnosis>
-		<Diagnosis>
-			<CreationTime>2017-07-18T11:04:34Z</CreationTime>
-			<DiagnosisId>DORD4745177920K46485</DiagnosisId>
-			<EncounterId>ORD4745177920K</EncounterId>
-			<DiagnosingClinician>耿斌蔚</DiagnosingClinician>
-			<DiagnosisCode>
-				<Code>A81.251</Code>
-				<Name>进行性多灶性白质脑病</Name>
-			</DiagnosisCode>
-			<DiagnosisDesc>护士不认为患者的病情已痊愈.</DiagnosisDesc>
-			<DiagnosisType>初步诊断</DiagnosisType>
-			<IdentificationTime>1990-03-30T15:07:32Z</IdentificationTime>
-			<Status>活动</Status>
-			<OnsetTime>1990-03-30T15:07:32Z</OnsetTime>
-			<IsPrimary>false</IsPrimary>
-		</Diagnosis>
-		<Diagnosis>
-			<DiagnosisId>2</DiagnosisId>
-			<EncounterId>ORD4745177920K</EncounterId>
-			<DiagnosingClinician>耿斌蔚</DiagnosingClinician>
-			<DiagnosisDesc>癌症晚期</DiagnosisDesc>
-			<DiagnosisType>病理诊断</DiagnosisType>
-			<IdentificationTime>1990-03-29T05:48:33Z</IdentificationTime>
-			<IsPrimary>False</IsPrimary>
-		</Diagnosis>
 	</Diagnoses>
-	<Observations>
-		<Observation>
-			<CreationTime>2017-07-18T11:04:34Z</CreationTime>
-			<ObsId>J612076230844805</ObsId>
-			<EncounterId>ORD4745177920K</EncounterId>
-			<ObservationTime>1990-03-23T08:39:31Z</ObservationTime>
-			<ObservationGroup>B超</ObservationGroup>
-			<ObservationCode>XX01-1</ObservationCode>
-			<ObservationDesc>临床试验 - STK</ObservationDesc>
-			<ResultInterpretation>临床医生不认为的病情还需观察.</ResultInterpretation>
-			<BodySite>
-				<Code>19</Code>
-				<Name>左大腿</Name>
-			</BodySite>
-			<ResultType>NM</ResultType>
-			<Value>127.41</Value>
-			<ValueUnits>PG</ValueUnits>
-			<SubId>J61207623084480509</SubId>
-			<Comments>的检验/检查项目: 临床试验 - STK 结果是 127.41 临床医生不认为的病情还需观察.</Comments>
-			<Clinician>纪子珍</Clinician>
-			<PerformedAt>贵阳第一铁路医院</PerformedAt>
-			<Status>F</Status>
-			<ReferenceRange>
-				<Units>PG</Units>
-				<Low>98.41</Low>
-				<High>262.41</High>
-				<Meaning>主管医师不认为的病情还需观察.</Meaning>
-				<Description>科主任不认为的病情在缓解.</Description>
-			</ReferenceRange>
-		</Observation>
-	</Observations>
+	
 	<Sections>
 		<Section>
-			<SectionCode>DE05.01.025.00</SectionCode>
-			<SectionName>诊疗计划</SectionName>
-			<textContent>完善各项常规检查:生化免疫全套、凝血五项</textContent>
+			<SectionCode>DE04.01.119.00</SectionCode>
+			<SectionName>主诉</SectionName>
+			<textContent>腹痛</textContent>
 		</Section>
-		<Section>
-			<SectionCode>DE06.00.300.00</SectionCode>
-			<SectionName>治则治法</SectionName>
-			<textContent>目前予患者综合保守治疗</textContent>
-		</Section>
+		
 	</Sections>
 </Document>

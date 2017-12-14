@@ -14,7 +14,9 @@
 			<!--文档记录对象（患者） [1..*] contextControlCode="OP"表示本信息可以被重载-->
 			<recordTarget contextControlCode="OP" typeCode="RCT">
 				<patientRole classCode="PAT">
-					<!-- 住院号 -->
+					<!-- 门诊号 -->
+					<xsl:apply-templates select="Sections/Section" mode="mode"/>
+					<!-- 住院号标识 -->
 					<xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/>
 					<!--患者信息 -->
 					<patient classCode="PSN" determinerCode="INSTANCE">
@@ -24,42 +26,41 @@
 						<xsl:apply-templates select="Encounter/Patient" mode="Name"/>
 						<!--患者性别-->
 						<xsl:apply-templates select="Encounter/Patient" mode="Gender"/>
+						<!--患者出生日期-->
+						<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
 						<!--患者年龄-->
 						<xsl:apply-templates select="Encounter/Patient" mode="Age"/>
 					</patient>
 				</patientRole>
 			</recordTarget>
-			<!-- 文档创作者 -->
-			<author typeCode="AUT" contextControlCode="OP">
-				<!--文档创作时间 1..1  -->
+			<!-- 作者 -->
+			<xsl:apply-templates select="Author" mode="Author1"/>			 
+			<!-- 保管机构 -->
+			<xsl:apply-templates select="Custodian" mode="Custodian"/>	
+			<!--麻醉医师签名 DE02.01.039.00 -->
+			<legalAuthenticator typeCode="LA">
+				<!-- DE09.00.053.00麻醉医师签名日期时间 -->
 				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!--制定创作者 1..1 -->
+				<!--签名 1..1 -->
 				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			</author>
-			<!-- 保管机构 1..1 -->
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			<!-- 主任医师签名 1..1 -->
+			</legalAuthenticator>
+			<!-- 患者签名 -->
 			<authenticator>
-				<!-- 签名时间 1..1 -->
+				<!-- DE09.00.053.00签名日期时间 -->
 				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!-- 签名 1..1 -->
+				<!--签名 1..1 -->
 				<xsl:apply-templates select="Sections/Section" mode="mode"/>
 			</authenticator>
-			<!-- 主治医师签名 1..1 -->
+			<!--代理人签名-->
 			<authenticator>
-				<!-- 签名时间 1..1 -->
+				<!-- DE09.00.053.00签名日期时间 -->
 				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!-- 签名 1..1 -->
+				<!--代理人关系-->
+				<xsl:apply-templates select="Sections/Section" mode="mode"/>
+				<!--签名 1..1 -->
 				<xsl:apply-templates select="Sections/Section" mode="mode"/>
 			</authenticator>
-			<!-- 住院医师签名 1..1 -->
-			<authenticator>
-				<!-- 签名时间 1..1 -->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!-- 签名 1..1 -->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			</authenticator>
-			<!--病床号、病房、病区、科室和医院的关联 1..R-->
+			<!--关联活动信息 1..R-->
 			<componentOf>
 				<encompassingEncounter>
 					<!--入院时间 1..1-->
@@ -91,63 +92,24 @@
 -->
 			<component>
 				<structuredBody>
-					<!--主要健康问题章节：入院情况 1..1 R-->
+					<!--术前诊断章节:术前诊断代码 1..1 R-->
 					<xsl:apply-templates select="Sections/Section" mode="mode"/>
-					<!--入院诊断章节1..1 R-->
-					<xsl:comment>入院诊断章节</xsl:comment>
+					<!--治疗计划章节:拟实施麻醉条目 1..1 R-->
+					<xsl:apply-templates select="Sections/Section" mode="mode"/>
+					<!--意见章节1..1 R-->
+					<xsl:comment>意见章节</xsl:comment>
 					<component>
 						<section>
+							<!--医疗机构意见 1..1 R -->
+							<xsl:apply-templates select="Sections/Section" mode="mode"/>
+							<!--患者意见 1..1 O -->
+							<xsl:apply-templates select="Sections/Section" mode="mode"/>
 							
-							<!--入院诊断编码 1..* R -->
-							<xsl:apply-templates select="Diagnoses/Diagnosis[DiagnosisType='入院诊断']" mode="DiagnosisEntry3"/>
-							<!--入院日期时间 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--阳性辅助检查结果 0..* R2 -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--中医“四诊”观察结果 0..1 O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--治则治法 0..1 O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
 						</section>
 					</component>
-					<!--住院过程章节：诊疗过程描述 1..1 R-->
+					<!--风险章节 1..1 R-->
 					<xsl:apply-templates select="Sections/Section" mode="mode"/>
-					<!--医嘱（用药）章节1..1 R-->
-					<xsl:comment>医嘱章节</xsl:comment>
-					<component>
-						<section>
-							<!--中药煎煮方法 0..1 O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--中药用药方法 0..1 O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-						</section>
-					</component>
-					<!--出院诊断章节1..1 R-->
-					<xsl:comment>出院诊断章节</xsl:comment>
-					<component>
-						<section>
-							<!--出院情况 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--出院日期时间 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--出院诊断-西医诊断名称 1..* R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--出院诊断-西医诊断编码 1..* R -->
-							<xsl:apply-templates select="Diagnoses/Diagnosis[DiagnosisType='出院诊断']" mode="DiagnosisEntry3"/>
-							<!--出院诊断-中医病名名称 0..* O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--出院诊断-中医病名代码 0..* O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--出院诊断-中医证候名称 0..1 O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--出院诊断-中医证候代码 0..1 O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--出院时症状与体征 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--出院医嘱 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-						</section>
-					</component>
+					
 				</structuredBody>
 			</component>
 		</ClinicalDocument>

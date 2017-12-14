@@ -44,7 +44,7 @@
 				<representedCustodianOrganization classCode="ORG" determinerCode="INSTANCE">
 					<id root="2.16.156.10011.1.5" extension="{Organization/id}"/>
 					<name>
-						<xsl:value-of select="Organization/Name"/>
+						<xsl:value-of select="Organization/name"/>
 					</name>
 				</representedCustodianOrganization>
 			</assignedCustodian>

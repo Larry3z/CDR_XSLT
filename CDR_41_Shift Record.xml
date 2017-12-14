@@ -6,6 +6,15 @@
 	<assignedPersonID>HYFE1001</assignedPersonID>
 	<ID>RN001</ID>
 	
+	<Custodian>
+		<Organization>
+			<id>C0001</id>
+			<Name>海南农垦总医院</Name>
+			<type>Healthcare Provider</type>
+		</Organization>
+	</Custodian>
+	
+	
 	<Title>交接班记录</Title>
 	<Type>
 		<Code>C0041</Code>
@@ -313,7 +322,7 @@
 		<Section>
 			<SectionCode>DE04.01.119.00</SectionCode>
 			<SectionName>主诉</SectionName>
-			<textContent>腹痛</textContent>
+			<textContent>腹痛，呕吐</textContent>
 		</Section>
 		<Section>
 			<SectionCode>DE05.01.025.00</SectionCode>

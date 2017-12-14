@@ -36,6 +36,33 @@
 			<!--次要参与者签名 Authenticator-->
 			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
 			
+			
+			  <!--检验申请机构及科室-->  
+			  			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
+
+  <!--participant typeCode="PRF"> 
+    <time/>
+    <associatedEntity classCode="ASSIGNED"> 
+      <scopingOrganization> 
+        <id root="2.16.156.10011.1.26" extension="1290100"/>  
+        <name>美容成形</name>  
+        <asOrganizationPartOf> 
+          <wholeOrganization> 
+            <id root="2.16.156.10011.1.5" extension="1234567890"/>  
+            <name>北京大学第三医院</name> 
+          </wholeOrganization> 
+        </asOrganizationPartOf> 
+      </scopingOrganization> 
+    </associatedEntity> 
+  </participant>  
+  <relatedDocument typeCode="RPLC"> 
+    <parentDocument> 
+      <id/>  
+      <setId/>  
+      <versionNumber/> 
+    </parentDocument> 
+  </relatedDocument-->  
+
 <!-- 病床号、病房、病区、科室和医院的关联 -->
 			<componentOf>
 			<xsl:apply-templates select="Encounter" mode="Hosipitalization1"/>
@@ -54,49 +81,45 @@
 			</relatedDocument>
 			<!-- 病床号、病房、病区、科室和医院的关联 -->
 			<!--文档体-->
-		<component>
+		
+	<component>
 			<structuredBody>
-				<xsl:comment>诊断记录章节</xsl:comment>
+				<xsl:comment>诊断章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="D1"/>
-				<xsl:comment>主诉章节</xsl:comment>
-				<xsl:apply-templates select="Diagnoses" mode="Complaint"/>
-				<xsl:comment>症状章节</xsl:comment>
-				<xsl:apply-templates select="Diagnoses" mode="Problem"/>
-				<xsl:comment>手术操作</xsl:comment>
-				<xsl:apply-templates select="Diagnoses" mode="PhyE1"/>
-				<xsl:comment>体格检查章节</xsl:comment>
-				<xsl:apply-templates select="Diagnoses" mode="PhysicalExamination.xsl"/>
-				<component>
-					<section>
-						<code displayName="体格检查"/>
-						<text/>
-						<!-- 特殊检查标志1..1 R -->
+				
+				<xsl:comment>实验室检查章节</xsl:comment>
+								<xsl:apply-templates select="Diagnoses" mode="PhysicalExamination.xsl"/>
+
+<component>
+					<section>				 
+				 <xsl:comment>检查方法名称1..1R</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查方法名称1..1 R -->
+				 <xsl:comment>检查类别1..1R</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查类别1..1 R -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查项目1..* R -->
+				 <xsl:comment>检查项目1..*R</xsl:comment>
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
 					</section>
 				</component>
 
-				<xsl:comment>其他处置章节</xsl:comment>
-				<xsl:apply-templates select="Diagnoses" mode="a"/>
+
+
+
 				<xsl:comment>检查报告章节</xsl:comment>
 				<component>
 					<section>
 						<code displayName="检查报告"/>
 						<text/>
-						<!-- 检查报告结果—客观所见条目0..1 R2 -->
+						<xsl:comment>检查报告结果-客观所见 0..1 R2</xsl:comment>
+						<!--检查报告结果 1..1 R -->
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查报告结果-主观提示条目0..1 R2 -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
+						<xsl:comment> 检查报告科室名称1..1 R </xsl:comment>
 						<!-- 检查报告科室名称1..1 R -->
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!--检查报告机构名称 1..1 R-->
+						<xsl:comment>检查报告机构名称1..1 R3</xsl:comment>
+						<!-- 检查报告机构名称1..1 R3-->
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查报告备注0..1 R2 -->
+						<xsl:comment>检查报告备注0..1 R2</xsl:comment>
+						<!--检查报告备注0..1 R2 -->
 						<xsl:apply-templates select="Diagnoses" mode="a"/>
 					</section>
 				</component>
@@ -109,35 +132,3 @@
 	
 	
 	
-	
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

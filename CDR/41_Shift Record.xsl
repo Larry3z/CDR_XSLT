@@ -25,23 +25,23 @@
 					</patient>
 				</patientRole>
 			</recordTarget>
+<<<<<<< HEAD
+<<<<<<< HEAD
 			<xsl:comment>文档创作者</xsl:comment>
-			<!--author typeCode="AUT" contextControlCode="OP">
-				<xsl:variable name="cTime" select="/CreationTime"/>
-				<time value="{$cTime}"/>
-				<assignedAuthor classCode="ASSIGNED">
-					<id root="2.16.156.10011.1.7" extension="-"/>
-					<code displayName="文档创作者"/>
-					<assignedPerson>
-						<name>王圣林[苏允裕]</name>
-					</assignedPerson>
-				</assignedAuthor>
-			</author-->
-			<!--xsl:apply-templates select="/assignedPerson" mode="Creator"/-->
-			<!--xsl:comment>保管机构</xsl:comment-->
-			<xsl:apply-templates select="Creator" mode="Creator"/>			
+			<xsl:apply-templates select="Author" mode="Author1"/>
 			<xsl:comment>保管机构</xsl:comment>
-			<xsl:call-template name="Custodian"/>
+			<xsl:apply-templates select="Custodian"/>
+=======
+=======
+>>>>>>> 17b0d309215e57cd15897dd3a91808445d89bb2b
+			<!-- 作者 -->
+			<xsl:apply-templates select="Author" mode="Author1"/>			 
+			<!-- 保管机构 -->
+			<xsl:apply-templates select="Custodian" mode="Custodian"/>			 
+<<<<<<< HEAD
+>>>>>>> 17b0d309215e57cd15897dd3a91808445d89bb2b
+=======
+>>>>>>> 17b0d309215e57cd15897dd3a91808445d89bb2b
 			<!-- 签名 -->
 			<authenticator>
 				<!--交班日期时间-->
@@ -81,7 +81,6 @@
 			<componentOf>
 				<encompassingEncounter>
 					<code displayName="入院日期时间"/>
-					<!--<xsl:value-of select="format-dateTime(RequestDate,'[M01]/[D01]/[Y0001]')" />-->
 					<xsl:variable name="AdminTime" select="/Document/Encounter/AdmissionTime"/>
 					<effectiveTime value="{$AdminTime}"/>
 					<location>
@@ -187,7 +186,6 @@
 							<code code="29548-5" displayName="Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
 							<text/>
 							<!--条目:目前情况-->
-							
 							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
 							<!--entry>
 								<observation classCode="OBS" moodCode="EVN ">
@@ -196,10 +194,7 @@
 								</observation>
 							</entry-->
 							<!--目前诊断-->
-							
 							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
-							
-							
 							<!--entry>
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE05.01.024.00" displayName="目前诊断-西医诊断编码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
@@ -207,19 +202,15 @@
 								</observation>
 							</entry-->
 							<!--目前诊断-中医病名代码-->
-							
 							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
-							
 							<!--entry>
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE05.10.130.00" displayName="目前诊断-中医病名代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
 									<value xsi:type="CD" code="BNG020" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)" displayName="黄疽病"/>
 								</observation>
 							</entry-->
-							
 							<!--目前诊断-中医证候代码-->
 							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
-							
 							<!--entry>
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE05.10.130.00" displayName="目前诊断-中医证候代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
@@ -228,7 +219,6 @@
 							</entry-->
 							<!--中医“四诊”观察结果-->
 							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
-							
 							<!--entry>
 								<observation classCode="OBS" moodCode="EVN ">
 									<code code="DE02.10.028.00" displayName="中医“四诊”观察结果" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
@@ -249,14 +239,11 @@
 						</section>
 					</component>
 					<xsl:comment>住院过程章节</xsl:comment>
-					
 					<component>
 						<section>
 							<code code="8648-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Hospital Course"/>
 							<text/>
-							
 							<!--诊疗过程描述-->
-							
 							<xsl:apply-templates select="/Document" mode="ChiefComplaint"/>
 							<!--entry>
 								<observation classCode="OBS" moodCode="EVN">
@@ -266,7 +253,6 @@
 							</entry-->
 						</section>
 					</component>
-					
 				</structuredBody>
 			</component>
 		</ClinicalDocument>

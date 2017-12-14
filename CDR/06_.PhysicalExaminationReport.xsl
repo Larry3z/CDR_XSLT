@@ -3,11 +3,12 @@
 		traget: 互连互通文档06-检查报告
  -->
 <xsl:stylesheet version="1.0" xmlns="urn:hl7-org:v3" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:isc="http://extension-functions.intersystems.com" xmlns:exsl="http://exslt.org/common" xmlns:set="http://exslt.org/sets" exclude-result-prefixes="isc sdtc exsl set">
-	<xsl:include href="Hainan_Templates/Diagnosis.xsl"/>
-	<xsl:include href="Hainan_Templates/PhysicalExamination.xsl"/>
-	
-	
-	
+	<xsl:include href="CDA-Support-Files/Export/Common/OIDs-IOT.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Common/CDAHeader.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
 	<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
 		<realmCode code="CN"/>
 		<typeId root="2.16.840.1.113883.1.3" extension="POCD_MT000040"/>
@@ -175,7 +176,7 @@
 				</location>
 			</encompassingEncounter>
 		</componentOf>
-<!--***************************************************
+		<!--***************************************************
 文档体Body
 *******************************************************
 -->
@@ -194,6 +195,22 @@
 				<xsl:comment>其他处置章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="2"/>
 				<xsl:comment>检查报告章节</xsl:comment>
+				<component>
+					<section>
+						<code displayName="检查报告"/>
+						<text/>
+						<!-- 1..1 R3 -->
+						<xsl:apply-templates select="Diagnoses" mode="2"/>
+						<!-- 1..1 R3 -->
+						<xsl:apply-templates select="Diagnoses" mode="2"/>
+						<!-- 1..1 R3 -->
+						<xsl:apply-templates select="Diagnoses" mode="2"/>
+						<!-- 1..1 R3 -->
+						<xsl:apply-templates select="Diagnoses" mode="2"/>
+						<!-- 1..1 R3 -->
+						<xsl:apply-templates select="Diagnoses" mode="2"/>
+					</section>
+				</component>
 			</structuredBody>
 		</component>
 	</ClinicalDocument>

@@ -6,30 +6,33 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/SurgicalOperation.xsl"/>
+	
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
 			<xsl:apply-templates select="." mode="CDAHeader"/>
-			
 			<xsl:comment>病人信息</xsl:comment>
 			<recordTarget contextControlCode="OP" typeCode="RCT">
 				<patientRole classCode="PAT">
-					<!--住院号标识-->
+					<!-- 住院号标识 -->
 					<xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/>
-					<!--电子申请单编号标识-->
-					<!--id root="2.16.156.10011.1.24" extension="D2011000001"/-->
 					<patient classCode="PSN" determinerCode="INSTANCE">
 						<!--患者身份证号-->
 						<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Name"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Gender"/>
-						<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
 						<!--xsl:apply-templates select="Encounter/Patient" mode="Age"/-->
 					</patient>
 				</patientRole>
 			</recordTarget>
-			
-			<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
+			<component>
+				<structuredBody>
+					<!-- 信息章节  -->
+					<xsl:apply-templates select="ID" mode="SurOp16"/>
+					<component/>
+				</structuredBody>
+			</component>
 		</ClinicalDocument>
 	</xsl:template>
 </xsl:stylesheet>

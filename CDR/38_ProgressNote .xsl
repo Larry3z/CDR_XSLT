@@ -14,10 +14,8 @@
 			<xsl:comment>病人信息</xsl:comment>
 			<recordTarget contextControlCode="OP" typeCode="RCT">
 				<patientRole classCode="PAT">
-					<!--住院号标识-->
+					<!-- 住院号标识 -->
 					<xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/>
-					<!--电子申请单编号标识-->
-					<!--id root="2.16.156.10011.1.24" extension="D2011000001"/-->
 					<patient classCode="PSN" determinerCode="INSTANCE">
 						<!--患者身份证号-->
 						<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
@@ -29,7 +27,30 @@
 				</patientRole>
 			</recordTarget>
 			
-			<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
+			<!--文档体-->
+			<component>
+				<structuredBody>
+					<!--主要健康问题章节-->
+					<xsl:apply-templates select="Patient" mode="Blood"/>
+					<!--诊断记录章节-->
+					<xsl:apply-templates select="Patient" mode="Blood"/>
+					<!--医嘱章节-->
+					<xsl:apply-templates select="Patient" mode="Blood"/>
+					<!--治疗计划章节-->
+					<xsl:apply-templates select="Patient" mode="Blood"/>
+					<!--用药章节-->
+					<xsl:comment>用药章节</xsl:comment>
+					<component>
+						<section>
+							<!--中药煎煮法 0..1 O-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--中药用药方法   0..1  O-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+						</section>
+					</component>
+				</structuredBody>
+			</component>
+			
 		</ClinicalDocument>
 	</xsl:template>
 </xsl:stylesheet>

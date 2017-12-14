@@ -26,15 +26,21 @@
 				</patientRole>
 			</recordTarget>
 <<<<<<< HEAD
+<<<<<<< HEAD
 			<xsl:comment>文档创作者</xsl:comment>
 			<xsl:apply-templates select="Author" mode="Author1"/>
 			<xsl:comment>保管机构</xsl:comment>
 			<xsl:apply-templates select="Custodian"/>
 =======
+=======
+>>>>>>> 17b0d309215e57cd15897dd3a91808445d89bb2b
 			<!-- 作者 -->
 			<xsl:apply-templates select="Author" mode="Author1"/>			 
 			<!-- 保管机构 -->
 			<xsl:apply-templates select="Custodian" mode="Custodian"/>			 
+<<<<<<< HEAD
+>>>>>>> 17b0d309215e57cd15897dd3a91808445d89bb2b
+=======
 >>>>>>> 17b0d309215e57cd15897dd3a91808445d89bb2b
 			<!-- 签名 -->
 			<authenticator>

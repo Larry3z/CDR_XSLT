@@ -20,11 +20,134 @@
 		<setId/>
 		<versionNumber/>
 	</xsl:template>
-	<!-- confidentialityCode may be overriden by stylesheets that import this one -->
-	<xsl:template mode="document-confidentialityCode" match="Container">
-		<confidentialityCode nullFlavor="{$confidentialityNullFlavor}"/>
+	<!-- 文档创建者模板1-->
+	<!-- DE09.00.053.00记录日期时间 完成此项业务活动时的公元纪年日期和时间的完整描述，暂时只用文档的生产时间，所以传入的是author,但要上一层去去CreationTime. -->
+	<xsl:template match="Author" mode="Author1">
+		<xsl:comment>文档作者</xsl:comment>
+		<author typeCode="AUT" contextControlCode="OP">
+			<time value="{../CreationTime}"/>
+			<assignedAuthor classCode="ASSIGNED">
+				<id root="2.16.156.10011.1.7" extension="{Id}"/>
+				<assignedPerson>
+					<name>
+						<xsl:value-of select="Name"/>
+					</name>
+				</assignedPerson>
+			</assignedAuthor>
+		</author>
 	</xsl:template>
-	<xsl:variable name="confidentialityNullFlavor" select="'NI'"/>
+	<!--保管机构模板-->
+	<xsl:template match="*" mode="Custodian">
+		<xsl:comment>保管机构</xsl:comment>
+		<custodian typeCode="CST">
+			<assignedCustodian classCode="ASSIGNED">
+				<representedCustodianOrganization classCode="ORG" determinerCode="INSTANCE">
+					<id root="2.16.156.10011.1.5" extension="{Organization/id}"/>
+					<name>
+						<xsl:value-of select="Organization/name"/>
+					</name>
+				</representedCustodianOrganization>
+			</assignedCustodian>
+		</custodian>
+	</xsl:template>
+	<!-- 法律责任参与者签名 -->
+	<xsl:template match="*" mode="legalAuthenticator">
+		<xsl:comment>法律责任参与者签名</xsl:comment>
+		<legalAuthenticator>
+			<!-- 签名 -->
+			<time/>
+			<signatureCode/>
+			<assignedEntity>
+				<id root="2.16.156.10011.1.4" extension="{identifier}"/>
+				<code displayName="上级医师"/>
+				<assignedPerson classCode="PSN" determinerCode="INSTANCE">
+					<name>
+						<xsl:value-of select="name"/>
+					</name>
+				</assignedPerson>
+			</assignedEntity>
+		</legalAuthenticator>
+	</xsl:template>
+	<!-- 其他参与者签名 -->
+	<xsl:template match="*" mode="Authenticator">
+		<xsl:comment>其他参与者签名</xsl:comment>
+		<authenticator>
+			<time/>
+			<signatureCode/>
+			<assignedEntity>
+				<id root="2.16.156.10011.1.4" extension="{identifier}"/>
+				<code displayName="住院医师"/>
+				<assignedPerson classCode="PSN" determinerCode="INSTANCE">
+					<name>
+						<xsl:value-of select="name"/>
+					</name>
+				</assignedPerson>
+			</assignedEntity>
+		</authenticator>
+	</xsl:template>
+	<!--相关文档, 暂时不用-->
+	<xsl:template name="relatedDocument">
+		<xsl:comment>相关文档</xsl:comment>
+		<relatedDocument typeCode="RPLC">
+			<parentDocument>
+				<id/>
+				<setId/>
+				<versionNumber/>
+			</parentDocument>
+		</relatedDocument>
+	</xsl:template>
+	
+	
+	
+	<!--住院状况模板1-->
+	<xsl:template match="*" mode="Hosipitalization1">
+		<xsl:comment>相关文档</xsl:comment>
+		<encompassingEncounter>
+			<effectiveTime/>
+			<location>
+				<healthCareFacility>
+					<serviceProviderOrganization>
+						<asOrganizationPartOf classCode="PART">
+							<!-- DE01.00.026.00病床号 -->
+							<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+								<id root="2.16.156.10011.1.22" extension="{Hosipitalization/Location/bed}"/>
+								<name>-+11</name>
+								<!-- DE01.00.019.00病房号 -->
+								<asOrganizationPartOf classCode="PART">
+									<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+										<id root="2.16.156.10011.1.21" extension="{Hosipitalization/Location/room}"/>
+										<name>无</name>
+										<!-- DE08.10.026.00科室名称 -->
+										<asOrganizationPartOf classCode="PART">
+											<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+												<id root="2.16.156.10011.1.26" extension="{AdmissionLocationNo}"/>
+												<name><xsl:value-of select="AdmissionLocation"/></name>
+												<!-- DE08.10.054.00病区名称 -->
+												<asOrganizationPartOf classCode="PART">
+													<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+														<id root="2.16.156.10011.1.27" extension="--"/>
+														<name><xsl:value-of select="Hosipitalization/Location/ward"/></name>
+														<!--XX医院 -->
+														<asOrganizationPartOf classCode="PART">
+															<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+																<id root="2.16.156.10011.1.5" extension="--"/>
+																<name><xsl:value-of select="HealthCareFacility"/></name>
+															</wholeOrganization>
+														</asOrganizationPartOf>
+													</wholeOrganization>
+												</asOrganizationPartOf>
+											</wholeOrganization>
+										</asOrganizationPartOf>
+									</wholeOrganization>
+								</asOrganizationPartOf>
+							</wholeOrganization>
+						</asOrganizationPartOf>
+					</serviceProviderOrganization>
+				</healthCareFacility>
+			</location>
+		</encompassingEncounter>
+	</xsl:template>
+	<!--reserved-->
 	<xsl:template match="Creator" mode="Creator">
 		<!--创建者-->
 		<author typeCode="AUT" contextControlCode="OP">
@@ -32,9 +155,7 @@
 			<time value="20120909112212"/>
 			<assignedAuthor classCode="ASSIGNED">
 				<id root="2.16.156.10011.1.7">
-					<xsl:attribute name="id">
-						<xsl:value-of select="id"/>
-					</xsl:attribute>
+					<xsl:attribute name="id"><xsl:value-of select="id"/></xsl:attribute>
 				</id>
 				<!--建档者姓名-->
 				<assignedPerson>
@@ -49,15 +170,5 @@
 				</representedOrganization>
 			</assignedAuthor>
 		</author>
-	</xsl:template>
-	<xsl:template name="Custodian">
-		<custodian typeCode="CST">
-			<assignedCustodian classCode="ASSIGNED">
-				<representedCustodianOrganization classCode="ORG" determinerCode="INSTANCE">
-					<id root="2.16.156.10011.1.5" extension="1234567890"/>
-					<name>xx医院</name>
-				</representedCustodianOrganization>
-			</assignedCustodian>
-		</custodian>
 	</xsl:template>
 </xsl:stylesheet>

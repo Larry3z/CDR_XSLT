@@ -31,6 +31,8 @@
 			<xsl:apply-templates select="Custodian" mode="Custodian"/>
 						<!--主要参与者签名 legalAuthenticator--><xsl:comment>kaishi</xsl:comment>
 			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole='医师']" mode="legalAuthenticator"/>
+						
+
 
 
 			<!--以下省略很多机构签名等等 -->

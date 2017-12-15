@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Medications>
 	<Medication>
+		<OrderId/>
+		<EncounterId/>
 		<PlacerId>HOS100319001</PlacerId>
 		<FillerId>HOS100319001</FillerId>
 		<OrderItem>
@@ -89,8 +91,8 @@
 		<EnteredOn>2017-08-13T09:45:00Z</EnteredOn>
 		<FromTime>2017-08-13T09:45:00Z</FromTime>
 		<DrugProduct>
-			<Code>Amoxil Oral Capsules</Code>
-			<Description>Amoxil Oral Capsules</Description>
+			Amoxil Oral Capsules
+			
 		</DrugProduct>
 		<DoseQuantity>500</DoseQuantity>
 		<DoseUoM>
@@ -101,6 +103,6 @@
 			<Code>Oral</Code>
 			<Description>Oral</Description>
 		</Route>
-		<EncounterNumber>HSVN00006</EncounterNumber>
+		
 	</Medication>
 </Medications>

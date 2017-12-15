@@ -25,7 +25,7 @@
 		<id root="2.16.156.10011.1.12" extension="{InpatientID}"/>
 	</xsl:template>
 	<!--姓名-->
-	<xsl:template match="Patient" mode="Name">
+	<xsl:template match="*" mode="Name">
 		<xsl:comment>患者姓名</xsl:comment>
 		<Name>
 			<xsl:variable name="FirstName" select="FirstName"/>
@@ -41,7 +41,7 @@
 		<administrativeGenderCode code="{$genderCode}" codeSystemName="生理性别代码表(GB/T 2261.1)" codeSystem="{$生理性别代码表}" displayName="{$genderDescription}"/>
 	</xsl:template>
 	<!--生日 BirthTime-->
-	<xsl:template match="*" mode="BirthTime">
+	<xsl:template match="BirthTime" mode="BirthTime">
 		<xsl:comment>患者出生时间</xsl:comment>
 		<birthTime>
 			
@@ -126,11 +126,7 @@
 	
 	<!--Age-->
 	<xsl:template match="*" mode="Age">
-		<age unit="岁">
-			<xsl:attribute name="value">
-				<xsl:value-of select="."/>
-			</xsl:attribute>
-		</age>
+		<age unit="岁" value="{Age}"/>
 	</xsl:template>
 	<!--employerOrganization-->
 	<!--Question: if using xsl:copy to copy EmployerOrganization, always put namespace in attribute, why?-->

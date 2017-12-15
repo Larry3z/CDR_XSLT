@@ -6,7 +6,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
+	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/-->
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -26,16 +26,20 @@
 					</patient>
 				</patientRole>
 			</recordTarget>
-			<!--以下省略很多机构签名等等 -->
-			<relatedDocument typeCode="RPLC">
-				<!--文档中医疗卫生事件的就诊场景,即入院场景记录-->
-				<parentDocument>
-					<id/>
-					<setId/>
-					<versionNumber/>
-				</parentDocument>
-			</relatedDocument>
+			<!-- 文档创作者 -->
+			<xsl:apply-templates select="Author" mode="Author1"/>
+			<!-- 保管机构 -->
+			<xsl:apply-templates select="Custodian" mode="Custodian"/>
+			<!--护士签名-->
+			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
+			<!--相关文档，暂时不用-->
+			<xsl:call-template name="relatedDocument"/>
+			<!--文档中医疗卫生事件的就诊场景,即入院场景记录-->
+			
 			<!-- 病床号、病房、病区、科室和医院的关联 -->
+			<componentOf>
+			<xsl:apply-templates select="Encounter" mode="Hosipitalization1"/>
+			</componentOf>
 			<!--文档体-->
 			<component>
 				<structuredBody>

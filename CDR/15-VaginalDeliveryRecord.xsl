@@ -6,7 +6,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
+	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/-->
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -26,76 +26,19 @@
 					</patient>
 				</patientRole>
 			</recordTarget>
-			<!--作者，保管机构-->
+			<!-- 文档创作者 -->
 			<xsl:apply-templates select="Author" mode="Author1"/>
+			<!-- 保管机构 -->
 			<xsl:apply-templates select="Custodian" mode="Custodian"/>
-            <!--authenticator> 
-                <time value=""/>  
-                <signatureCode/>  
-                <assignedEntity> 
-                    <id root="2.16.156.10011.1.4" extension="医务人员编号"/>  
-                    <code displayName="接生者"/>  
-                    <assignedPerson> 
-                        <name>XXX（姓名）</name> 
-                    </assignedPerson> 
-                </assignedEntity> 
-            </authenticator>  
-            <authenticator> 
-                <time/>  
-                <signatureCode/>  
-                <assignedEntity> 
-                    <id root="2.16.156.10011.1.4" extension="医务人员编号"/>  
-                    <code displayName="助产者"/>  
-                    <assignedPerson> 
-                        <name>XXX（姓名）</name> 
-                    </assignedPerson> 
-                </assignedEntity> 
-            </authenticator>  
-            <authenticator> 
-                <time/>  
-                <signatureCode/>  
-                <assignedEntity> 
-                    <id root="2.16.156.10011.1.4" extension="医务人员编号"/>  
-                    <code displayName="助手"/>  
-                    <assignedPerson> 
-                        <name>XXX（姓名）</name> 
-                    </assignedPerson> 
-                </assignedEntity> 
-            </authenticator>  
-            <authenticator> 
-                <time/>  
-                <signatureCode/>  
-                <assignedEntity> 
-                    <id root="2.16.156.10011.1.4" extension="医务人员编号"/>  
-                    <code displayName="护婴者"/>  
-                    <assignedPerson> 
-                        <name>XXX（姓名）</name> 
-                    </assignedPerson> 
-                </assignedEntity> 
-            </authenticator>  
-            <authenticator> 
-                <time/>  
-                <signatureCode/>  
-                <assignedEntity> 
-                    <id root="2.16.156.10011.1.4" extension="医务人员编号"/>  
-                    <code displayName="指导者"/>  
-                    <assignedPerson> 
-                        <name>XXX（姓名）</name> 
-                    </assignedPerson> 
-                </assignedEntity> 
-            </authenticator>  
-            <authenticator> 
-                <time/>  
-                <signatureCode/>  
-                <assignedEntity> 
-                    <id root="2.16.156.10011.1.4" extension="医务人员编号"/>  
-                    <code displayName="记录人"/>  
-                    <assignedPerson> 
-                        <name>XXX（姓名）</name> 
-                    </assignedPerson> 
-                </assignedEntity> 
-            </authenticator>  
-            <participant typeCode="NOT"--> 
+			<!--接生者签名-->
+			<!--助产者签名-->
+			<!--助手签名--> 
+            <!--护婴者签名-->
+            <!--指导者签名-->
+            <!--记录人签名-->
+            <xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/>
+            
+            <!--participant typeCode="NOT"--> 
               <!--联系人@classCode：CON，固定值，表示角色是联系人 -->  
                 <!--associatedEntity classCode="ECON"--> 
                     <!--联系人电话-->  
@@ -106,11 +49,8 @@
                         <!--name>于洪浩</name> 
                     </associatedPerson> 
                 </associatedEntity> 
-            </participant--> 
-			<!--主要参与者签名 legalAuthenticator--><!--xsl:comment>kaishi</xsl:comment-->
-			<!--xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole='医师']" mode="legalAuthenticator"/-->
-			<!--次要参与者签名 Authenticator-->
-			<!--xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/-->
+            </participant-->
+             
 			<!--相关文档，暂时不用-->
 			<xsl:call-template name="relatedDocument"/>
 			<!-- 病床号、病房、病区、科室和医院的关联 -->

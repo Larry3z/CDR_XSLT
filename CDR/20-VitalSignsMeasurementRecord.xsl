@@ -6,7 +6,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
+	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/-->
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -27,12 +27,10 @@
 				</patientRole>
 			</recordTarget>
 			<!-- 文档作者 -->
-			<!--签名日期时间：DE09.00.053.00-->
 			<xsl:apply-templates select="Author" mode="Author1"/>
 			<!-- 文档生成机构 -->
 			<xsl:apply-templates select="Custodian" mode="Custodian"/>
-			<!-- 签名 -->
-			<!--签名日期时间：DE09.00.053.00 -->
+			<!-- 护士签名 -->
 			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole='医师']" mode="legalAuthenticator"/>
 			<!--相关文档，暂时不用-->
 			<xsl:call-template name="relatedDocument"/>

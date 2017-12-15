@@ -6,7 +6,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
+	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/-->
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -15,11 +15,11 @@
 			<recordTarget contextControlCode="OP" typeCode="RCT">
 				<patientRole classCode="PAT">
 				    <!--门诊号标识-->
-				    <xsl:comment>门诊号标识</xsl:comment>
-			        <id root="2.16.156.10011.1.11" extension="HA201102113366666"/>
+				    <!--xsl:comment>门诊号标识</xsl:comment-->
+			        <xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/>
 			        <!--电子申请单编号-->
-			        <xsl:comment>电子申请单号</xsl:comment>
-			        <id root="2.16.156.10011.1.24" extension="HA201102113366666"/>
+			        <!--xsl:comment>电子申请单号</xsl:comment-->
+			        <xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/>
 					<!-- 住院号标识 -->
 					<xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/>
 					<patient classCode="PSN" determinerCode="INSTANCE">
@@ -32,21 +32,23 @@
 					</patient>
 					<!--提供患者服务机构-->
 					<xsl:comment>提供患者服务机构</xsl:comment>
-			        <providerOrganization classCode="ORG" determinerCode="INSTANCE">
+			        <!--providerOrganization classCode="ORG" determinerCode="INSTANCE"-->
 				       <!--机构标识号-->
-				       <xsl:comment>机构标识号</xsl:comment>
-				       <id root="2.16.156.10011.1.5" extension="1234567890"/>
+				       <!--xsl:comment>机构标识号</xsl:comment>
+				       <id root="2.16.156.10011.1.5" extension="1234567890"/-->
 				       <!--住院机构名称-->
-				       <xsl:comment>住院机构名称</xsl:comment>
+				       <!--xsl:comment>住院机构名称</xsl:comment>
 				       <name>xx医院</name>
-			        </providerOrganization>
+			        </providerOrganization-->
 				</patientRole>
 			</recordTarget>
-			<!--作者，保管机构-->
+			<!-- 文档创作者 -->
 			<xsl:apply-templates select="Author" mode="Author1"/>
+			<!-- 保管机构 -->
 			<xsl:apply-templates select="Custodian" mode="Custodian"/>
-			<!--主要参与者签名 legalAuthenticator-->
+			<!--麻醉医师签名-->
 			<xsl:comment>麻醉医师签名</xsl:comment>
+			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole='医师']" mode="legalAuthenticator"></xsl:apply-templates>
 			<!--authenticator-->
 		       <!--签名日期时间-->
 		       <!--time value="201210111212"/>
@@ -59,9 +61,6 @@
 			        </assignedPerson>
 		        </assignedEntity>
 	        </authenticator-->
-			<!--xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole='医师']" mode="legalAuthenticator"></xsl:apply-templates-->
-			<!--次要参与者签名 Authenticator-->
-			<!--xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole!='医师']" mode="Authenticator"/-->
 			<!--相关文档，暂时不用-->
 			<xsl:call-template name="relatedDocument"/>
 			<!-- 病床号、病房、病区、科室和医院的关联 -->

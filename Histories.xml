@@ -1,0 +1,125 @@
+<Document>
+	<SocialHistories>
+		<SocialHistory>
+			<CreationTime>2017-11-01T17:10:26Z</CreationTime>
+			<SocialHabit>DE02.10.097.00</SocialHabit>
+			<SocialHabitComments>抽烟喝酒烫头</SocialHabitComments>
+		</SocialHistory>
+	</SocialHistories>
+	<Allergies>
+		<Allergy>
+			<CreationTime>2017-11-01T17:21:34Z</CreationTime>
+			<AllergyID>2</AllergyID>
+			<AllergyCategory>fish and crab</AllergyCategory>
+			<Reaction>vomit</Reaction>
+			<Severity>dangerous</Severity>
+			<FreeTextAllergy>fish and crab, vomit, dangerous</FreeTextAllergy>
+		</Allergy>
+	</Allergies>
+	<IllnessHistories>
+		<IllnessHistory>
+			<CreationTime>2017-11-01T17:33:10Z</CreationTime>
+			<NoteText>麻风霍乱艾滋病</NoteText>
+			<IllnessID>2</IllnessID>
+			<Type>传染病史</Type>
+		</IllnessHistory>
+		<IllnessHistory>
+			<CreationTime>2017-11-01T18:03:27Z</CreationTime>
+			<NoteText>大脑炎二脑炎</NoteText>
+			<IllnessID>2</IllnessID>
+			<Type>疾病史</Type>
+		</IllnessHistory>
+		<IllnessHistory>
+			<CreationTime>2017-11-01T18:03:32Z</CreationTime>
+			<NoteText>整容</NoteText>
+			<IllnessID>2</IllnessID>
+			<Type>手术史</Type>
+		</IllnessHistory>
+		<IllnessHistory>
+			<CreationTime>2017-11-01T18:03:36Z</CreationTime>
+			<NoteText>男孩女孩男孩女孩</NoteText>
+			<Type>婚育史</Type>
+		</IllnessHistory>
+		<IllnessHistory>
+			<CreationTime>2017-11-01T18:04:06Z</CreationTime>
+			<NoteText>一天一次</NoteText>
+			<Type>月经史</Type>
+		</IllnessHistory>
+		<IllnessHistory>
+			<CreationTime>2017-11-01T18:04:07Z</CreationTime>
+			<NoteText>心脏病</NoteText>
+			<Type>既往史</Type>
+		</IllnessHistory>
+		<IllnessHistory>
+			<CreationTime>2017-11-01T18:04:08Z</CreationTime>
+			<NoteText> 怀孕两次</NoteText>
+			<Perganttime> 0</Perganttime>
+			<Childbirthtime> 0</Childbirthtime>
+			<Type>既往孕产史</Type>
+		</IllnessHistory>
+		
+		<IllnessHistory>
+			<CreationTime>2017-11-01T18:04:11Z</CreationTime>
+			<IllnessID>2</IllnessID>
+			<NoteText> 乙肝</NoteText>
+			<Type>传染病史</Type>
+		</IllnessHistory>
+		<IllnessHistory>
+			<CreationTime>2017-11-01T18:04:12Z</CreationTime>
+			<IllnessID>2</IllnessID>
+			<NoteText> 型血两次</NoteText>
+			<Type>输血史</Type>
+		</IllnessHistory>
+		<IllnessHistory>
+			<CreationTime>2017-11-01T18:04:13Z</CreationTime>
+			<IllnessID>2</IllnessID>
+			<NoteText> 乙肝疫苗两次</NoteText>
+			<Type>预防接种史</Type>
+		</IllnessHistory>
+		<IllnessHistory>
+			<CreationTime>2017-11-01T18:04:14Z</CreationTime>
+			<IllnessID>001</IllnessID>
+			<Type>有创诊疗操作标志</Type>
+		</IllnessHistory>
+		<IllnessHistory>
+			<CreationTime>2017-11-01T18:04:15Z</CreationTime>
+			<IllnessTime>10</IllnessTime>
+			<Type>住院史</Type>
+		</IllnessHistory>
+	</IllnessHistories>
+	<FamilyHistory>
+		<CreationTime>2017-11-27T18:04:14Z</CreationTime>
+		<NoteText>哥哥患有结肠癌</NoteText>
+		<Type>家族史</Type>
+	</FamilyHistory>
+	<LifeHabits>
+		<LifeHabit1>
+			<ID>1</ID>
+			<Number>2</Number>
+			<Status>112</Status>
+			<Day>30</Day>
+			<Type>吸烟</Type>
+		</LifeHabit1>
+		<LifeHabit2>
+			<ID>1</ID>
+			<Number>2</Number>
+			<Times>7</Times>
+			<Type>饮酒</Type>
+		</LifeHabit2>
+		<LifeHabit3>
+			<Status>112</Status>
+		</LifeHabit3>
+	</LifeHabits>
+	<Problems>
+		<Problem>
+			<CreationTime>2017-12-01T17:33:11Z</CreationTime>
+			<Comments>麻风霍乱艾滋病</Comments>
+			<Type>现病史</Type>
+		</Problem>
+		<Problem>
+			<CreationTime>2017-12-01T17:33:10Z</CreationTime>
+			<Comments>麻风霍乱艾滋病</Comments>
+			<Type>简要病史</Type>
+		</Problem>
+	</Problems>
+</Document>

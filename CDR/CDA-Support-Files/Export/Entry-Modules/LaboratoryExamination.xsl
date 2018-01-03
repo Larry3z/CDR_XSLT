@@ -238,29 +238,42 @@
 	</xsl:template>
 	
 	<!--适用住院病程，抢救记录-->
-	<xsl:template match=" LaboratoryExamination " mode="LabE4">
-	<component>
-				<section>
-					<code code="30954-2" displayName="STUDIES SUMMARY" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-					<text/>
-					<entry>
-						<organizer classCode="CLUSTER" moodCode="EVN">
-							<statusCode/>
-							<component>
-								<observation classCode="OBS" moodCode="EVN">
-									<code code="DE04.30.010.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="辅助检查项目"/>
-								</observation>
-							</component>
-							<component>
-								<observation classCode="OBS" moodCode="EVN">
-									<code code="DE04.30.009.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="辅助检查结果"/>
-									<value xsi:type="ST">辅助检查结果描述</value>
-								</observation>
-							</component>
-						</organizer>
-					</entry>
-				</section>
-			</component>
+	<xsl:template match="LaboratoryExamination" mode="LabE4">
+	<component> 
+        <section> 
+          <code code="30954-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="STUDIES SUMMARY"/>  
+          <text/>  
+          <!--检查/检验项目-->  
+          <entry> 
+            <observation classCode="OBS " moodCode="EVN "> 
+              <code code="DE04.30.020.00" displayName="检查/检验项目名称" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="卫生信息数据元目录"/>  
+              <value xsi:type="ST"><xsl:value-of select="doc44/jcxmmc"/></value>  
+              <entryRelationship typeCode="COMP"> 
+                <!--检查/检验结果-->  
+                <observation classCode="OBS " moodCode="EVN "> 
+                  <code code="DE04.30.009.00" displayName="检查/检验结果" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>  
+                  <value xsi:type="ST"><xsl:value-of select="doc44/jcjg"/></value> 
+                </observation> 
+              </entryRelationship>  
+              <entryRelationship typeCode="COMP"> 
+                <!--检查/检验定量结果-->  
+                <observation classCode="OBS " moodCode="EVN "> 
+                  <code code="DE04.30.015.00" displayName="检查/检验定量结果" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="卫生信息数据元目录"/>  
+                  <value xsi:type="PQ" value="{doc44/jydljg}" unit="{doc44/jydljgdw}"/> 
+                </observation> 
+              </entryRelationship>  
+              <entryRelationship typeCode="COMP"> 
+                <!--检查/检验结果代码-->  
+                <observation classCode="OBS " moodCode="EVN "> 
+                  <code code="DE04.30.017.00" displayName="检查/检验结果代码" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="卫生信息数据元目录"/>  
+                  <value xsi:type="CD" code="{doc44/jcjgdm/code}" displayName="{doc44/jcjgdm/displayname}"  codeSystem="2.16.156.10011.2.3.2.38" codeSystemName="检查/检验结果代码表" />  
+                  <!--1.正常 2.异常 3.不确定--> 
+                </observation> 
+              </entryRelationship> 
+            </observation> 
+          </entry> 
+        </section> 
+      </component>
 	</xsl:template>
 	
     <!--适用出院小结-->
@@ -278,7 +291,7 @@
                 <!--HDSD00.16.042 DE04.50.128.00 阳性辅助检查结果 -->  
                 <observation classCode="OBS" moodCode="EVN"> 
                   <code code="DE04.50.128.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>  
-                  <value xsi:type="ST">自由文本</value> 
+                  <value xsi:type="ST"><xsl:value-of select="doc53/yxjcjg"/></value> 
                 </observation> 
               </component> 
             </organizer> 

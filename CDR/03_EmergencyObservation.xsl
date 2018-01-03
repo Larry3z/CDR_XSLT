@@ -8,6 +8,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/LaboratoryExamination.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/PhysicalExamination.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -109,8 +110,9 @@
 					</entry>
 				</section>
 			</component-->
+			<!--体格检查章节-->
 			<xsl:comment>体格检查章节</xsl:comment>
-			<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
+			<xsl:apply-templates select="Sections/Section/PhysicalExamination" mode="PhyE"/>
 			<xsl:comment>实验室检验章节</xsl:comment>
 			<!-- 实验室检验章节 -->
 			<xsl:apply-templates select="Encounter/Orders/RadOrder/LabOrder/Results/Result/ResultItems" mode="LabE1"/>

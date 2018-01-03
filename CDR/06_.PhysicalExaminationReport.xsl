@@ -7,6 +7,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/InspectionReport.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/PhysicalExamination.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
@@ -65,8 +66,9 @@
 				<xsl:apply-templates select="Diagnoses" mode="Problem"/>
 				<xsl:comment>手术操作</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="PhyE1"/>
+				<!--体格检查章节-->
 				<xsl:comment>体格检查章节</xsl:comment>
-				<xsl:apply-templates select="Diagnoses" mode="PhysicalExamination.xsl"/>
+				<xsl:apply-templates select="Sections/Section/PhysicalExamination" mode="PhyE1"/>
 				<component>
 					<section>
 						<code displayName="体格检查"/>

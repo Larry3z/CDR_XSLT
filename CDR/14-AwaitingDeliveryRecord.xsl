@@ -6,6 +6,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/PrenatalExamination.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/-->
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
@@ -118,20 +119,11 @@
 							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
 						</section>
 					</component>
+					
 					<!--产前检查章节-->
 					<xsl:comment>产前检查章节</xsl:comment>
-					<component>
-						<section>
-							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-							<text/>
-							<!--宫底高度 1..1 R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-							<!--腹围 1..1 R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
-							<!--胎方位代码 1..1 R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-						</section>
-					</component>
+					<xsl:apply-templates select="Sections/Section/PrenatalExamination" mode="PreE"/>
+					
 					<!--处置计划章节-->
 					<xsl:comment>处置计划章节</xsl:comment>
 					<component>

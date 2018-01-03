@@ -7,6 +7,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/LaboratoryExamination.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -109,7 +110,7 @@
 
 				
 				<xsl:comment>实验室检查章节</xsl:comment>
-				<xsl:apply-templates select="Diagnoses" mode="PhysicalExamination.xsl"/>
+				<xsl:apply-templates select="LaboratoryExamination" mode="LabE3"/>
 				<component>
 					<section>
 				<xsl:comment>血型1..1R</xsl:comment>

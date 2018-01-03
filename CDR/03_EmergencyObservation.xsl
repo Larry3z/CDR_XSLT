@@ -6,6 +6,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/LaboratoryExamination.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
@@ -111,7 +112,8 @@
 			<xsl:comment>体格检查章节</xsl:comment>
 			<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
 			<xsl:comment>实验室检验章节</xsl:comment>
-			<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
+			<!-- 实验室检验章节 -->
+			<xsl:apply-templates select="Encounter/Orders/RadOrder/LabOrder/Results/Result/ResultItems" mode="LabE1"/>
 			
 			<!-- 实验室检验章节 -->
 			<component>

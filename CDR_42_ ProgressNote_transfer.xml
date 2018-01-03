@@ -31,8 +31,9 @@
 		<Class>住院</Class>
 		<Hospitalization>
 			<Location>
-				<bed>3</bed>
-				<ward>骨科</ward>
+				<bed>03</bed>
+				<room>04</room>
+				<ward>骨科一区</ward>
 			</Location>
 		</Hospitalization>
 		<Status>完成</Status>
@@ -103,7 +104,8 @@
 			<IsDeceased>false</IsDeceased>
 			<BloodABO>2</BloodABO>
 			<BloodRH>1</BloodRH>
-			<Citizenship>银川</Citizenship>
+			<Citizenship>银川</Citizenship>.
+			<Age>44</Age>
 			<Address>
 				<CreationTime>2017-07-28T11:32:14Z</CreationTime>
 				<Province>河南</Province>

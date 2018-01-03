@@ -5,13 +5,12 @@
 		<xsl:variable name="displayName">
 			<xsl:choose>
 				<xsl:when test="DiagnosisType ='初步诊断'">初步诊断-西医诊断编码</xsl:when>
-<<<<<<< HEAD
-=======
+
 				<xsl:when test="DiagnosisType='术前诊断'">术前诊断编码</xsl:when>
 				<xsl:when test="DiagnosisType ='术后诊断'">术后诊断编码</xsl:when>
 				<xsl:when test="DiagnosisType ='入院诊断'">入院诊断</xsl:when>
 				<xsl:when test="DiagnosisType ='入院诊断'">入院诊断</xsl:when>
->>>>>>> 17b0d309215e57cd15897dd3a91808445d89bb2b
+
 				<xsl:otherwise>诊断编码</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
@@ -27,7 +26,7 @@
 		<entry>
 			<observation classCode="OBS" moodCode="EVN ">
 				<code code="DE05.01.025.00" displayName="鉴别诊断-西医诊断名称" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
-<<<<<<< HEAD
+
 				<value xsi:type="ST"><xsl:value-of select="DiagnosisCode/Name"/></value>
 =======
 				<value xsi:type="ST">
@@ -60,7 +59,7 @@
 						<value xsi:type="CD" code="{DiagnosisCode/Code}" displayName="{DiagnosisCode/Name}" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/>
 					</observation>
 				</entryRelationship>
->>>>>>> 17b0d309215e57cd15897dd3a91808445d89bb2b
+
 			</observation>
 		</entry>
 	</xsl:template>
@@ -109,10 +108,7 @@
 			</entry>
 		</section>
 	</xsl:template>
-<<<<<<< HEAD
-=======
-	<!-- reserved-->
->>>>>>> 17b0d309215e57cd15897dd3a91808445d89bb2b
+
 	<xsl:template match="*" mode="GeneralDiagnosisEntry">
 		<section>
 			<code code="29548-5" displayName="西医诊断编码" codeSystem="2.16.840.1.11883.6.1" codeSystemName="LOINC"/>

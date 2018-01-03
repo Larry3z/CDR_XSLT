@@ -6,6 +6,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/InspectionReport.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
@@ -83,23 +84,9 @@
 
 				<xsl:comment>其他处置章节</xsl:comment>
 				<xsl:apply-templates select="Diagnoses" mode="a"/>
-				<xsl:comment>检查报告章节</xsl:comment>
-				<component>
-					<section>
-						<code displayName="检查报告"/>
-						<text/>
-						<!-- 检查报告结果—客观所见条目0..1 R2 -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查报告结果-主观提示条目0..1 R2 -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查报告科室名称1..1 R -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!--检查报告机构名称 1..1 R-->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-						<!-- 检查报告备注0..1 R2 -->
-						<xsl:apply-templates select="Diagnoses" mode="a"/>
-					</section>
-				</component>
+				<!-- 检查报告 -->
+				<xsl:apply-templates select="InspectionReport" mode="IRep"/>
+				
 			</structuredBody>
 		</component>
 		</ClinicalDocument>

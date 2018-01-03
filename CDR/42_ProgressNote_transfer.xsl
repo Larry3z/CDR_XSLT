@@ -6,8 +6,8 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
-	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
+	
+	<!--xsl:include href="CDA-Support-Files/Export/Secti。。。。。。on-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
 			<xsl:apply-templates select="." mode="CDAHeader"/>
@@ -65,64 +65,7 @@
 				</assignedEntity>
 			</authenticator>
 			<!--关联活动信息 1..R-->
-			<componentOf>
-				<encompassingEncounter>
-					<code displayName="入院日期时间"/>
-					<xsl:variable name="AdminTime" select="Encounter/AdmissionTime"/>
-					<effectiveTime value="{$AdminTime}"/>
-					<location>
-						<healthCareFacility>
-							<serviceProviderOrganization>
-								<asOrganizationPartOf classCode="PART">
-									<!-- DE01.00.026.00病床号 -->
-									<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
-										<id root="2.16.156.10011.1.22" extension="-+11"/>
-										<name>
-											<xsl:value-of select="Encounter/Hospitalization/Location/bed"/>
-										</name>
-										<!-- DE01.00.019.00病房号 -->
-										<asOrganizationPartOf classCode="PART">
-											<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
-												<id root="2.16.156.10011.1.21" extension="-"/>
-												<name>
-													<xsl:value-of select="Encounter/Hospitalization/Location/ward"/>
-												</name>
-												<!-- DE08.10.026.00科室名称 -->
-												<asOrganizationPartOf classCode="PART">
-													<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
-														<id root="2.16.156.10011.1.26" extension="{Encounter/AdmissionLocationNo}"/>
-														<name>
-															<xsl:value-of select="Encounter/AdmissionLocation"/>
-														</name>
-														<!-- DE08.10.054.00病区名称 -->
-														<asOrganizationPartOf classCode="PART">
-															<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
-																<id root="2.16.156.10011.1.27" extension="{Encounter/wholeOrganizationNo}"/>
-																<name>
-																	<xsl:value-of select="Encounter/wholeOrganization"/>
-																</name>
-																<!--医疗机构名称 -->
-																<asOrganizationPartOf classCode="PART">
-																	<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
-																		<id root="2.16.156.10011.1.5" extension="HYFE"/>
-																		<name>
-																			<xsl:value-of select="Encounter/HealthCareFacility"/>
-																		</name>
-																	</wholeOrganization>
-																</asOrganizationPartOf>
-															</wholeOrganization>
-														</asOrganizationPartOf>
-													</wholeOrganization>
-												</asOrganizationPartOf>
-											</wholeOrganization>
-										</asOrganizationPartOf>
-									</wholeOrganization>
-								</asOrganizationPartOf>
-							</serviceProviderOrganization>
-						</healthCareFacility>
-					</location>
-				</encompassingEncounter>
-			</componentOf>
+			<xsl:apply-templates select="Encounter" mode="Hosipitalization1"/>
 			<!--文档体-->
 			<component>
 				<structuredBody>
@@ -197,7 +140,7 @@
 							<xsl:apply-templates select="Sections/Section" mode="mode"/>
 						</section>
 					</component>
-					<!--住院过程章节：诊疗过程描述 1..1 R-->
+					<!--住院过程章节：疗程过程描述 1..1 R-->
 					<xsl:apply-templates select="Sections/Section" mode="mode"/>
 				</structuredBody>
 			</component>

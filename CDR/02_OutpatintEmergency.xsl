@@ -7,6 +7,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/LaboratoryExamination.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -68,7 +69,7 @@
 			<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
 			<xsl:comment>实验室检验章节</xsl:comment>
 			<!-- 实验室检验章节 -->
-			<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
+			<xsl:apply-templates select="Encounter/Orders/RadOrder/LabOrder/Results/Result/ResultItems" mode="LabE1"/>
 			<xsl:comment>诊断记录章节</xsl:comment>
 			
 			<!-- 诊断记录章节 -->

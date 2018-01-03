@@ -110,13 +110,13 @@
 						<asOrganizationPartOf classCode="PART">
 							<!-- DE01.00.026.00病床号 -->
 							<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
-								<id root="2.16.156.10011.1.22" extension="{Hosipitalization/Location/bed}"/>
-								<name>-+11</name>
+								<id root="2.16.156.10011.1.22" extension="{Hospitalization/Location/bed}"/>
+								<name><xsl:value-of select="Hospitalization/Location/bed"/></name>
 								<!-- DE01.00.019.00病房号 -->
 								<asOrganizationPartOf classCode="PART">
 									<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
-										<id root="2.16.156.10011.1.21" extension="{Hosipitalization/Location/room}"/>
-										<name>无</name>
+										<id root="2.16.156.10011.1.21" extension="{Hospitalization/Location/room}"/>
+										<name><xsl:value-of select="Hospitalization/Location/room"/></name>
 										<!-- DE08.10.026.00科室名称 -->
 										<asOrganizationPartOf classCode="PART">
 											<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
@@ -126,7 +126,7 @@
 												<asOrganizationPartOf classCode="PART">
 													<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
 														<id root="2.16.156.10011.1.27" extension="--"/>
-														<name><xsl:value-of select="Hosipitalization/Location/ward"/></name>
+														<name><xsl:value-of select="Hospitalization/Location/ward"/></name>
 														<!--XX医院 -->
 														<asOrganizationPartOf classCode="PART">
 															<wholeOrganization classCode="ORG" determinerCode="INSTANCE">

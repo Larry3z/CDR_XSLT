@@ -57,10 +57,14 @@
 	</xsl:template>
 	<xsl:template match="Document" mode="Allergy">
 		<comment>过敏史</comment>
-		<code code="DE02.10.022.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="过敏史"/>
-		<value xsi:type="ST">
-			<xsl:value-of select="/Document/Allergies/Allergy/FreeTextAllergy"/>
-		</value>
+		<entry>
+			<observation classCode="OBS" moodCode="EVN">
+				<code code="DE02.10.022.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="过敏史"/>
+				<value xsi:type="ST">
+					<xsl:value-of select="/Document/Allergies/Allergy/FreeTextAllergy"/>
+				</value>
+			</observation>
+		</entry>
 	</xsl:template>
 	<xsl:template match="Document" mode="Blood">
 		<comment>输血史</comment>
@@ -99,22 +103,84 @@
 	</xsl:template>
 	<xsl:template match="Document" mode="HealthStatus">
 		<comment>健康状况标志</comment>
-		
-				<code code="DE05.10.031.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="一般健康状况标志"/>
-				<value xsi:type="BL" value="{/Document/IllnessHistories/IllnessHistory[CreationTime='2017-11-01T18:03:27Z']/IllnessID}"/>
-			
-		
+		<code code="DE05.10.031.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="一般健康状况标志"/>
+		<value xsi:type="BL" value="{/Document/IllnessHistories/IllnessHistory[CreationTime='2017-11-01T18:03:27Z']/IllnessID}"/>
 	</xsl:template>
 	<xsl:template match="Document" mode="InfectionStatus">
 		<comment>患者传染性标志</comment>
-		
-				<code code="DE05.10.119.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="患者传染性标志"/>
-				<value xsi:type="BL" value="{/Document/IllnessHistories/IllnessHistory[CreationTime='2017-11-01T18:04:11Z']/IllnessID}"/>
-			
+		<code code="DE05.10.119.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="患者传染性标志"/>
+		<value xsi:type="BL" value="{/Document/IllnessHistories/IllnessHistory[CreationTime='2017-11-01T18:04:11Z']/IllnessID}"/>
 	</xsl:template>
 	<xsl:template match="Document" mode="AllergyStatus">
 		<comment>过敏标志</comment>
 		<code code="DE02.10.023.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
 		<value xsi:type="BL" value="{/Document/Allergies/Allergy/AllergyID}"/>
 	</xsl:template>
+	<xsl:template match="Document" mode="Social">
+		<comment>个人史章节</comment>
+		<component>
+			<section>
+				<code code="29762-2" displayName="Social history" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+				<text/>
+				<!--个人史条目-->
+				<entry>
+					<observation classCode="OBS" moodCode="EVN">
+						<code code="DE02.10.097.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="个人史"/>
+						<value xsi:type="ST">
+							<xsl:value-of select="/Document/SocialHistories/SocialHistory/SocialHabitComments"/>
+						</value>
+					</observation>
+				</entry>
+			</section>
+		</component>
+	</xsl:template>
+	<xsl:template match="Document" mode="Menstruation">
+		<comment>月经史</comment>
+		<component>
+			<section>
+				<code code="49033-4" displayName="Menstrual History" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+				<text/>
+				<entry>
+					<observation classCode="OBS" moodCode="EVN">
+						<code code="DE02.10.102.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="月经史"/>
+						<value xsi:type="ST">
+							<xsl:value-of select="/Document/IllnessHistories/IllnessHistory[CreationTime='2017-11-01T18:04:06Z']/NoteText"/>
+						</value>
+					</observation>
+				</entry>
+			</section>
+		</component>
+	</xsl:template>
+	<xsl:template match="Document" mode="Family">
+		<comment>家族史</comment>
+		<component>
+			<section>
+				<code code="10157-6" displayName="HISTORY OF FAMILY MEMBER DISEASES" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+				<text/>
+				<entry>
+					<observation classCode="OBS" moodCode="EVN">
+						<code code="DE02.10.103.00" displayName="家族史" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+						<xsl:value-of select="/Document/FamilyHistory[CreationTime='2017-11-27T18:04:14Z']/NoteText"/>
+					</observation>
+				</entry>
+			</section>
+		</component>
+	</xsl:template>
+	<xsl:template match="Document" mode="Present">
+		<comment>现病史</comment>
+		<component>
+			<section>
+				<code code="10164-2" displayName="HISTORY OF PRESENT ILLNESS" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+				<text/>
+				<!--现病史条目-->
+				<entry>
+					<observation classCode="OBS" moodCode="EVN">
+						<code code="DE02.10.071.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="现病史"/>
+						<value xsi:type="ST"><xsl:value-of select="/Document/Problems/Problem1/Comments"/></value>
+					</observation>
+				</entry>
+			</section>
+		</component>
+	</xsl:template>
+	
 </xsl:stylesheet>

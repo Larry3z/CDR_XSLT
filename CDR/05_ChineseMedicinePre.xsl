@@ -6,7 +6,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
+	
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -41,40 +41,35 @@
 			<!-- 病床号、病房、病区、科室和医院的关联 -->
 			<!--文档体-->
 			<component>
-				<structuredBody>
-				<xsl:comment>诊断章节</xsl:comment>	
+		<structuredBody>
+			<!--
+********************************************************
+诊断章节
+********************************************************
+-->
 			<!--诊断章节-->
-			<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 			<component>
 				<section>
 					<code code="29548-5" displayName="Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
 					<text/>
-					<xsl:comment>西医诊断编码0..1O</xsl:comment>
-					<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 					<!--条目：诊断-->
-					
-					<!--entry>
+					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE05.01.024.00" displayName="西医诊断编码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
 							<value xsi:type="CD" code="K31.500" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10" displayName="十二指肠梗阻"/>
 						</observation>
-					</entry-->
-					<xsl:comment>中医诊断病名代码0..1O</xsl:comment>
-					<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
-					<!--entry>
-					<xsl:comment>西医诊断编码</xsl:comment>
+					</entry>
+					<entry>
 						<observation classCode="OBS" moodCode="EVN">
-							<code code="DE05.10.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="c">
+							<code code="DE05.10.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="中医诊断病名代码">
 								<qualifier>
 									<name displayName="中医诊断病名代码"/>
 								</qualifier>
 							</code>
 							<value xsi:type="CD" code="BNS130" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)" displayName="关格病"/>
 						</observation>
-					</entry-->
-					<xsl:comment>中医证候代码</xsl:comment>
-					<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
-					<!--entry>
+					</entry>
+					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE05.10.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="中医证候代码">
 								<qualifier>
@@ -83,7 +78,7 @@
 							</code>
 							<value xsi:type="CD" code="BWA010" displayName="石瘿病" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)"/>
 						</observation>
-					</entry-->
+					</entry>
 				</section>
 			</component>
 			<!--
@@ -91,101 +86,143 @@
 用药章节
 ********************************************************
 -->
-<xsl:comment>用药章节 </xsl:comment>
-<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 			<!--用药章节 1..*-->
 			<component>
 				<section>
 					<code code="10160-0" displayName="HISTORY OF MEDICATION USE" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
 					<text/>
-					<xsl:comment>处方条目1..*R</xsl:comment>
-					<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 					<!--处方条目-->
-					
-					<xsl:comment>处方有效天数1..1R</xsl:comment>
-					<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
+					<entry>
+						<substanceAdministration classCode="SBADM" moodCode="EVN">
+							<text/>
+							<routeCode code="1" displayName="口服" codeSystem="2.16.156.10011.2.3.1.158" codeSystemName="用药途径代码表"/>
+							<!--用药剂量-单次 -->
+							<doseQuantity value="{/Document/DrugUse/dose}" unit="mg"/>
+							<!--用药频率 -->
+							<rateQuantity>
+							     <translation code="{/Document/DrugUse/times}" displayName="bid"/>
+							</rateQuantity>
+							<!--药物剂型 -->
+							<administrationUnitCode code="47" displayName="灌汤剂" codeSystem="2.16.156.10011.2.3.1.211" codeSystemName="药物剂型代码表"></administrationUnitCode>
+							<consumable>
+								<manufacturedProduct>
+									<manufacturedLabeledDrug>
+										<!--药品代码及名称(通用名) -->
+										<code/>
+																				<name><xsl:value-of select="/Document/DrugUse/name"/> </name>
+
+									</manufacturedLabeledDrug>
+								</manufacturedProduct>
+							</consumable>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE08.50.043.00" displayName="药物规格" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST"><xsl:value-of select="/Document/DrugUse/size"/></value>
+								</observation>
+							</entryRelationship>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.135.00" displayName="药物使用总剂量" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="PQ" value="{/Document/DrugUse/total}" unit="mg"/>
+								</observation>
+							</entryRelationship>
+						</substanceAdministration>
+					</entry>
 					<!--处方有效天数-->
-					<!--entry>
+					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE06.00.294.00" displayName="处方有效天数" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
-							<value xsi:type="PQ" value="3" unit="天"/>
+							<value xsi:type="PQ" value="{/Document/DrugUse/days}"  unit="天"/>
 						</observation>
-					</entry-->
-					<xsl:comment>处方药品组号1..1R</xsl:comment>
-					<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
+					</entry>
 					<!--处方药品组号-->
 					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE08.50.056.00" displayName="处方药品组号" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
-							<value xsi:type="INT" value="4"/>
+							<value xsi:type="INT" value="{/Document/DrugUse/group}"/>
 						</observation>
 					</entry>
-					<xsl:comment>中药饮片处方0..*O</xsl:comment>
-					<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 					<!--中药饮片处方-->
-					
-					<xsl:comment>处方类别代码1..1R</xsl:comment>
-					<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN ">
+							<code code="DE08.50.049.00" displayName="中药饮片处方" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="/Document/DrugUse/text"/></value>
+							<!--中药饮片剂数-->
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN ">
+									<code code="DE08.50.050.00" displayName="中药饮片剂数" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="PQ" value="{/Document/DrugUse/MedicinePieces/times}" unit="剂"/>
+								</observation>
+							</entryRelationship>
+							<!--中药饮片煎煮法-->
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN ">
+									<code code="DE08.50.047.00" displayName="中药煎煮法" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST"><xsl:value-of select="/Document/DrugUse/MedicinePieces/boilingway"/></value>
+								</observation>
+							</entryRelationship>
+							<!--中药用药方法-->
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN ">
+									<code code="DE06.00.136.00" displayName="中药用药法" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST"><xsl:value-of select="/Document/DrugUse/MedicinePieces/useway"/></value>
+								</observation>
+							</entryRelationship>
+						</observation>
+					</entry>
 					<!-- 处方类别代码 DE08.50.032.00 处方类别代码 -->
-					<!--entry>
+					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE08.50.032.00" displayName="处方类别代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
 							<value xsi:type="CD" code="1" codeSystem="2.16.156.10011.2.3.2.40" codeSystemName="处方类别代码表" displayName="中药饮片处方"/>
 						</observation>
-					</entry-->
+					</entry>
 				</section>
 			</component>
 			<!--
 **********************************************
 费用章节
 **********************************************
---><xsl:comment>费用章节</xsl:comment>
-<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
-			<!--component>
+-->
+			<component>
 				<section>
 					<code code="48768-6" displayName="PAYMENT SOURCES" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
 					<text/>
 					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE07.00.004.00" displayName="处方药品金额" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
-							<value xsi:type="MO" value="4.00" currency="元"/>
+							<value xsi:type="MO"  value="{/Document/cost/cost4}" currency="元"/>
 						</observation>
 					</entry>
 				</section>
-			</component-->
+			</component>
 			<!--
 ***********************************************
 治疗计划章节
 ***********************************************
 -->
-<xsl:comment>费用章节</xsl:comment>
-<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 			<component>
 				<section>
 					<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
 					<text/>
-					<xsl:comment>处方备注信息0..1O</xsl:comment>
-					<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 					<!--处方备注信息-->
-					<!--entry>
+					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE06.00.179.00" displayName="处方备注信息" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
-							<value xsi:type="ST">备注信息描述</value>
+							<value xsi:type="ST"><xsl:value-of select="/Document/TreatmentPlan/postscript"/></value>
 						</observation>
-					</entry-->
-					<xsl:comment>治则治法0..1O</xsl:comment>
-					<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
+					</entry>
 					<!--治则治法-->
-					<!--entry>
+					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE06.00.300.00" displayName="治则治法" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
-							<value xsi:type="ST">目前予患者综合保守治疗</value>
+							<value xsi:type="ST"><xsl:value-of select="/Document/Law"/></value>
 						</observation>
-					</entry-->
+					</entry>
 				</section>
 			</component>
-				</structuredBody>
-			</component>
+		</structuredBody>
+	</component>
 		</ClinicalDocument>
 	</xsl:template>
 </xsl:stylesheet>

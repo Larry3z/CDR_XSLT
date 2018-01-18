@@ -7,7 +7,6 @@
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/LaboratoryExamination.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -29,7 +28,7 @@
 						<xsl:apply-templates select="Encounter/Patient" mode="IDNo"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Name"/>
 						<xsl:apply-templates select="Encounter/Patient" mode="Gender"/>
-						<xsl:apply-templates select="Encounter/Patient/BirthTime" mode="BirthTime"/>
+						<xsl:apply-templates select="Encounter/Patient" mode="BirthTime"/>
 						<!--xsl:apply-templates select="Encounter/Patient" mode="InpatientID"  婚姻状况代码     /-->
 						<!--xsl:apply-templates select="Encounter/Patient" mode="InpatientID"   民族代码/-->
 						<!-- 出生地 县、市、省、邮政编码-->
@@ -115,7 +114,7 @@
 					<!--过敏史章节-->
 					<xsl:apply-templates select="Patient" mode="Blood"/>
 					<!--实验室检查章节-->
-					<xsl:apply-templates select="Encounter/Patient/Blood" mode="LabE"/>
+					<xsl:apply-templates select="Patient" mode="Blood"/>
 					<!--手术操作章节-->
 					<xsl:apply-templates select="Patient" mode="Blood"/>
 					<!--住院史章节-->

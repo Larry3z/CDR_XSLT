@@ -6,7 +6,6 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/LaboratoryExamination.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/-->
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
@@ -61,7 +60,7 @@
 			<component>
 				<structuredBody>
 					<!--实验室检查章节-->
-					<xsl:apply-templates select="Encounter/Patient/Blood" mode="LabE"/>
+					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
 					<!--主要健康问题章节-->
 					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
 					<!--输血章节-->

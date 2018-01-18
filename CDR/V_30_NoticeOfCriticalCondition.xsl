@@ -37,16 +37,53 @@
 			<!-- 病床号
 
 、病房、病区、科室和医院的关联 -->
-			<component>
-	<structuredBody> 
-      <!--诊断记录章节 1..1 R-->
-      <xsl:comment>诊断记录章节</xsl:comment>
-	  <xsl:apply-templates select="Sections/Section" mode="mode"/>  
-      <!--知情同意章节 1..1 R-->
-      <xsl:comment>知情同意章节</xsl:comment>
-	  <xsl:apply-templates select="Sections/Section" mode="mode"/>  
+			<component> 
+    <structuredBody> 
+      <!--
+***************************
+诊断章节
+***************************-->  
+      <component> 
+        <section> 
+          <code code="29548-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Diagnosis"/>  
+          <text/>  
+          <!--疾病诊断编码-->  
+          <entry typeCode="COMP"> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="疾病诊断编码"/>  
+              <value xsi:type="CD"  code="B95.100" displayName="B族链球菌感染"  codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/> 
+            </observation> 
+          </entry> 
+        </section> 
+      </component>  
+      <!--
+***************************
+知情同意章节
+***************************-->  
+      <component> 
+        <section> 
+          <code code="34895-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="EDUCATION NOTE"/>  
+          <text/>  
+          <entry> 
+            <!--病情概况以及主要抢救措施-->  
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.183.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="病情概况以及主要抢救措施"/>  
+              <value xsi:type="ST"><xsl:value-of select="/Document/informedConsent/illnessStateSaveWay"/></value>  
+              <!--病危（重）通知内容-->  
+              <entryRelationship typeCode="COMP"> 
+                <observation classCode="OBS" moodCode="EVN"> 
+                  <code code="DE06.00.278.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="病危（重）通知内容"/>  
+                  <!--通知时间-->  
+                  <effectiveTime value="20121101"/>  
+                  <value xsi:type="ST"><xsl:value-of select="/Document/informedConsent/riticalNotice"/></value> 
+                </observation> 
+              </entryRelationship> 
+            </observation> 
+          </entry> 
+        </section> 
+      </component> 
     </structuredBody> 
-	</component>
+  </component> 
 		</ClinicalDocument>
 	</xsl:template>
 </xsl:stylesheet>

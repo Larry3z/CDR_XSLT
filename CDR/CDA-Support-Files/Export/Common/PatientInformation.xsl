@@ -44,7 +44,8 @@
 	<xsl:template match="BirthTime" mode="BirthTime">
 		<xsl:comment>患者出生时间</xsl:comment>
 		<birthTime>
-				<xsl:value-of select="."/>
+			
+				<xsl:value-of select="BirthTime"/>
 		</birthTime>
 	</xsl:template>
 	<!--地址 Address-->
@@ -158,12 +159,12 @@
 		<xsl:variable name="Maritaldisplay">
 			<xsl:value-of select="Name"/>
 		</xsl:variable>
-		<maritalStatusCode code="{$MaritalCode}" displayNme="{$Maritaldisplay}" codeSystem="{$婚姻状况代码表}" displayName="婚姻状况代码表(GB/T 2261.2)"/>
+		<maritalStatusCode code="{$MaritalCode}" displayNme="{Maritaldisplay}" codeSystem="{$婚姻状况代码表}" displayName="婚姻状况代码表(GB/T 2261.2)"/>
 	</xsl:template>
 	<!--Occupation-->
 	<xsl:template match="*" mode="Occupation">
 		<xsl:comment>职业</xsl:comment>
-		<maritalStatusCode code="{Occupation/Code}" displayNme="{Occupation/Name}" codeSystem="2.16.156.10011.2.3.3.13" codeSystemName="从业状况(个人身体)代码表(GB/T 2261.4)"/>
+		<maritalStatusCode code="{Occupation/Code}" displayNme="{Occupatuion/Name}" codeSystem="2.16.156.10011.2.3.3.13" codeSystemName="从业状况(个人身体)代码表(GB/T 2261.4)"/>
 	</xsl:template>
 	<!--联系人1..*, @typeCode: NOT(ugent notification contact)，固定值，表示不同的参与者-->
 	<xsl:template match="SupportContact" mode="CDRSupportContacts">

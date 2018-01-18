@@ -79,33 +79,96 @@
 				</encompassingEncounter>
 			</componentOf>
 			<component>
-		    <structuredBody>
-			<!--诊断记录章节 1..1 R-->
-			<xsl:comment>诊断记录章节</xsl:comment>
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			<!--输血章节 1..1 R-->
-			<xsl:comment>输血章节</xsl:comment>
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			<!--治疗计划章节 1..1 R-->
-			<xsl:comment>治疗计划章节</xsl:comment>
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			<!--意见章节 1..1 R-->
-			<xsl:comment>意见章节</xsl:comment>
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
+		<structuredBody>
+			<!--
+***************************
+诊断章节
+***************************-->
 			<component>
 				<section>
-				<!--医疗机构意见 1..1 R-->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!--患者意见 1..1 R-->				
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
+					<code code="29548-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Diagnosis"/>
+					<text/>
+					<!--疾病诊断编码-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="疾病诊断编码"/>
+							<value xsi:type="CD"  code="B95.100" displayName="B族链球菌感染"  codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10" />
+						</observation>
+					</entry>
 				</section>
 			</component>
-			<!--风险章节 1..1 R-->
-			<xsl:comment>风险章节</xsl:comment>
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			<!--输血章节-->
-			<xsl:comment>输血章节</xsl:comment>
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
+			<!--
+***************************
+输血章节
+***************************-->
+			<component>
+				<section>
+					<code code="56836-0" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of blood transfusion"/>
+					<text/>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE06.00.106.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<!--1无，2有，9未说明-->
+							<value xsi:type="CD" code="1" displayName="无" codeSystem="2.16.156.10011.2.3.2.42" codeSystemName="输血史标识代码表"/>
+						</observation>
+					</entry>
+				</section>
+			</component>
+			<!--
+***************************
+治疗计划章节
+***************************-->
+			<component>
+				<section>
+					<code code="18776-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="TREATMENT PLAN"/>
+					<text/>
+					<entry>
+						<!--输血过程-->
+						<procedure classCode="PROC" moodCode="EVN">
+							<code/>
+							<!--输血时间-->
+							<effectiveTime/>
+							<!--输血方式-->
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.266.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="输血方式"/>
+									<value xsi:type="ST"><xsl:value-of select="/Document/treatPlan/transfusion/traWay"/></value>
+								</observation>
+							</entryRelationship>
+							<!--输血指征-->
+							<entryRelationship typeCode="CAUS">
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.340.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="输血指征"/>
+									<value xsi:type="ST"><xsl:value-of select="/Document/treatPlan/transfusion/traIndication"/></value>
+								</observation>
+							</entryRelationship>
+							<!--输血品种代码-->
+							<entryRelationship typeCode="COMP">
+								<substanceAdministration classCode="SBADM" moodCode="RQO">
+									<consumable>
+										<manufacturedProduct>
+											<manufacturedMaterial>
+												<code code="11" codeSystem="2.16.156.10011.2.3.1.251" codeSystemName="输血品种代码表" displayName="浓缩红细胞"/>
+											</manufacturedMaterial>
+										</manufacturedProduct>
+									</consumable>
+								</substanceAdministration>
+							</entryRelationship>
+							<!--输血前有关检查项目以及结果-->
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE05.10.109.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="输血前有关检查项目以及结果"/>
+									<value xsi:type="ED"><xsl:value-of select="/Document/treatPlan/transfusion/traInspectionItemResult"/></value>
+								</observation>
+							</entryRelationship>
+						</procedure>
+					</entry>
+				</section>
+			</component>
+			<!--
+***************************
+意见章节
+***************************-->
 			<component>
 				<section>
 					<code displayName="意见章节"/>
@@ -114,21 +177,22 @@
 					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE06.00.018.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="医疗机构的意见"/>
-							<value xsi:type="ST">医疗机构意见</value>
+							<value xsi:type="ST"><xsl:value-of select="/Document/suggestion/medicalInstitution"/></value>
 						</observation>
 					</entry>
 					<!--患者意见-->
 					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE06.00.018.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="患者的意见"/>
-							<value xsi:type="ST">患者意见</value>
+							<value xsi:type="ST"><xsl:value-of select="/Document/suggestion/patientOpinion"/></value>
 						</observation>
 					</entry>
 				</section>
 			</component>
-			<!--风险章节-->
-			<xsl:comment>风险章节</xsl:comment>
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
+			<!--
+***************************
+风险章节
+***************************-->
 			<component>
 				<section>
 					<code displayName="操作风险"/>
@@ -137,7 +201,7 @@
 					<entry>
 						<observation classCode="OBS" moodCode="DEF">
 							<code code="DE06.00.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="输血风险及可能发生的不良后果"/>
-							<value xsi:type="ST">输血风险及可能发生的不良后果</value>
+							<value xsi:type="ST"><xsl:value-of select="/Document/operationRisk/transfusionRisk"/></value>
 						</observation>
 					</entry>
 				</section>

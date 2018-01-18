@@ -5,7 +5,6 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/AssistantExamination.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
@@ -111,7 +110,7 @@
 						</section>
 					</component>
 					<!--辅助检查章节 0..1 R2-->
-					<xsl:apply-templates select="Encounter/Orders/RadOrder/Results/Result/ResultItems/Observation" mode="AssE"/>
+					<xsl:apply-templates select="Sections/Section" mode="mode"/>
 					<!--手术操作章节0..1 R2-->
 					<xsl:comment>手术操作章节</xsl:comment>
 					<component>

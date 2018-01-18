@@ -6,8 +6,6 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/AssistantExamination.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/PhysicalExamination.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
@@ -101,9 +99,38 @@
 					</component>
 					<!--体格检查章节-->
 					<xsl:comment>体格检查章节</xsl:comment>
-					<xsl:apply-templates select="Sections/Section/PhysicalExamination" mode="PhyE3"/>
+					<component>
+						<section>
+							<!--一般状况检查结果  0..1 R2-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--皮肤和粘膜检查结果  1..1 R-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--全身浅表淋巴检查结果 1..1 R-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--头部及其器官检查结果  1..1 R-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--颈部检查结果  1..1 R-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--胸部检查结果  1..1 R-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--腹部检查结果  1..1 R-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--肛门指诊检查结果  0..1 R2-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--外生殖器检查结果  0..1 R2-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--脊柱检查结果  1..1 R-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--四肢检查结果  1..1 R-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--神经系统检查结果  1..1 R-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+							<!--专科情况 0..1 R2-->
+							<xsl:apply-templates select="Patient" mode="Blood"/>
+						</section>
+					</component>
 					<!--辅助检查章节-->
-					<xsl:apply-templates select="Encounter/Orders/RadOrder/Results/Result/ResultItems/Observation/Comments" mode="AssE"/>
+					<xsl:apply-templates select="Patient" mode="Blood"/>
 					<!--主要健康问题章节-->
 					<xsl:comment>主要健康问题章节</xsl:comment>
 					<component>

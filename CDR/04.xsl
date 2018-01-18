@@ -6,11 +6,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-<<<<<<< HEAD
-	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/-->
-=======
 	<xsl:include href="CDA-Support-Files/Export/Common/Histories.xsl"/>
->>>>>>> f19460c9334c7b6064ea5dde237c0aa643a9d76f
 	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Medication.xsl"/>
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3" xmlns:mif="urn:hl7-org:v3/mif">
@@ -64,10 +60,6 @@
 			<xsl:call-template name="relatedDocument"/>
 			<!--文档体开始-->
 			<component>
-<<<<<<< HEAD
-				<structuredBody>
-					<component>
-=======
 		<structuredBody>
 			<!--诊断记录章节-->
 			<component>
@@ -85,7 +77,6 @@
 			</component>
 			<!--用药章节 1..*-->
 			<component>
->>>>>>> f19460c9334c7b6064ea5dde237c0aa643a9d76f
 				<section>
 					<code code="10160-0" codeSystem="2.16.840.1.113883.6.1" displayName="HISTORY
 OF MEDICATION USE" codeSystemName="LOINC"/>
@@ -95,17 +86,10 @@ OF MEDICATION USE" codeSystemName="LOINC"/>
 							<text/>
 							<routeCode code="1" displayName="口服" codeSystem="2.16.156.10011.2.3.1.158" codeSystemName="用药途径代码表"/>
 							<!--用药剂量-单次 -->
-<<<<<<< HEAD
-							<doseQuantity value="{/Document/Medication1/DoseQuantity}" unit="mg"/>
-							<!--用药频率 -->
-							<rateQuantity>
-							     <translation code="01" displayName="bid"/>
-=======
 							<doseQuantity value="{/Document/DrugUse/dose}" unit="mg"/>
 							<!--用药频率 -->
 							<rateQuantity>
 							     <translation code="{/Document/DrugUse/times}" displayName="bid"/>
->>>>>>> f19460c9334c7b6064ea5dde237c0aa643a9d76f
 							</rateQuantity>
 							<!--药物剂型 -->
 							<administrationUnitCode code="47" displayName="灌汤剂" codeSystem="2.16.156.10011.2.3.1.211" codeSystemName="药物剂型代码表"></administrationUnitCode>
@@ -114,32 +98,20 @@ OF MEDICATION USE" codeSystemName="LOINC"/>
 									<manufacturedLabeledDrug>
 										<!--药品代码及名称(通用名) -->
 										<code/>
-<<<<<<< HEAD
-										<name>氢氯噻臻</name>
-=======
 										<name><xsl:value-of select="/Document/DrugUse/name"/> </name>
->>>>>>> f19460c9334c7b6064ea5dde237c0aa643a9d76f
 									</manufacturedLabeledDrug>
 								</manufacturedProduct>
 							</consumable>
 							<entryRelationship typeCode="COMP">
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE08.50.043.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="药物规格"/>
-<<<<<<< HEAD
-									<value xsi:type="ST"><xsl:value-of select="/Document/Medication1/DrugSpecifications"/></value>
-=======
 									<value xsi:type="ST"><xsl:value-of select="/Document/DrugUse/size"/></value>
->>>>>>> f19460c9334c7b6064ea5dde237c0aa643a9d76f
 								</observation>
 							</entryRelationship>
 							<entryRelationship typeCode="COMP">
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE06.00.135.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="药物使用总剂量"/>
-<<<<<<< HEAD
-									<value xsi:type="PQ" value="3.22"/>
-=======
 									<value xsi:type="PQ" value="{/Document/DrugUse/total}"/>
->>>>>>> f19460c9334c7b6064ea5dde237c0aa643a9d76f
 								</observation>
 							</entryRelationship>
 						</substanceAdministration>
@@ -147,39 +119,22 @@ OF MEDICATION USE" codeSystemName="LOINC"/>
 					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE06.00.294.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="处方有效天数"/>
-<<<<<<< HEAD
-							<value xsi:type="PQ" value="3" unit="天"/>
-=======
 							<value xsi:type="PQ" value="{/Document/DrugUse/days}" unit="天"/>
->>>>>>> f19460c9334c7b6064ea5dde237c0aa643a9d76f
 						</observation>
 					</entry>
 					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE08.50.056.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="处方药品组号"/>
-<<<<<<< HEAD
-							<value xsi:type="INT" value="4"/>
-=======
 							<value xsi:type="INT" value="{/Document/DrugUse/group}"/>
->>>>>>> f19460c9334c7b6064ea5dde237c0aa643a9d76f
 						</observation>
 					</entry>
 					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE06.00.179.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="处方备注信息"/>
-<<<<<<< HEAD
-							<value xsi:type="ST">备注信息描述</value>
-						</observation>
-					</entry>
-				</section>
-			</component>
-				</structuredBody>
-=======
 							<value xsi:type="ST"><xsl:value-of select="/Document/DrugUse/text"/></value>
 						</observation>
 					</entry>
 				</section>
->>>>>>> f19460c9334c7b6064ea5dde237c0aa643a9d76f
 			</component>
 			<!--费用章节-->
 			<component>

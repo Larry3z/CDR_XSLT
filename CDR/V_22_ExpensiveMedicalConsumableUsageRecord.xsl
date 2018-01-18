@@ -65,10 +65,12 @@
 			<!--文档体-->
 			<component>
 		<structuredBody>
-			<!--诊断记录章节 1..1 R-->
-			<xsl:comment>诊断记录章节</xsl:comment>
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			<!--component>
+			<!--
+*****************************
+诊断章节
+*****************************
+-->
+			<component>
 				<section>
 					<code code="29548-5" displayName="Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
 					<text/>
@@ -79,10 +81,63 @@
 						</observation>
 					</entry>
 				</section>
-			</component-->
-			<!--高值耗材章节（同用药章节） 1..1 R-->
-			<xsl:comment>高值耗材章节</xsl:comment>
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
+			</component>
+			<!--
+*****************************
+高值耗材章节
+*****************************
+-->
+			<!--高值耗材章节（同用药章节） -->
+			<component>
+				<section>
+					<code code="10160-0" codeSystem="2.16.840.1.113883.6.1" displayName="HISTORY
+OF MEDICATION USE" codeSystemName="LOINC"/>
+					<text/>
+					<entry>
+						<substanceAdministration classCode="SBADM" moodCode="EVN">
+							<text/>
+							<!--使用途径：DE06.00.242.00-->
+							<routeCode nullFlavor="OTH">
+								<originalText><xsl:value-of select="/Document/expensive/useRoad"/></originalText>
+							</routeCode>
+							<!--耗材数量DE06.00.241.00、耗材单位DE08.50.034.00 -->
+							<doseQuantity value="{/Document/expensive/doseQuantity}" unit="mg"/>
+							<consumable>
+								<manufacturedProduct>
+									<!--产品编码-->
+									<id/>
+									<manufacturedMaterial>
+										<!--材料名称 -->
+										<code/>
+										<name><xsl:value-of select="/Document/expensive/materialName"/></name>
+									</manufacturedMaterial>
+									<manufacturerOrganization>
+										<name><xsl:value-of select="/Document/expensive/manufacturerName"/></name>
+										<asOrganizationPartOf>
+											<wholeOrganization>
+												<name><xsl:value-of select="/Document/expensive/supplierName"/></name>
+											</wholeOrganization>
+										</asOrganizationPartOf>
+									</manufacturerOrganization>
+								</manufacturedProduct>
+							</consumable>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE08.50.035.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="产品供应商"/>
+									<value xsi:type="ST"><xsl:value-of select="/Document/expensive/supplierName"/></value>
+								</observation>
+							</entryRelationship>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE08.50.058.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="植入性耗材标志"/>
+									<!-- 植入性耗材标志：DE08.50.058.00 -->
+									<value xsi:type="BL" value="true"/>
+								</observation>
+							</entryRelationship>
+						</substanceAdministration>
+					</entry>
+				</section>
+			</component>
 		</structuredBody>
 	</component>
 		</ClinicalDocument>

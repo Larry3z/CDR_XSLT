@@ -31,54 +31,136 @@
 					<providerOrganization classCode="ORG" determinerCode="INSTANCE">
 						<asOrganizationPartOf classCode="PART">
 							<!--讨论时间 -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--讨论地点 -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
+							<effectiveTime value="{Discuss/Time}"/>
+							<wholeOrganization>
+								<addr>
+									<xsl:value-of select="Discuss/Place"/>
+								</addr>
+							</wholeOrganization>
 						</asOrganizationPartOf>
 					</providerOrganization>
 				</patientRole>
 			</recordTarget>
-			<!-- 文档创作者 -->
-			<author typeCode="AUT" contextControlCode="OP">
-				<!--文档创作时间 1..1  -->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!--制定创作者 1..1 -->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			</author>
-			<!-- 保管机构 1..1 -->
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
+			<!-- 作者 -->
+			<xsl:apply-templates select="Author" mode="Author1"/>
+			<!-- 保管机构 -->
+			<xsl:apply-templates select="Custodian" mode="Custodian"/>
 			<!-- 签名 1..1 -->
 			<authenticator>
-				<!-- 手术者签名:DE09.00.053.00签名、日期时间 1..1 -->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!-- 麻醉医师签名:DE09.00.053.00签名、日期时间 1..1 -->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!-- 医师签名：DE09.00.053.00签名、日期时间 1..1 -->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
+				<!-- DE09.00.053.00签名日期时间 -->
+				<time value="{authenticator/SurgicalSignature/Surgeon/Time}"/>
+				<signatureCode/>
+				<assignedEntity>
+					<id root="2.16.156.10011.1.4" extension="-"/>
+					<code displayName="手术者"/>
+					<assignedPerson>
+						<name><xsl:value-of select="authenticator/SurgicalSignature/Surgeon/Name"/></name>
+						<professionalTechnicalPosition>
+							<professionaltechnicalpositionCode code="{authenticator/SurgicalSignature/Surgeon/ProfessionaltechnicalpositionCode}" codeSystem="2.16.156.10011.2.3.1.209" codeSystemName="专业技术职务类别代码表" displayName="{authenticator/SurgicalSignature/Surgeon/Title}"/>
+						</professionalTechnicalPosition>
+					</assignedPerson>
+				</assignedEntity>
 			</authenticator>
-			<!--讨论成员信息 1..* :参加讨论成员名单-->
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			<!--讨论主持人信息 1..1 :主持人姓名-->
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			<!--病床号、病房、病区、科室和医院的关联 1..R-->
+			<authenticator>
+				<!-- DE09.00.053.00签名日期时间 -->
+				<time value="{authenticator/SurgicalSignature/Physician/Time}"/>
+				<signatureCode/>
+				<assignedEntity>
+					<id root="2.16.156.10011.1.4" extension="-"/>
+					<code displayName="麻醉医师"/>
+					<assignedPerson>
+						<name><xsl:value-of select="authenticator/SurgicalSignature/Surgeon/Name"/></name>
+						<professionalTechnicalPosition>
+							<professionaltechnicalpositionCode code="{authenticator/SurgicalSignature/Physician/ProfessionaltechnicalpositionCode}" codeSystem="2.16.156.10011.2.3.1.209" codeSystemName="专业技术职务类别代码表" displayName="{authenticator/SurgicalSignature/Physician/Title}"/>
+						</professionalTechnicalPosition>
+					</assignedPerson>
+				</assignedEntity>
+			</authenticator>
+			<authenticator>
+				<!-- DE09.00.053.00签名日期时间 -->
+				<time value="{authenticator/SurgicalSignature/Anesthesiologist/Time}"/>
+				<signatureCode/>
+				<assignedEntity>
+					<id root="2.16.156.10011.1.4" extension="医务人员编号"/>
+					<code displayName="医师"/>
+					<assignedPerson>
+						<name><xsl:value-of select="authenticator/SurgicalSignature/Surgeon/Name"/></name>
+						<professionalTechnicalPosition>
+							<professionaltechnicalpositionCode code="{authenticator/SurgicalSignature/Anesthesiologist/ProfessionaltechnicalpositionCode}" codeSystem="2.16.156.10011.2.3.1.209" codeSystemName="专业技术职务类别代码表" displayName="{authenticator/SurgicalSignature/Anesthesiologist/Title}"/>
+						</professionalTechnicalPosition>
+					</assignedPerson>
+				</assignedEntity>
+			</authenticator>
+			<!--讨论成员信息-->
+			<participant typeCode="CON">
+				<associatedEntity classCode="ECON">
+					<!--参加讨论人员名单-->
+					<associatedPerson>
+						<name>
+							<xsl:value-of select="Practitioners/Practitioner[identifier='H001']/Name"/>
+						</name>
+						<name>
+							<xsl:value-of select="Practitioners/Practitioner[identifier='H002']/Name"/>
+						</name>
+						<name>
+							<xsl:value-of select="Practitioners/Practitioner[identifier='H003']/Name"/>
+						</name>
+						<name>
+							<xsl:value-of select="Practitioners/Practitioner[identifier='H004']/Name"/>
+						</name>
+						<name>
+							<xsl:value-of select="Practitioners/Practitioner[identifier='H005']/Name"/>
+						</name>
+					</associatedPerson>
+				</associatedEntity>
+			</participant>
+			 <!--讨论主持人信息-->  
+  <participant typeCode="ORG"> 
+    <associatedEntity classCode="ECON"> 
+      <id root="2.16.156.10011.1.4" extension="医务人员编码"/>  
+      <associatedPerson> 
+        <!--主持人姓名-->  
+        <name><xsl:value-of select="Practitioners/Compere"/></name> 
+      </associatedPerson> 
+    </associatedEntity> 
+  </participant>  
+			<!-- 病床号、病房、病区、科室和医院的关联 -->
 			<componentOf>
 				<encompassingEncounter>
-					<!--入院时间 1..1-->
-					<xsl:apply-templates select="Sections/Section" mode="mode"/>
+					<effectiveTime/>
 					<location>
 						<healthCareFacility>
 							<serviceProviderOrganization>
 								<asOrganizationPartOf classCode="PART">
-									<!-- DE01.00.026.00病床号 1..1 -->
-									<xsl:apply-templates select="Sections/Section" mode="mode"/>
-									<!-- DE01.00.019.00病房号1..1 -->
-									<xsl:apply-templates select="Sections/Section" mode="mode"/>
-									<!-- DE08.10.026.00科室名称 1..1 -->
-									<xsl:apply-templates select="Sections/Section" mode="mode"/>
-									<!-- DE08.10.054.00病区名称 1..1 -->
-									<xsl:apply-templates select="Sections/Section" mode="mode"/>
-									<!--医疗机构名称 1..1 -->
-									<xsl:apply-templates select="Sections/Section" mode="mode"/>
+									<!--HDSD00.09.003 DE01.00.026.00 病床号 -->
+									<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+										<id root="2.16.156.10011.1.22" extension="1-32"/>
+										<!--HDSD00.09.004 DE01.00.019.00 病房号 -->
+										<asOrganizationPartOf classCode="PART">
+											<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+												<id root="2.16.156.10011.1.21" extension="-"/>
+												<!--HDSD00.09.036 DE08.10.026.00 科室名称 -->
+												<asOrganizationPartOf classCode="PART">
+													<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+														<!--HDSD00.09.005 DE08.10.054.00 病区名称
+-->
+														<asOrganizationPartOf classCode="PART">
+															<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+																<name>普通外科一病房</name>
+																<!--XXX医院 -->
+																<asOrganizationPartOf classCode="PART">
+																	<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+																		<id root="2.16.156.10011.1.5" extension="12345678890"/>
+																		<name>北京大学第三医院</name>
+																	</wholeOrganization>
+																</asOrganizationPartOf>
+															</wholeOrganization>
+														</asOrganizationPartOf>
+													</wholeOrganization>
+												</asOrganizationPartOf>
+											</wholeOrganization>
+										</asOrganizationPartOf>
+									</wholeOrganization>
 								</asOrganizationPartOf>
 							</serviceProviderOrganization>
 						</healthCareFacility>
@@ -92,118 +174,118 @@
 -->
 			<component>
 				<structuredBody>
-					<!--术前诊断章节-->  
-      <component> 
-        <section> 
-          <code code="10219-4" displayName="Surgical operation note preoperative Dx" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>  
-          <text/>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="术前诊断编码"/>  
-              <value xsi:type="CD" code="B95.100" displayName="B族链球菌感染"  codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/> 
-            </observation> 
-          </entry>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.092.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="入院日期时间"/>  
-              <value xsi:type="TS" value="20130216131400"/> 
-            </observation> 
-          </entry> 
-        </section> 
-      </component>  
-      <!--治疗计划章节-->  
-      <component> 
-        <section> 
-          <code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>  
-          <text/>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.094.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术及操作名称"/>  
-              <value xsi:type="ST">文本</value> 
-            </observation> 
-          </entry>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.093.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术及操作编码"/>  
-              <value xsi:type="CD" code="84.51003" displayName="陶瓷脊椎融合物置入术" codeSystem="2.16.156.10011.2.3.3.12" codeSystemName="手术(操作)代码表(ICD-9-CM)"/> 
-            </observation> 
-          </entry>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.187.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术目标部位名称"/>  
-              <value xsi:type="ST">文本</value> 
-            </observation> 
-          </entry>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.221.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术及操作日期时间"/>  
-              <value xsi:type="TS" value="000000000000"/> 
-            </observation> 
-          </entry>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.073.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施麻醉方法代码"/>  
-              <value xsi:type="CD" code="1" displayName="全身麻醉" codeSystem="2.16.156.10011.2.3.1.159" codeSystemName="麻醉方法代码表"/> 
-            </observation> 
-          </entry> 
-        </section> 
-      </component>  
-      <!--手术操作章节-->  
-      <component> 
-        <section> 
-          <code code="47519-4" displayName="HISTORY OF PROCEDURES" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>  
-          <text/>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.254.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="手术要点"/>  
-              <value xsi:type="ST">文本</value> 
-            </observation> 
-          </entry>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.271.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="术前准备"/>  
-              <value xsi:type="ST">文本</value> 
-            </observation> 
-          </entry>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.340.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="手术指征"/>  
-              <value xsi:type="ST">文本</value> 
-            </observation> 
-          </entry>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.301.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="手术方案"/>  
-              <value xsi:type="ST">文本</value> 
-            </observation> 
-          </entry>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE09.00.119.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="注意事项"/>  
-              <value xsi:type="ST">文本</value> 
-            </observation> 
-          </entry> 
-        </section> 
-      </component>  
-      <!--术前总结章节-->  
-      <component> 
-        <section> 
-          <code displayName="讨论总结"/>  
-          <text/>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.018.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="讨论意见"/>  
-              <value xsi:type="ST">文本</value> 
-            </observation> 
-          </entry>  
-          <entry> 
-            <observation classCode="OBS" moodCode="EVN"> 
-              <code code="DE06.00.018.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="讨论结论"/>  
-              <value xsi:type="ST">文本</value> 
-            </observation> 
-          </entry> 
-        </section> 
-      </component> 
+					<!--术前诊断章节-->
+					<component>
+						<section>
+							<code code="10219-4" displayName="Surgical operation note preoperative Dx" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<text/>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="术前诊断编码"/>
+									<value xsi:type="CD" code="B95.100" displayName="B族链球菌感染" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/>
+								</observation>
+							</entry>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.092.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="入院日期时间"/>
+									<value xsi:type="TS" value="20130216131400"/>
+								</observation>
+							</entry>
+						</section>
+					</component>
+					<!--治疗计划章节-->
+					<component>
+						<section>
+							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<text/>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.094.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术及操作名称"/>
+									<value xsi:type="ST">文本</value>
+								</observation>
+							</entry>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.093.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术及操作编码"/>
+									<value xsi:type="CD" code="84.51003" displayName="陶瓷脊椎融合物置入术" codeSystem="2.16.156.10011.2.3.3.12" codeSystemName="手术(操作)代码表(ICD-9-CM)"/>
+								</observation>
+							</entry>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.187.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术目标部位名称"/>
+									<value xsi:type="ST">文本</value>
+								</observation>
+							</entry>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.221.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术及操作日期时间"/>
+									<value xsi:type="TS" value="000000000000"/>
+								</observation>
+							</entry>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.073.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施麻醉方法代码"/>
+									<value xsi:type="CD" code="1" displayName="全身麻醉" codeSystem="2.16.156.10011.2.3.1.159" codeSystemName="麻醉方法代码表"/>
+								</observation>
+							</entry>
+						</section>
+					</component>
+					<!--手术操作章节-->
+					<component>
+						<section>
+							<code code="47519-4" displayName="HISTORY OF PROCEDURES" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<text/>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.254.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="手术要点"/>
+									<value xsi:type="ST">文本</value>
+								</observation>
+							</entry>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.271.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="术前准备"/>
+									<value xsi:type="ST">文本</value>
+								</observation>
+							</entry>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.340.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="手术指征"/>
+									<value xsi:type="ST">文本</value>
+								</observation>
+							</entry>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.301.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="手术方案"/>
+									<value xsi:type="ST">文本</value>
+								</observation>
+							</entry>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE09.00.119.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="注意事项"/>
+									<value xsi:type="ST">文本</value>
+								</observation>
+							</entry>
+						</section>
+					</component>
+					<!--术前总结章节-->
+					<component>
+						<section>
+							<code displayName="讨论总结"/>
+							<text/>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.018.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="讨论意见"/>
+									<value xsi:type="ST">文本</value>
+								</observation>
+							</entry>
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.018.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="讨论结论"/>
+									<value xsi:type="ST">文本</value>
+								</observation>
+							</entry>
+						</section>
+					</component>
 				</structuredBody>
 			</component>
 		</ClinicalDocument>

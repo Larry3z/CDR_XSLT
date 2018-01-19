@@ -45,23 +45,48 @@
 		<SurgicalSignature>
 			<Surgeon>
 				<Time>这里显示手术者签名时间</Time>
-				<ProfessionaltechnicalpositionCode>这里显示职称代码</ProfessionaltechnicalpositionCode>
+				<ProfessionaltechnicalpositionCode>这里显示手术者职称代码</ProfessionaltechnicalpositionCode>
 				<Title>这里显示手术者职称</Title>
 				<Name>这里显示手术者签名</Name>
 			</Surgeon>
 			<Physician>
 				<Time>这里显示医师签名时间</Time>
-				<ProfessionaltechnicalpositionCode>这里显示职称代码</ProfessionaltechnicalpositionCode>
+				<ProfessionaltechnicalpositionCode>这里显示医师职称代码</ProfessionaltechnicalpositionCode>
 				<Title>这里显示医师职称</Title>
 				<Name>这里显示医师签名</Name>
 			</Physician>
-			<Anesthesiologist>
-				<Time>这里显示签名时间</Time>
-				<ProfessionaltechnicalpositionCode>这里显示职称代码</ProfessionaltechnicalpositionCode>
-				<Title>这里显示麻醉医师麻醉医师职称</Title>
-				<Name>这里显示麻醉医师签名</Name>
-			</Anesthesiologist>
 		</SurgicalSignature>
+		<!--主任、主治、住院、麻醉医生签名-->
+		<Anesthesiologist>
+			<Time>这里显示麻醉医师签名时间</Time>
+			<ProfessionaltechnicalpositionCode>这里显示麻醉医师职称代码</ProfessionaltechnicalpositionCode>
+			<Title>这里显示麻醉医师麻醉医师职称</Title>
+			<Name>这里显示麻醉医师签名</Name>
+		</Anesthesiologist>
+		<ChiefPhysician>
+			<Time>这里显示主任医师签名时间</Time>
+			<ProfessionaltechnicalpositionCode>这里显示主任医师职称代码</ProfessionaltechnicalpositionCode>
+			<Title>这里显示主任医师麻醉医师职称</Title>
+			<Name>这里显示主任医师签名</Name>
+		</ChiefPhysician>
+		<AttendingDoctor>
+			<Time>这里显示主治医师签名时间</Time>
+			<ProfessionaltechnicalpositionCode>这里显示主治医师职称代码</ProfessionaltechnicalpositionCode>
+			<Title>这里显示主治医师麻醉医师职称</Title>
+			<Name>这里显示主治医师签名</Name>
+		</AttendingDoctor>
+		<Inpatient>
+			<Time>这里显示住院医师签名时间</Time>
+			<ProfessionaltechnicalpositionCode>这里显示住院医师职称代码</ProfessionaltechnicalpositionCode>
+			<Title>这里显示住院医师麻醉医师职称</Title>
+			<Name>这里显示住院医师签名</Name>
+		</Inpatient>
+		<SuperiorPhysician>
+			<Time>这里显示上级医师签名时间</Time>
+			<ProfessionaltechnicalpositionCode>这里显示上级医师职称代码</ProfessionaltechnicalpositionCode>
+			<Title>这里显示上级医师麻醉医师职称</Title>
+			<Name>这里显示上级医师签名</Name>
+		</SuperiorPhysician>
 		<!--交接班-->
 		<changeShifts>
 			<Shift>王交班</Shift>
@@ -111,7 +136,7 @@
 			<identifier>H005</identifier>
 			<PractitionerRole>参与者角色五</PractitionerRole>
 		</Practitioner>
-		<Compere>这里显示主持人信息</Compere>
+		<Compere>这里显示主持人姓名</Compere>
 	</Practitioners>
 	<!--会诊相关-->
 	<Consultation>
@@ -327,6 +352,14 @@
 	<!--入院诊断-->
 	<HospitolDiagnoses>
 		<Admission>这里显示入院情况</Admission>
+		<DiagnosticCode>
+			<code>这里显示入院诊断代码</code>
+			<displayName>这里显示入院诊断代码对应的名称</displayName>
+		</DiagnosticCode>
+		<Time>这里显示入院时间</Time>
+		<PositiveAuxiliaryExaminationResults>这里显示阳性辅助检查结果</PositiveAuxiliaryExaminationResults>
+		<TCMsizhen>这里显示中医四诊观察结果</TCMsizhen>
+		<Accountability>这里显示治责治法</Accountability>
 		<!--西医诊断编码-->
 		<WesternDiagnosis>
 			<code>这里显示西医诊断编码</code>
@@ -339,9 +372,72 @@
 		</TCPName>
 		<TCPSymptom>
 			<code>这里显示中医症候编码</code>
-			<displayName>中医病证分类</displayName>
+			<displayName>这里显示中医病证分类</displayName>
 		</TCPSymptom>
 	</HospitolDiagnoses>
+	<!--住院过程-->
+	<HospitalizationProcess>
+		<DiagnosisTreatmentProcess>这里显示诊疗过程描述</DiagnosisTreatmentProcess>
+	</HospitalizationProcess>
+	<!--出院院诊断-->
+	<DischargeDiagnosis>
+		<DischargeSituation>这里显示出院情况</DischargeSituation>
+		<Time>这里显示出院日期时间</Time>
+		<!--西医诊断-->
+		<WesternDiagnosis>
+			<Name>这里显示西医诊断名称</Name>
+			<code>这里显示西医诊断编码</code>
+			<displayName>这里显示西医诊断编码对应的名称</displayName>
+		</WesternDiagnosis>
+		<!--中医病名-->
+		<TCMName>
+			<Name>这里显示中医病名名称</Name>
+			<!--中医病名代码-->
+			<DiseaseNameCode>
+				<code>这里显示中医病名编码</code>
+				<displayName>这里显示中医病名编码对应的名称</displayName>
+			</DiseaseNameCode>
+			<!--中医病症分类与代码表-->
+			<DiseaseClassificationCode>
+				<code>这里显示中医病症分类代码</code>
+				<displayName>这里显示中医病症分类代码对应的名称</displayName>
+			</DiseaseClassificationCode>
+		</TCMName>
+		<TCMSymptom>
+			<Name>这里显示中医证候名称</Name>
+			<!--中医证候代码-->
+			<DiseaseNameCode>
+				<code>这里显示中医证候代码</code>
+				<displayName>这里显示中医证候代码对应的名称</displayName>
+			</DiseaseNameCode>
+			<!--中医病症分类与代码表-->
+			<DiseaseClassificationCode>
+				<code>这里显示中医病症分类代码</code>
+				<displayName>这里显示中医病症分类代码对应的名称</displayName>
+			</DiseaseClassificationCode>
+		</TCMSymptom>
+		<DischargeSymptoms>这里显示出院症状与体征</DischargeSymptoms>
+		<DischargeOrder>这里显示出院医嘱</DischargeOrder>
+	</DischargeDiagnosis>
+	<!--死亡原因-->
+	<DeathCause>
+		<Time>这里显示死亡日期时间</Time>
+		<DirectCause>这里显示死亡直接原因</DirectCause>
+		<DirectCauseCode>
+			<code>这里显示死亡直接原因代码</code>
+			<displayName>这里显示死亡直接原因代码对应的值</displayName>
+		</DirectCauseCode>
+	</DeathCause>
+	<!--尸检意见-->
+	<AutopsyOpinion>这里显示尸检意见（家属是否同意尸体解剖标志）</AutopsyOpinion>
+	<!--讨论内容-->
+	<DiscussionContent>这里显示死亡讨论记录内容</DiscussionContent>
+	<!--讨论总结 -->
+	<DiscussionSummary>这里显示主持人总结意见</DiscussionSummary>
+	<!--生命体征 -->
+	<VitalSigns>
+		<Weight>这里显示患者体重</Weight>
+	</VitalSigns>
 	<!--治疗诊断-->
 	<Diagnosis>
 		<!--诊断记录-->
@@ -351,6 +447,12 @@
 			<displayName>这里显示相关疾病编码名称</displayName>
 			<ConditionChange>这里显示病情变化情况</ConditionChange>
 		</Disease>
+		<!--死亡诊断-->
+		<DeathDiagnosis>
+			<Name>这里显示死亡诊断名称</Name>
+			<code>这里显示死亡诊断编码</code>
+			<displayName>这里显示死亡诊断编码对应的名称</displayName>
+		</DeathDiagnosis>
 		<CurrentSituation>这里显示目前情况</CurrentSituation>
 		<CurrentDiagnosis>
 			<code>这里显示西医病名编码</code>
@@ -393,6 +495,48 @@
 		<DecoctingMethod>这里显示中药煎煮方法</DecoctingMethod>
 		<MedicationMethod>这里显示中药用药方法</MedicationMethod>
 	</Medication>
+	<!--医嘱-->
+	<Order>
+		<Category>
+			<code>这里显示医嘱类别代码</code>
+			<displayName>这里显示医嘱类别代码对应的名称</displayName>
+		</Category>
+		<ProjectType>
+			<code>这里显示医嘱项目类型代码</code>
+			<displayName>这里显示医嘱项目类型对应的名称</displayName>
+		</ProjectType>
+		<PlanStartTime>这里显示医嘱计划开始时间</PlanStartTime>
+		<PlanEndTime>这里显示医嘱计划结束时间</PlanEndTime>
+		<PlanningInformation>这里显示医嘱计划信息</PlanningInformation>
+		<OpenInformation>
+			<Time>这里显示医嘱开立时间</Time>
+			<Person>这里显示医嘱开立者</Person>
+			<Department>医嘱开立科室</Department>
+		</OpenInformation>
+		<ToExamine>
+			<Time>这里显示医嘱审核时间</Time>
+			<Person>这里显示医嘱审核人</Person>
+		</ToExamine>
+		<Check>
+			<Time>这里显示医嘱核对时间</Time>
+			<Person>这里显示医嘱核对人</Person>
+		</Check>
+		<Stop>
+			<Time>这里显示医嘱停止时间</Time>
+			<Person>这里显示医嘱停止人</Person>
+		</Stop>
+		<Cancel>
+			<Time>这里显示医嘱取消时间</Time>
+			<Person>这里显示医嘱取消人</Person>
+		</Cancel>
+		<Implement>
+			<State>这里显示医嘱执行状态</State>
+			<Person>这里显示医嘱执行者</Person>
+			<Department>医嘱执行科室</Department>
+		</Implement>
+		<ElectronicApplicationNumber>这里显示电子申请单编号</ElectronicApplicationNumber>
+		<PrescriptionDrugsNumbers>这里显示处方药品组号</PrescriptionDrugsNumbers>
+	</Order>
 	<!--手术-->
 	<Operation>
 		<Indication>这里显示手术适应症</Indication>
@@ -400,17 +544,19 @@
 		<Indications>这里显示手术指征</Indications>
 		<AttentionMatters>这里显示注意事项</AttentionMatters>
 		<OperationPoints>这里显示手术要点</OperationPoints>
+		<surgicalProgram>这里显示手术方案</surgicalProgram>
 		<PreoperativePreparation>这里显示术前准备</PreoperativePreparation>
 	</Operation>
 	<!--手术操作-->
 	<SurgicalOperation>
 		<Operation>
 			<code>这里显示手术操作编码</code>
-			<displayName>这里显示手术操作名称</displayName>
+			<displayName>这里显示手术操作对应的名称</displayName>
 		</Operation>
-		<Name>这里显示手术名称</Name>
-		<SurgicalSite>这里显示手术部位</SurgicalSite>
-		<OperationTime>这里显示手术操作时间</OperationTime>
+		<Name>这里显示手术及操作名称</Name>
+		<SurgicalSite>这里显示施手术目标部位名称</SurgicalSite>
+		<OperationTime>这里显示施手术及操作日期时间</OperationTime>
+		<OperationProcess>这里显示手术过程描述</OperationProcess>
 		<InterventionName>这里显示介入物名称</InterventionName>
 		<OperationMethod>这里显示操作方法</OperationMethod>
 		<OperationTimes>这里显示操作次数</OperationTimes>
@@ -418,16 +564,24 @@
 		<RescueStartTime>这里显示抢救开始时间</RescueStartTime>
 		<RescueEndTime>这里显示抢救结束时间</RescueEndTime>
 		<Anaesthesia>
-			<code>这里显示麻醉代码</code>
-			<displayName>这里显示麻醉代码对应的方式</displayName>
+			<code>这里显示麻醉方法代码</code>
+			<displayName>这里显示麻醉方法代码对应的名称</displayName>
 		</Anaesthesia>
 	</SurgicalOperation>
-	<!--术前诊断-->
+	<!--术前/后诊断-->
 	<PreoperativeDiagnosis>
-		<code>这里显示术前诊断编码</code>
-		<displayName>这里显示术前诊断编码名称</displayName>
-		<DiagnosticBasis>这里显示诊断依据</DiagnosticBasis>
+		<DateAdmission>这里显示住院日期时间</DateAdmission>
+		<Name>这里显示术前/后诊断名称</Name>
+		<code>这里显示术前/后诊断编码</code>
+		<displayName>这里显示术前/后诊断编码名称</displayName>
+		<DiagnosticBasis>这里术前/后显示诊断依据</DiagnosticBasis>
+		<Attention>这里显示注意事项</Attention>
 	</PreoperativeDiagnosis>
+	<!--术前总结-->
+	<PreoperativeSummary>
+		<DiscussionOpinion>这里显示讨论意见</DiscussionOpinion>
+		<DiscussionConclusions>这里显示讨论结论</DiscussionConclusions>
+	</PreoperativeSummary>
 	<!--实验室检查-->
 	<LaboratoryExamination>
 		<InspectName>这里显示检查项目名称</InspectName>
@@ -460,4 +614,8 @@
 		<AnaphylaxisIdentification>这里显示过敏史标识</AnaphylaxisIdentification>
 		<AnaphylaxisValue>这里显示过敏史的值</AnaphylaxisValue>
 	</PastHistory>
+	<!--主要健康问题-->
+	<MajorHealthProblems>
+		<AdmissionDiagnosis>这里显示入院诊断情况</AdmissionDiagnosis>
+	</MajorHealthProblems>
 </Document>

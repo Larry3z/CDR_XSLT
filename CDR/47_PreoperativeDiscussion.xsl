@@ -92,58 +92,118 @@
 -->
 			<component>
 				<structuredBody>
-					<!--术前诊断章节0..1 R2-->
-					<xsl:comment>术前诊断章节</xsl:comment>
-					<component>
-						<section>
-							<!--术前诊断编码 0..* R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--入院日期时间 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-						</section>
-					</component>
-					<!--治疗计划章节1..1 R-->
-					<xsl:comment>治疗计划章节</xsl:comment>
-					<component>
-						<section>
-							<!--拟实施手术及操作名称 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--拟实施手术及操作编码 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--拟实施手术目标部位名称 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--拟实施手术及操作日期时间 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--拟实施麻醉方法代码 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-						</section>
-					</component>
-					<!--手术操作章节1..1 R-->
-					<xsl:comment>手术操作章节</xsl:comment>
-					<component>
-						<section>
-							<!--手术要点 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--术前准备 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--手术指征 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--手术方案 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--注意事项 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-						</section>
-					</component>
-					<!--术前总结章节1..1 R-->
-					<xsl:comment>术前总结章节</xsl:comment>
-					<component>
-						<section>
-							<!--讨论意见 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--讨论总结 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-						</section>
-					</component>
+					<!--术前诊断章节-->  
+      <component> 
+        <section> 
+          <code code="10219-4" displayName="Surgical operation note preoperative Dx" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>  
+          <text/>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="术前诊断编码"/>  
+              <value xsi:type="CD" code="B95.100" displayName="B族链球菌感染"  codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/> 
+            </observation> 
+          </entry>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.092.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="入院日期时间"/>  
+              <value xsi:type="TS" value="20130216131400"/> 
+            </observation> 
+          </entry> 
+        </section> 
+      </component>  
+      <!--治疗计划章节-->  
+      <component> 
+        <section> 
+          <code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>  
+          <text/>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.094.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术及操作名称"/>  
+              <value xsi:type="ST">文本</value> 
+            </observation> 
+          </entry>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.093.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术及操作编码"/>  
+              <value xsi:type="CD" code="84.51003" displayName="陶瓷脊椎融合物置入术" codeSystem="2.16.156.10011.2.3.3.12" codeSystemName="手术(操作)代码表(ICD-9-CM)"/> 
+            </observation> 
+          </entry>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.187.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术目标部位名称"/>  
+              <value xsi:type="ST">文本</value> 
+            </observation> 
+          </entry>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.221.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施手术及操作日期时间"/>  
+              <value xsi:type="TS" value="000000000000"/> 
+            </observation> 
+          </entry>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.073.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="拟实施麻醉方法代码"/>  
+              <value xsi:type="CD" code="1" displayName="全身麻醉" codeSystem="2.16.156.10011.2.3.1.159" codeSystemName="麻醉方法代码表"/> 
+            </observation> 
+          </entry> 
+        </section> 
+      </component>  
+      <!--手术操作章节-->  
+      <component> 
+        <section> 
+          <code code="47519-4" displayName="HISTORY OF PROCEDURES" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>  
+          <text/>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.254.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="手术要点"/>  
+              <value xsi:type="ST">文本</value> 
+            </observation> 
+          </entry>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.271.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="术前准备"/>  
+              <value xsi:type="ST">文本</value> 
+            </observation> 
+          </entry>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.340.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="手术指征"/>  
+              <value xsi:type="ST">文本</value> 
+            </observation> 
+          </entry>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.301.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="手术方案"/>  
+              <value xsi:type="ST">文本</value> 
+            </observation> 
+          </entry>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE09.00.119.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="注意事项"/>  
+              <value xsi:type="ST">文本</value> 
+            </observation> 
+          </entry> 
+        </section> 
+      </component>  
+      <!--术前总结章节-->  
+      <component> 
+        <section> 
+          <code displayName="讨论总结"/>  
+          <text/>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.018.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="讨论意见"/>  
+              <value xsi:type="ST">文本</value> 
+            </observation> 
+          </entry>  
+          <entry> 
+            <observation classCode="OBS" moodCode="EVN"> 
+              <code code="DE06.00.018.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="讨论结论"/>  
+              <value xsi:type="ST">文本</value> 
+            </observation> 
+          </entry> 
+        </section> 
+      </component> 
 				</structuredBody>
 			</component>
 		</ClinicalDocument>

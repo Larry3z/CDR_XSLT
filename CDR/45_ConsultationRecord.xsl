@@ -16,8 +16,8 @@
 				<patientRole classCode="PAT">
 					<!-- 住院号标识 -->
 					<xsl:apply-templates select="Encounter/Patient" mode="InpatientID"/>
-					<!--电子申请单编号标识 1..1 -->
-					<xsl:apply-templates select="Sections/Section" mode="mode"/>
+					<!--电子申请单编号标识-->
+					<id root="2.16.156.10011.1.24" extension="{ElectronicApplicationNumber}"/>
 					<!--患者信息 -->
 					<patient classCode="PSN" determinerCode="INSTANCE">
 						<!--患者身份证号-->
@@ -33,59 +33,153 @@
 					</patient>
 				</patientRole>
 			</recordTarget>
-			<!-- 文档创作者 -->
-			<author typeCode="AUT" contextControlCode="OP">
-				<!--文档创作时间 1..1  -->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!--制定创作者 1..1 -->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			</author>
-			<!-- 保管机构 1..1 -->
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			<!-- 会诊申请相关 1..1-会诊申请医师 -->
-			<xsl:apply-templates select="Sections/Section" mode="mode"/>
-			<!--会诊医师相关 1..1-->
+			<!-- 作者 -->
+			<xsl:apply-templates select="Author" mode="Author1"/>
+			<!-- 保管机构 -->
+			<xsl:apply-templates select="Custodian" mode="Custodian"/>
+			<!-- 会诊申请相关 -->
 			<authenticator>
-				<!--会诊日期时间 1..1-->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!--会诊医师签名 1..1-->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!--会诊医师所在医疗机构名称-->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
+				<time value="{Consultation/ApplicationConsultation/Time}"/>
+				<signatureCode/>
+				<assignedEntity>
+					<id root="2.16.156.10011.1.4" extension="医务人员编码"/>
+					<code displayName="会诊申请医师"/>
+					<assignedPerson classCode="PSN" determinerCode="INSTANCE">
+						<name>
+							<xsl:value-of select="Consultation/ApplicationConsultation/DoctorName"/>
+						</name>
+					</assignedPerson>
+				</assignedEntity>
 			</authenticator>
-			<!--会诊申请医疗机构名称 1..1-->
+			<!--会诊医师相关-->
 			<authenticator>
-				<!--申请会诊科室名称 1..1-->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!--申请会诊机构名称 1..1-->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
+				<!--会诊日期时间-->
+				<time xsi:type="TS" value="{Consultation/ConsultationDoctor/Time}"/>
+				<signatureCode/>
+				<assignedEntity>
+					<id root="2.16.156.10011.1.4" extension="医务人员编码"/>
+					<code displayName="会诊医师"/>
+					<assignedPerson classCode="PSN" determinerCode="INSTANCE">
+						<name>
+							<xsl:value-of select="Consultation/ConsultationDoctor/Name"/>
+						</name>
+					</assignedPerson>
+					<!--会诊医师所在医疗机构名称-->
+					<representedOrganization>
+						<name>
+							<xsl:value-of select="Consultation/ConsultationDoctor/MedicalInstitution"/>
+						</name>
+					</representedOrganization>
+				</assignedEntity>
 			</authenticator>
-			<!--会诊所在医疗机构名称 1..1-->
+			<!--会诊申请医疗机构名称-->
 			<authenticator>
-				<!--会诊科室名称 1..1-->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
-				<!--会诊所在机构名称 1..1-->
-				<xsl:apply-templates select="Sections/Section" mode="mode"/>
+				<time value="{Consultation/ApplyMedicalInstitution/Time}"/>
+				<signatureCode/>
+				<assignedEntity>
+					<id/>
+					<code displayName="会诊申请医疗机构"/>
+					<representedOrganization>
+						<asOrganizationPartOf>
+							<wholeOrganization>
+								<id root="2.16.156.10011.1.26" extension="申请会诊科室"/>
+								<name>
+									<xsl:value-of select="Consultation/ApplyMedicalInstitution/Department"/>
+								</name>
+								<asOrganizationPartOf>
+									<wholeOrganization>
+										<id root="2.16.156.10011.1.5" extension="申请会诊机构名称"/>
+										<name>
+											<xsl:value-of select="Consultation/ApplyMedicalInstitution/Name"/>
+										</name>
+									</wholeOrganization>
+								</asOrganizationPartOf>
+							</wholeOrganization>
+						</asOrganizationPartOf>
+					</representedOrganization>
+				</assignedEntity>
+			</authenticator>
+			<!--会诊所在医疗机构名称-->
+			<authenticator>
+				<time value="{Consultation/MedicalInstitutionLocated/Time}"/>
+				<signatureCode/>
+				<assignedEntity>
+					<id/>
+					<code displayName="会诊所在机构"/>
+					<representedOrganization>
+						<asOrganizationPartOf>
+							<wholeOrganization>
+								<id root="2.16.156.10011.1.26" extension="会诊科室名称"/>
+								<name>
+									<xsl:value-of select="Consultation/MedicalInstitutionLocated/Department"/>
+								</name>
+								<asOrganizationPartOf>
+									<wholeOrganization>
+										<id root="2.16.156.10011.1.5" extension="会诊所在医疗机构名称"/>
+										<name>
+											<xsl:value-of select="Consultation/MedicalInstitutionLocated/Name"/>
+										</name>
+									</wholeOrganization>
+								</asOrganizationPartOf>
+							</wholeOrganization>
+						</asOrganizationPartOf>
+					</representedOrganization>
+				</assignedEntity>
 			</authenticator>
 			<!--关联活动信息 1..R-->
+			<xsl:comment>关联活动信息</xsl:comment>
 			<componentOf>
 				<encompassingEncounter>
-					<!--入院时间 1..1-->
-					<xsl:apply-templates select="Sections/Section" mode="mode"/>
+					<code displayName="入院日期时间"/>
+					<xsl:variable name="AdminTime" select="Encounter/AdmissionTime"/>
+					<effectiveTime value="{$AdminTime}"/>
 					<location>
 						<healthCareFacility>
 							<serviceProviderOrganization>
 								<asOrganizationPartOf classCode="PART">
-									<!-- DE01.00.026.00病床号 1..1 -->
-									<xsl:apply-templates select="Sections/Section" mode="mode"/>
-									<!-- DE01.00.019.00病房号1..1 -->
-									<xsl:apply-templates select="Sections/Section" mode="mode"/>
-									<!-- DE08.10.026.00科室名称 1..1 -->
-									<xsl:apply-templates select="Sections/Section" mode="mode"/>
-									<!-- DE08.10.054.00病区名称 1..1 -->
-									<xsl:apply-templates select="Sections/Section" mode="mode"/>
-									<!--医疗机构名称 1..1 -->
-									<xsl:apply-templates select="Sections/Section" mode="mode"/>
+									<!-- DE01.00.026.00病床号 -->
+									<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+										<id root="2.16.156.10011.1.22" extension="-+11"/>
+										<name>
+											<xsl:value-of select="Encounter/Hospitalization/Location/bed"/>
+										</name>
+										<!-- DE01.00.019.00病房号 -->
+										<asOrganizationPartOf classCode="PART">
+											<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+												<id root="2.16.156.10011.1.21" extension="-"/>
+												<name>
+													<xsl:value-of select="Encounter/Hospitalization/Location/ward"/>
+												</name>
+												<!-- DE08.10.026.00科室名称 -->
+												<asOrganizationPartOf classCode="PART">
+													<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+														<id root="2.16.156.10011.1.26" extension="{Encounter/AdmissionLocationNo}"/>
+														<name>
+															<xsl:value-of select="Encounter/AdmissionLocation"/>
+														</name>
+														<!-- DE08.10.054.00病区名称 -->
+														<asOrganizationPartOf classCode="PART">
+															<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+																<id root="2.16.156.10011.1.27" extension="{Encounter/wholeOrganizationNo}"/>
+																<name>
+																	<xsl:value-of select="Encounter/wholeOrganization"/>
+																</name>
+																<!--医疗机构名称 -->
+																<asOrganizationPartOf classCode="PART">
+																	<wholeOrganization classCode="ORG" determinerCode="INSTANCE">
+																		<id root="2.16.156.10011.1.5" extension="HYFE"/>
+																		<name>
+																			<xsl:value-of select="Encounter/HealthCareFacility"/>
+																		</name>
+																	</wholeOrganization>
+																</asOrganizationPartOf>
+															</wholeOrganization>
+														</asOrganizationPartOf>
+													</wholeOrganization>
+												</asOrganizationPartOf>
+											</wholeOrganization>
+										</asOrganizationPartOf>
+									</wholeOrganization>
 								</asOrganizationPartOf>
 							</serviceProviderOrganization>
 						</healthCareFacility>
@@ -99,50 +193,238 @@
 -->
 			<component>
 				<structuredBody>
-					<!--健康评估章节:病历概要 1..1 R-->
-					<xsl:apply-templates select="Sections/Section" mode="mode"/>
-					<!--诊断记录章节1..1 R-->
-					<xsl:comment>诊断记录章节</xsl:comment>
+					<!--健康评估章节-->
+					<comment>健康评估</comment>
 					<component>
 						<section>
-							<!--西医诊断 1..* R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--中医病名 1..* O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--中医证候 1..* O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--中医“四诊”观察结果 1..1 O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
+							<code code="51848-0" displayName="Assessment note" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<text/>
+							<entry>
+								<!-- 病历摘要-->
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.182.00" displayName="病历摘要" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="CaseSummary"/>
+									</value>
+								</observation>
+							</entry>
+						</section>
+					</component>
+					<!--诊断章节-->
+					<comment>诊断</comment>
+					<component>
+						<section>
+							<code code="29548-5" displayName="Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<text/>
+							<!--西医诊断-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN ">
+									<code code="DE05.01.025.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="西医诊断名称"/>
+									<value xsi:type="ST">患者所患疾病的西医诊断名称</value>
+									<entryRelationship typeCode="COMP">
+										<observation classCode="OBS" moodCode="EVN">
+											<code code="DE05.01.024.00" displayName="西医诊断编码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+											<value xsi:type="CD" code="{Diagnosis/CurrentDiagnosis/code}" displayName="{Diagnosis/CurrentDiagnosis/displayName}" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/>
+										</observation>
+									</entryRelationship>
+								</observation>
+							</entry>
+							<!--中医病名-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN ">
+									<code code="DE05.10.172.00" displayName="中医诊断名称" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录">
+										<qualifier>
+											<name displayName="中医诊断名称"/>
+										</qualifier>
+									</code>
+									<value xsi:type="ST">
+										<xsl:value-of select="Diagnosis/TCPSymptom/Name"/>
+									</value>
+									<entryRelationship typeCode="COMP">
+										<observation classCode="OBS" moodCode="EVN">
+											<code code="DE05.10.130.00" displayName="中医病名代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录">
+												<qualifier>
+													<name displayName="中医病名代码"/>
+												</qualifier>
+											</code>
+											<value xsi:type="CD" code="{Diagnosis/TCPName/code}" displayName="{Diagnosis/TCPName/code}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)"/>
+										</observation>
+									</entryRelationship>
+								</observation>
+							</entry>
+							<!--中医证候-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN ">
+									<code code="DE05.10.172.00" displayName="中医诊断症候名称" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录">
+										<qualifier>
+											<name displayName="中医证候名称"/>
+										</qualifier>
+									</code>
+									<value xsi:type="ST">
+										<xsl:value-of select="Diagnosis/TCPSymptom/Name"/>
+									</value>
+									<entryRelationship typeCode="COMP">
+										<observation classCode="OBS" moodCode="EVN">
+											<code code="DE05.10.130.00" displayName="中医证候代码" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录">
+												<qualifier>
+													<name displayName="中医证候代码"/>
+												</qualifier>
+											</code>
+											<value xsi:type="CD" code="{Diagnosis/TCPSymptom/code}" displayName="{Diagnosis/TCPSymptom/displayName}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)"/>
+										</observation>
+									</entryRelationship>
+								</observation>
+							</entry>
+							<!--中医“四诊”观察结果-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN ">
+									<code code="DE02.10.028.00" displayName="中医“四诊”观察结果" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="Diagnosis/TCPsizhen"/>
+									</value>
+								</observation>
+							</entry>
 						</section>
 					</component>
 					<!--辅助检查章节 0..1 R2-->
-					<xsl:apply-templates select="Sections/Section" mode="mode"/>
-					<!--治疗计划章节1..1 R-->
-					<xsl:comment>治疗计划章节</xsl:comment>
+					<comment>辅助检查</comment>
 					<component>
 						<section>
-							<!--诊疗过程名称条目 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--治则治法 0..1 O -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--会诊目的 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
+							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<text/>
+							<!--诊疗过程名称-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN ">
+									<code code="DE06.00.297.00" displayName="诊疗过程名称" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="SupplementaryExamination/DiagnosisTreatmentProcess"/>
+									</value>
+								</observation>
+							</entry>
+							<!--治则治法-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.300.00" displayName="治则治法" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="SupplementaryExamination/Accountability"/>
+									</value>
+								</observation>
+							</entry>
+							<!--会诊目的-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.214.00" displayName="会诊目的" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="SupplementaryExamination/ConsultationPurpose"/>
+									</value>
+								</observation>
+							</entry>
 						</section>
 					</component>
-					<!--会诊原因章节1..1 R-->
-					<xsl:comment>会诊原因章节</xsl:comment>
+					<!--治疗计划章节-->
+					<comment>治疗计划</comment>
 					<component>
 						<section>
-							<!--会诊类型条目 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
-							<!--会诊原因 1..1 R -->
-							<xsl:apply-templates select="Sections/Section" mode="mode"/>
+							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<text/>
+							<!--诊疗过程名称-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN ">
+									<code code="DE06.00.297.00" displayName="诊疗过程名称" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="TreatmentPlan/DiagnosisProcess"/>
+									</value>
+								</observation>
+							</entry>
+							<!--治则治法-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.300.00" displayName="治则治法" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="TreatmentPlan/Accountability"/>
+									</value>
+								</observation>
+							</entry>
+							<!--会诊目的-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.214.00" displayName="会诊目的" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="TreatmentPlan/ConsultationPurpose"/>
+									</value>
+								</observation>
+							</entry>
 						</section>
 					</component>
-					<!--会诊意见章节 1..1 R-->
-					<xsl:apply-templates select="Sections/Section" mode="mode"/>
-					<!--住院过程章节 1..1 R-->
-					<xsl:apply-templates select="Sections/Section" mode="mode"/>
+					<!--
+********************************************************
+会诊原因章节
+********************************************************
+-->
+					<!--会诊原因章节-->
+					<comment>会诊原因</comment>
+					<component>
+						<section>
+							<code displayName="会诊原因"/>
+							<text/>
+							<!--会诊类型-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.319.00" displayName="会诊类型" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="Consultation/CauseConsultation/Type"/>
+									</value>
+								</observation>
+							</entry>
+							<!--会诊原因-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.039.00" displayName="会诊原因" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="Consultation/CauseConsultation/DetailedDescription"/>
+									</value>
+								</observation>
+							</entry>
+						</section>
+					</component>
+					<!--会诊意见章节-->
+					<comment>会诊意见</comment>
+					<component>
+						<section>
+							<code displayName="会诊意见"/>
+							<text/>
+							<!--会诊意见-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.018.00" displayName="会诊意见" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="Consultation/CauseConsultation/Opinion"/>
+									</value>
+								</observation>
+							</entry>
+						</section>
+					</component>
+					<!--
+****************************************************
+住院过程章节
+****************************************************
+-->
+					<comment>住院过程</comment>
+					<component>
+						<section>
+							<code code="8648-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Hospital Course"/>
+							<text/>
+							<!--诊疗过程描述-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="DE06.00.296.00" displayName="诊疗过程描述" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+									<value xsi:type="ST">
+										<xsl:value-of select="HospitalCourse"/>
+									</value>
+								</observation>
+							</entry>
+						</section>
+					</component>
 				</structuredBody>
 			</component>
 		</ClinicalDocument>

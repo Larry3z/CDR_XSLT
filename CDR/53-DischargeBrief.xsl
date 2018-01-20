@@ -128,6 +128,7 @@
 			<component>
 				<structuredBody>
 					<!--主要健康问题章节-->
+					<xsl:comment>主要健康问题</xsl:comment>
 					<component>
 						<section>
 							<code code="11450-4" displayName="PROBLEM LIST" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
@@ -142,6 +143,7 @@
 						</section>
 					</component>
 					<!--入院诊断章节-->
+					<xsl:comment>入院诊断</xsl:comment>
 					<component>
 						<section>
 							<code code="46241-6" displayName="HOSPITAL ADMISSION DX" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
@@ -170,6 +172,7 @@
 						</section>
 					</component>
 					<!--出院诊断章节-->
+					<xsl:comment>出院诊断</xsl:comment>
 					<component>
 						<section>
 							<code code="11535-2" displayName="Discharge Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
@@ -185,40 +188,41 @@
 							<entry typeCode="COMP">
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE05.10.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="出院诊断-中医病名代码"/>
-									<value xsi:type="CD" code="{DischargeDiagnosis/WesternDiagnosis/code}" displayName="{DischargeDiagnosis/WesternDiagnosis/displayName}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)"/>
+									<value xsi:type="CD" code="{DischargeDiagnosis/TCMName/DiseaseNameCode/code}" displayName="{DischargeDiagnosis/TCMName/DiseaseNameCode/displayName}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)"/>
 								</observation>
 							</entry>
 							<!--HDSD00.16.010 DE05.10.130.00 出院诊断-中医诊断代码 条目-->
 							<entry typeCode="COMP">
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE05.10.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="出院诊断-中医证候代码"/>
-									<value xsi:type="CD" code="{DischargeDiagnosisTCMName/DiseaseNameCode/displayName}" displayName="{DischargeDiagnosis/TCMName/DiseaseNameCode/displayName}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)"/>
+									<value xsi:type="CD" code="{DischargeDiagnosis/TCMSymptom/DiseaseNameCode/code}" displayName="{DischargeDiagnosis/TCMSymptom/DiseaseNameCode/displayName}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)"/>
 								</observation>
 							</entry>
 							<!--HDSD00.16.051 DE02.10.028.00 中医“四诊”观察结果 条目-->
 							<entry>
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE02.10.028.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="中医“四诊”观察结果"/>
-									<value xsi:type="ST">自由文本</value>
+									<value xsi:type="ST"><xsl:value-of select="DischargeDiagnosis/TCMsizhen"/></value>
 								</observation>
 							</entry>
 							<!--HDSD00.16.006 DE04.01.117.00 出院时症状与体征 条目-->
 							<entry typeCode="COMP">
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE04.01.117.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="出院时症状与体征"/>
-									<value xsi:type="ST">自由文本</value>
+									<value xsi:type="ST"><xsl:value-of select="DischargeDiagnosis/DischargeSign"/></value>
 								</observation>
 							</entry>
 							<!--HDSD00.16.004 DE06.00.193.00 出院情况 条目 -->
 							<entry typeCode="COMP">
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE06.00.193.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="出院情况"/>
-									<value xsi:type="ST">自由文本</value>
+									<value xsi:type="ST"><xsl:value-of select="DischargeDiagnosis/DischargeSituation"/></value>
 								</observation>
 							</entry>
 						</section>
 					</component>
 					<!--手术操作章节-->
+					<xsl:comment>手术操作</xsl:comment>
 					<component>
 						<section>
 							<code code="47519-4" displayName="HISTORY OF PROCEDURES" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
@@ -228,7 +232,7 @@
 								<!-- 手术记录 -->
 								<procedure classCode="PROC" moodCode="EVN">
 									<!--HDSD00.16.038 DE06.00.093.00 手术及操作编码 -->
-									<code code="43.41013" displayName="胃镜下胃病损电切术" codeSystem="2.16.156.10011.2.3.3.12" codeSystemName="手术(操作)代码表(ICD-9-CM)"/>
+									<code code="{SurgicalOperation/SurgicalRecords/Operation/code}" displayName="{SurgicalOperation/SurgicalRecords/Operation/displayName}" codeSystem="2.16.156.10011.2.3.3.12" codeSystemName="手术(操作)代码表(ICD-9-CM)"/>
 									<statusCode/>
 									<!--手术及操作编码、操作日期/时间-->
 									<!--HDSD00.16.039 DE06.00.221.00 手术及操作开始日期时间 -->
@@ -237,28 +241,28 @@
 									<entryRelationship typeCode="COMP">
 										<observation classCode="OBS" moodCode="EVN">
 											<code code="DE06.00.257.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="手术切口类别代码"/>
-											<value xsi:type="CD" code="2" displayName="Ⅰ类切口" codeSystem="2.16.156.10011.2.3.1.256" codeSystemName="手术切口类别代码表"/>
+											<value xsi:type="CD" code="{SurgicalOperation/SurgicalRecords/SurgicalIncision/code}" displayName="{SurgicalOperation/SurgicalRecords/SurgicalIncision/displayName}" codeSystem="2.16.156.10011.2.3.1.256" codeSystemName="手术切口类别代码表"/>
 										</observation>
 									</entryRelationship>
 									<!--HDSD00.16.029 DE05.10.147.00 切口愈合等级代码 -->
 									<entryRelationship typeCode="COMP">
 										<observation classCode="OBS" moodCode="EVN">
 											<code code="DE05.10.147.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="切口愈合等级代码"/>
-											<value xsi:type="CD" code="1" displayName="甲" codeSystem="2.16.156.10011.2.3.1.257" codeSystemName="手术切口愈合等级代码表"/>
+											<value xsi:type="CD" code="{SurgicalOperation/SurgicalRecords/SurgicalHealingGrade/code}" displayName="{SurgicalOperation/SurgicalRecords/SurgicalHealingGrade/displayName}" codeSystem="2.16.156.10011.2.3.1.257" codeSystemName="手术切口愈合等级代码表"/>
 										</observation>
 									</entryRelationship>
 									<!--HDSD00.16.025 DE06.00.073.00 麻醉方法代码 -->
 									<entryRelationship typeCode="COMP">
 										<observation classCode="OBS" moodCode="EVN">
 											<code code="DE06.00.073.00" codeSystem="2.16.156.10011.2.2.2" codeSystemName="卫生信息数据元目录" displayName="麻醉方法代码"/>
-											<value code="1" displayName="全身麻醉" codeSystem="2.16.156.10011.2.3.1.159" codeSystemName="麻醉方法代码表" xsi:type="CD"/>
+											<value code="{SurgicalOperation/SurgicalRecords/Anaesthesia/code}" displayName="{SurgicalOperation/SurgicalRecords/Anaesthesia/displayName}" codeSystem="2.16.156.10011.2.3.1.159" codeSystemName="麻醉方法代码表" xsi:type="CD"/>
 										</observation>
 									</entryRelationship>
 									<!-- HDSD00.16.037 DE05.10.063.00 手术过程 -->
 									<entryRelationship typeCode="COMP">
 										<observation classCode="OBS" moodCode="EVN">
 											<code code="DE05.10.063.00" codeSystem="2.16.156.10011.2.2.2" codeSystemName="卫生信息数据元目录" displayName="手术过程"/>
-											<value xsi:type="ST">胃镜下胃病损电切术</value>
+											<value xsi:type="ST"><xsl:value-of select="SurgicalOperation/SurgicalRecords/OperationProcess"/></value>
 										</observation>
 									</entryRelationship>
 								</procedure>
@@ -266,6 +270,7 @@
 						</section>
 					</component>
 					<!-- 治疗计划章节 -->
+					<xsl:comment>治疗计划</xsl:comment>
 					<component>
 						<section>
 							<code code="18776-5" codeSystem="2.16.840.1.113883.6.1" displayName="TREATMENT PLAN" codeSystemName="LOINC"/>
@@ -274,13 +279,14 @@
 							<entry>
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE06.00.300.00" codeSystem="2.16.156.10011.2.3.3.15" codeSystemName="卫生信息数据元目录" displayName="治则治法"/>
-									<value xsi:type="ST">自由文本</value>
+									<value xsi:type="ST"><xsl:value-of select="TreatmentPlan/Accountability"/></value>
 									<!--GB/T 16751.3-1997-->
 								</observation>
 							</entry>
 						</section>
 					</component>
 					<!--住院过程章节-->
+					<xsl:comment>住院过程</xsl:comment>
 					<component>
 						<section>
 							<code code="8648-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Hospital Course"/>
@@ -289,26 +295,27 @@
 							<entry>
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE06.00.296.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="诊疗过程描述"/>
-									<value xsi:type="ST">自由文本</value>
+									<value xsi:type="ST"><xsl:value-of select="HospitalizationProcess/DiagnosisTreatmentProcess"/></value>
 								</observation>
 							</entry>
 							<!--HDSD00.16.047 DE05.10.113.00 治疗结果代码 条目-->
 							<entry>
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE05.10.113.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="治疗结果代码"/>
-									<value xsi:type="CD" code="1" displayName="治愈" codeSystem="2.16.156.10011.2.3.1.148" codeSystemName="病情转归代码表"/>
+									<value xsi:type="CD" code="{HospitalizationProcess/TreatmentResults/code}" displayName="{HospitalizationProcess/TreatmentResults/displayName}" codeSystem="2.16.156.10011.2.3.1.148" codeSystemName="病情转归代码表"/>
 								</observation>
 							</entry>
 							<!--HDSD00.16.036 DE06.00.310.00 实际住院天数 条目-->
 							<entry typeCode="COMP">
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE06.00.310.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="实际住院天数"/>
-									<value xsi:type="PQ" value="3" unit="天"/>
+									<value xsi:type="PQ" value="{HospitalizationProcess/Days}" unit="天"/>
 								</observation>
 							</entry>
 						</section>
 					</component>
 					<!-- 医嘱章节-->
+					<xsl:comment>医嘱</xsl:comment>
 					<component>
 						<section>
 							<code code="46209-3" codeSystem="2.16.840.1.113883.6.1" displayName="Provider Orders" codeSystemName="LOINC"/>
@@ -317,26 +324,27 @@
 							<entry>
 								<observation classCode="OBS" moodCode="EVN ">
 									<code code="DE08.50.047.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="中药煎煮方法"/>
-									<value xsi:type="ST">自由文本</value>
+									<value xsi:type="ST"><xsl:value-of select="Order/DecoctingMethod"/></value>
 								</observation>
 							</entry>
 							<!--HDSD00.16.050 DE06.00.136.00 中药用药方法 条目-->
 							<entry>
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE06.00.136.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="中药用药方法"/>
-									<value xsi:type="ST">自由文本</value>
+									<value xsi:type="ST"><xsl:value-of select="Order/MedicationMethod"/></value>
 								</observation>
 							</entry>
 							<!--HDSD00.16.007 DE06.00.287.00 出院医嘱 条目-->
 							<entry typeCode="COMP">
 								<observation classCode="OBS" moodCode="EVN">
 									<code code="DE06.00.287.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="出院医嘱"/>
-									<value xsi:type="ST">出院</value>
+									<value xsi:type="ST"><xsl:value-of select="Order/DischargeOrder"/></value>
 								</observation>
 							</entry>
 						</section>
 					</component>
 					<!--实验室检查章节-->
+					<xsl:comment>实验室检查</xsl:comment>
 					<component>
 						<section>
 							<code code="30954-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="STUDIES SUMMARY"/>
@@ -350,7 +358,7 @@
 										<!--HDSD00.16.042 DE04.50.128.00 阳性辅助检查结果 -->
 										<observation classCode="OBS" moodCode="EVN">
 											<code code="DE04.50.128.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
-											<value xsi:type="ST">自由文本</value>
+											<value xsi:type="ST"><xsl:value-of select="LaboratoryExamination/PositiveAuxiliaryExaminationResults"/></value>
 										</observation>
 									</component>
 								</organizer>

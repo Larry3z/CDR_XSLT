@@ -46,37 +46,111 @@
 			</relatedDocument>
 			<!-- 病床号、病房、病区、科室和医院的关联 -->
 			
+			
+			
+			
+			
 			<!--文档体-->
+		<component>
+		<structuredBody>
+			<!--
+********************************************************
+健康评估章节
+********************************************************
+-->
 			<component>
-				<structuredBody>
-					<!--健康评估章节-->
-					<xsl:comment>健康评估章节</xsl:comment>
-					<component>
-						<section>
-							<!--讨论意见 1..1 R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-							<!--主持人总结意见  1..1 R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-						</section>
-					</component>
-					<!--诊断记录章节-->
-					<xsl:apply-templates select="Patient" mode="Blood"/>
-					<!--治疗计划章节-->
-					<xsl:apply-templates select="Patient" mode="Blood"/>
-					<!--用药章节-->
-					<xsl:comment>用药章节</xsl:comment>
-					<component>
-						<section>
-							<!--医嘱内容 0..1 O-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-							<!--中药煎煮方法 0..1 O-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-							<!--中药用药方法  0..1 O-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-						</section>
-					</component>
-				</structuredBody>
+				<section>
+					<code code="51848-0" displayName="Assessment note" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN ">
+							<code code="DE06.00.018.00" displayName="讨论意见" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="HealthAssess/DiscusOpinion"/></value>
+						</observation>
+					</entry>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN ">
+							<code code="DE06.00.018.00" displayName="主持人总结意见" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="HealthAssess/HostSummary"/></value>
+						</observation>
+					</entry>
+				</section>
 			</component>
+			<!--
+*******************************************************
+诊断章节
+*******************************************************
+-->
+			<component>
+				<section>
+					<code code="29548-5" displayName="Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE02.10.028.00" displayName="中医“四诊”观察结果" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="Diagnosis/TCPsizhen"/></value>
+						</observation>
+					</entry>
+				</section>
+			</component>
+			<!--
+********************************************************
+治疗计划章节
+********************************************************
+-->
+			<!--治疗计划章节-->
+			<component>
+				<section>
+					<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<!--辩证论治-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.10.131.00" displayName="辩证论治" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="TreatmentPlan/bzlz"/></value>
+						</observation>
+					</entry>
+				</section>
+			</component>
+			<!--
+*******************************************************
+用药章节
+*******************************************************
+-->
+			<component>
+				<section>
+					<code code="10160-0" displayName="HISTORY OF MEDICATION USE" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<!-- 中药处方医嘱内容 -->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN ">
+							<code code="DE06.00.287.00" displayName="中药处方医嘱内容" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="Medication/TCMOrder"/></value>
+						</observation>
+					</entry>
+					<!--中药煎煮法-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN ">
+							<code code="DE08.50.047.00" displayName="中药饮片煎煮法" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="Medication/DecoctingMethod"/></value>
+						</observation>
+					</entry>
+					<!--中药用药方法-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN ">
+							<code code="DE06.00.136.00" displayName="中药用药方法的描述" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="Medication/MedicationMethod"/></value>
+						</observation>
+					</entry>
+				</section>
+			</component>
+		</structuredBody>
+	</component>
+	
+	
+	
+	
+	
 			
 		</ClinicalDocument>
 	</xsl:template>

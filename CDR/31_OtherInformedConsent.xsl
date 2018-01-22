@@ -45,23 +45,65 @@
 			
 			<!--文档体-->
 			<component>
-				<structuredBody>
-					<!--诊断记录章节-->
-					<xsl:apply-templates select="Patient" mode="Blood"/>
-					<!--知情同意章节-->
-					<xsl:apply-templates select="Patient" mode="Blood"/>
-					<!--意见章节-->
-					<xsl:comment>意见章节</xsl:comment>
-					<component>
-						<section>
-							<!--医疗机构意见 1..1 R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-							<!--患者意见 1..1 R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-						</section>
-					</component>
-				</structuredBody>
+		<structuredBody>
+			<!--诊断记录章节-->
+			<component>
+				<section>
+					<code code="29548-5" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Diagnosis"/>
+					<title/>
+					<text/>
+					<!--疾病诊断编码-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="疾病诊断编码"/>
+							<value xsi:type="CD"  code="{Diagnosis/CurrentDiagnosis/code}" displayName="{Diagnosis/CurrentDiagnosis/displayName}" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/>
+						</observation>
+					</entry>
+				</section>
 			</component>
+			<!--知情同意章节-->
+			<component>
+				<section>
+					<code code="34895-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="EDUCATION NOTE"/>
+					<text/>
+					<!-- DE09.00.117.00知情同意书名称 -->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE09.00.117.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="知情同意书名称"/>
+							<value xsi:type="ST"><xsl:value-of select="InformedConsent/ICname"/></value>
+						</observation>
+					</entry>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE09.00.116.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="知情同意内容"/>
+							<value xsi:type="ST"><xsl:value-of select="InformedConsent/ICrecord"/></value>
+						</observation>
+					</entry>
+				</section>
+			</component>
+			<!--意见章节-->
+			<component>
+				<section>
+					<code displayName="意见章节"/>
+					<text/>
+					<!--医疗机构意见-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE06.00.018.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="医疗机构的意见"/>
+							<value xsi:type="ST"><xsl:value-of select="Opinion/MI"/></value>
+						</observation>
+					</entry>
+					<!--患者意见-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE06.00.018.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="患者的意见"/>
+							<value xsi:type="ST"><xsl:value-of select="Opinion/Patient"/></value>
+						</observation>
+					</entry>
+				</section>
+			</component>
+		</structuredBody>
+	</component>
 			
 		</ClinicalDocument>
 	</xsl:template>

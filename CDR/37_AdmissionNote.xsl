@@ -26,7 +26,7 @@
 					</patient>
 				</patientRole>
 			</recordTarget>
-<<<<<<< HEAD
+
 			<!--以下省略很多机构签名等等 -->
 			<relatedDocument typeCode="RPLC">
 				<!--文档中医疗卫生事件的就诊场景,即入院场景记录-->

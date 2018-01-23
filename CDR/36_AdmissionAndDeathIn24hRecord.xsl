@@ -48,51 +48,190 @@
 			
 			<!--文档体-->
 			<component>
-				<structuredBody>
-					<!--主诉章节-->
-					<xsl:apply-templates select="Patient" mode="Blood"/>
-					<!--主要健康问题章节-->
-					<xsl:comment>主要健康问题章节</xsl:comment>
-					<component>
-						<section>
-							<!--陈述内容可靠标志 1..1 R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-							<!--中医“四诊”观察结果   0..*  O-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-						</section>
-					</component>
-					<!--入院诊断章节-->
-					<xsl:comment>入院诊断章节</xsl:comment>
-					<component>
-						<section>
-							<!--入院诊断-西医 0..* R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-							<!--入院诊断-中医  0..* R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-						</section>
-					</component>
-					<!--治疗计划章节-->
-					<xsl:apply-templates select="Patient" mode="Blood"/>
-					<!--住院过程章节-->
-					<xsl:comment>住院过程章节</xsl:comment>
-					<component>
-						<section>
-							<!--入院情况 1..1 R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-							<!--诊疗过程描述 1..1 R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-							<!--死亡日期时间 1..1 R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-							<!--死亡原因 1..1 R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-							<!--死亡诊断-西医 1..1 R-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-							<!--死亡诊断-中医 0..* O-->
-							<xsl:apply-templates select="Patient" mode="Blood"/>
-						</section>
-					</component>
-				</structuredBody>
+		<structuredBody>
+			<!--主诉章节-->
+			<component>
+				<section>
+					<code code="10154-3" displayName="CHIEF COMPLAINT" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<!--主诉条目-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE04.01.119.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="主诉"/>
+							<value xsi:type="ST"><xsl:value-of select="Cc/Record"/></value>
+						</observation>
+					</entry>
+				</section>
 			</component>
+			<!--主要健康问题章节 -->
+			<component>
+				<section>
+					<code code="11450-4" displayName="PROBLEM LIST" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<!--陈述内容可靠标志-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.10.143.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="陈述内容可靠标志"/>
+							<value xsi:type="BL" value="{MajorHealthProblems/StateReliaSign}"/>
+						</observation>
+					</entry>
+					<!--中医“四诊”观察结果-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE02.10.028.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="中医“四诊”观察结果"/>
+							<value xsi:type="ST"><xsl:value-of select="MajorHealthProblems/cz/TCM/TCPsizhen"/></value>
+						</observation>
+					</entry>
+				</section>
+			</component>
+			<!--
+********************************************************
+入院诊断章节
+********************************************************
+-->
+			<component>
+				<section>
+					<code code="46241-6" displayName="HOSPITAL ADMISSION DX" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<!--入院诊断-西医条目-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.01.025.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="入院诊断-西医诊断名称"/>
+							<value xsi:type="ST"><xsl:value-of select="Diagnosis/CurrentDiagnosis/Name"/></value>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<!--入院诊断-西医诊断编码-代码-->
+									<code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="入院诊断-西医诊断编码"/>
+									<value xsi:type="CD" code="{Diagnosis/CurrentDiagnosis/code}" displayName="{Diagnosis/CurrentDiagnosis/displayName}" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/>
+								</observation>
+							</entryRelationship>
+						</observation>
+					</entry>
+					<!--入院诊断-中医条目-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.10.172.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="入院诊断-中医病名名称"/>
+							<value xsi:type="ST"><xsl:value-of select="Diagnosis/TCM/Name"/></value>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<!--入院诊断-中医诊断编码-代码-->
+									<code code="DE05.10.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="入院诊断-中医病名代码"/>
+									<value xsi:type="CD" code="{Diagnosis/TCM/code}" displayName="{Diagnosis/TCM/displayName}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)"/>
+								</observation>
+							</entryRelationship>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<!--入院诊断-中医证候编码-名称-->
+									<code code="DE05.10.172.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="入院诊断-中医证候名称"/>
+									<value xsi:type="ST"><xsl:value-of select="Diagnosis/TCMSymptom/Name"/></value>
+								</observation>
+							</entryRelationship>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<!--入院诊断-中医证候编码-代码-->
+									<code code="DE05.10.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="入院诊断-中医证候代码"/>
+									<value xsi:type="CD" code="{Diagnosis/TCMSymptom/code}" displayName="{Diagnosis/TCMSymptom/displayName}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)"/>
+								</observation>
+							</entryRelationship>
+						</observation>
+					</entry>
+				</section>
+			</component>
+			<!--治疗计划章节-->
+			<component>
+				<section>
+					<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<!--治则治法条目-->
+					<entry>
+						<observation classCode="OBS" moodCode="INT">
+							<code code="DE06.00.300.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="治则治法"/>
+							<value xsi:type="ST"><xsl:value-of select="TreatmentPlan/Accountability"/></value>
+						</observation>
+					</entry>
+				</section>
+			</component>
+			<!--住院过程章节-->
+			<component>
+				<section>
+					<code code="8648-8" displayName="HOSPITAL COURSE" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<!--入院情况条目-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.10.148.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="入院情况"/>
+							<value xsi:type="ST"><xsl:value-of select="HospitalizationProcess/Admission"/></value>
+						</observation>
+					</entry>
+					<!--诊疗过程描述条目-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE06.00.296.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="诊疗过程描述"/>
+							<value xsi:type="ST"><xsl:value-of select="HospitalizationProcess/DT"/></value>
+						</observation>
+					</entry>
+					<!--死亡日期时间条目-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE02.01.036.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="死亡日期时间"/>
+							<effectiveTime>
+								<high value="{HospitalizationProcess/DTime}"/>
+							</effectiveTime>
+						</observation>
+					</entry>
+					<!--死亡原因条目-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.10.099.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="死亡原因"/>
+							<value xsi:type="ST"><xsl:value-of select="HospitalizationProcess/DReason"/></value>
+						</observation>
+					</entry>
+					<!--死亡诊断-西医条目-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.01.025.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="死亡诊断-西医诊断名称"/>
+							<value xsi:type="ST"><xsl:value-of select="HospitalizationProcess/CurrentDiagnosis/Name"/></value>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<!--死亡诊断-西医诊断编码-代码-->
+									<code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="卫生信息数据元目录" displayName="死亡诊断-西医诊断编码"/>
+									<value xsi:type="CD" code="{HospitalizationProcess/CurrentDiagnosis/code}" displayName="{HospitalizationProcess/CurrentDiagnosis/displayName}" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/>
+								</observation>
+							</entryRelationship>
+						</observation>
+					</entry>
+					<!--死亡诊断-中医条目-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.10.172.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="死亡诊断-中医病名名称"/>
+							<value xsi:type="ST"><xsl:value-of select="HospitalizationProcess/TCM/Name"/></value>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<!--死亡诊断-中医诊断编码-代码-->
+									<code code="DE05.10.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="死亡诊断-中医病名代码"/>
+									<value xsi:type="CD" code="{HospitalizationProcess/TCM/code}" displayName="{HospitalizationProcess/TCM/displayName}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)"/>
+								</observation>
+							</entryRelationship>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<!--死亡诊断-中医证候编码-名称-->
+									<code code="DE05.10.172.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="死亡诊断-中医证候名称"/>
+									<value xsi:type="ST"><xsl:value-of select="HospitalizationProcess/TCMSymptom/Name"/></value>
+								</observation>
+							</entryRelationship>
+							<entryRelationship typeCode="COMP">
+								<observation classCode="OBS" moodCode="EVN">
+									<!--死亡诊断-中医证候编码-代码-->
+									<code code="DE05.10.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="死亡诊断-中医证候代码"/>
+									<value xsi:type="CD" code="{HospitalizationProcess/TCMSymptom/code}" displayName="{HospitalizationProcess/TCMSymptom/displayName}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)"/>
+								</observation>
+							</entryRelationship>
+						</observation>
+					</entry>
+				</section>
+			</component>
+		</structuredBody>
+	</component>
 			
 		</ClinicalDocument>
 	</xsl:template>

@@ -2,11 +2,14 @@
 <!-- Created with Liquid Studio 2017 - Developer Bundle Edition (Trial) 15.1.4.7515 (https://www.liquid-technologies.com) -->
 <xsl:stylesheet version="1.0" xmlns="urn:hl7-org:v3" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:isc="http://extension-functions.intersystems.com" xmlns:exsl="http://exslt.org/common" xmlns:set="http://exslt.org/sets" exclude-result-prefixes="isc sdtc exsl set">
 	<xsl:include href="CDA-Support-Files/Export/Common/OIDs-IOT.xsl"/>
-	<xsl:include href="CDA-Support-Files/Export/Common/CDAHeader.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Common/CDAHeader1.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Common/Body.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/ChiefComplaint.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Entry-Modules/TreatmentPlan.xsl"/>
-	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/-->
+	<!--xsl:include href="CDA-Support-Files/Export/Entry-Modules/LaboratoryExamination.xsl"/-->
+	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Diagnosis.xsl"/>
+	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Medication.xsl"/>
 	<!--xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/-->
 	<xsl:template match="/Document">
 		<ClinicalDocument xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:hl7-org:v3">
@@ -31,50 +34,65 @@
 			<!-- 文档生成机构 -->
 			<xsl:apply-templates select="Custodian" mode="Custodian"/>
 			<!-- 护士签名 -->
-			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole='医师']" mode="legalAuthenticator"/>
+			<xsl:comment>护士签名</xsl:comment>
+			<xsl:apply-templates select="Practitioners/Practitioner[PractitionerRole='护士']" mode="Authenticator"/>
+			<xsl:apply-templates select="serviceEvent" mode="serviceEvent"/>
 			<!--相关文档，暂时不用-->
 			<xsl:call-template name="relatedDocument"/>
 			<!--文档中医疗卫生事件的就诊场景,即入院场景记录-->
 			<componentOf>
-			<xsl:apply-templates select="Encounter" mode="Hosipitalization1"/>
+				<xsl:apply-templates select="Encounter" mode="Hosipitalization1"/>
 			</componentOf>
 			<!--文档体-->
 			<component>
 				<structuredBody>
 					<!--诊断记录章节 1..1 R-->
-					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
+					<xsl:comment>诊断记录章节 1..1 R</xsl:comment>
+					<component>
+						<section>
+							<code code="29548-5" displayName="Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<xsl:apply-templates select="Diagnoses/Diagnosis[DiagnosisType='诊断编码']" mode="Diagnosis"/>
+						</section>
+					</component>
 					<!--生命体征章节-->
 					<xsl:comment>生命体征章节</xsl:comment>
 					<component>
 						<section>
-							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<code code="8716-3" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="VITAL SIGNS"/>
 							<text/>
 							<!--呼吸频率条目 1..1 R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
+							<xsl:apply-templates select="VitalSign" mode="VitalSign4"/>
 							<!--脉率条目 1..1 R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
+							<xsl:apply-templates select="VitalSign" mode="VitalSign3"/>
 							<!--起搏器心率条目 1..1 R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
+							<xsl:apply-templates select="VitalSign" mode="VitalSign7"/>
 							<!--体温条目 1..1 R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
+							<xsl:apply-templates select="VitalSign" mode="VitalSign2"/>
 							<!--血压条目 1..1 R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
+							<xsl:apply-templates select="VitalSign" mode="VitalSign6"/>
 							<!--体重条目 1..1 R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
+							<xsl:apply-templates select="VitalSign" mode="VitalSign1"/>
 							<!--腹围条目 1..1 R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
+							<xsl:apply-templates select="VitalSign" mode="VitalSign8"/>
 						</section>
 					</component>
 					<!--护理观察章节-->
 					<xsl:comment>护理观察章节</xsl:comment>
 					<component>
 						<section>
-							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+							<code displayName="护理观察"/>
 							<text/>
-							<!--护理观察项目名称条目 1..* R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-							<!--护理观察结果描述条目 1..* R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
+							<!--多个观察写多个entry即可，每个观察对应着观察结果描述-->
+							<entry>
+								<observation classCode="OBS" moodCode="EVN">
+									<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+									<text/>
+									<!--护理观察项目名称条目 1..* R-->
+									<xsl:apply-templates select="NursingObservation" mode="Nur1"/>
+									<!--护理观察结果描述条目 1..* R-->
+									<xsl:apply-templates select="NursingObservation" mode="Nur2"/>
+								</observation>
+							</entry>
 						</section>
 					</component>
 				</structuredBody>

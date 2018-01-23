@@ -3,18 +3,13 @@
 	
 	
 	<!--一般护理记录、危重（病危）护理记录-->
-	<xsl:template match="AssessmentNote" mode="Assessment1">
-		    <component>
-				<section>
-					<code code="51848-0" displayName="Assessment note" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+	<xsl:template match="*" mode="Assessment1">
 					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE03.00.080.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="饮食情况代码"/>
-							<value xsi:type="CD" code="1" displayName="良好" codeSystem="2.16.156.10011.2.3.2.34" codeSystemName="饮食情况代码表"/>
+							<value xsi:type="CD" code="{Code}" displayName="{Name}" codeSystem="2.16.156.10011.2.3.2.34" codeSystemName="饮食情况代码表"/>
 						</observation>
 					</entry>
-				</section>
-			</component>
 	</xsl:template>
 	
 	<!--出院评估与指导-->

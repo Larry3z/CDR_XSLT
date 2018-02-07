@@ -41,7 +41,7 @@
 		<administrativeGenderCode code="{$genderCode}" codeSystemName="生理性别代码表(GB/T 2261.1)" codeSystem="{$生理性别代码表}" displayName="{$genderDescription}"/>
 	</xsl:template>
 	<!--生日 BirthTime-->
-	<xsl:template match="BirthTime" mode="BirthTime">
+	<xsl:template match="*" mode="BirthTime">
 		<xsl:comment>患者出生时间</xsl:comment>
 		<birthTime>
 			

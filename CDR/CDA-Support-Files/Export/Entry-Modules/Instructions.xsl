@@ -3,18 +3,12 @@
 	
 	<!--一般护理记录、护理计划-->
 	<xsl:template match="Instructions" mode="Instr1">
-		    <component>
-				<section>
-					<code code="69730-0" codeSystem="2.16.840.1.113883.6.1" displayName="Instructions" codeSystemName="LOINC"/>
-					<text/>
 					<entry>
 						<observation classCode="OBS" moodCode="EVN">
 							<code code="DE06.00.291.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="饮食指导代码"/>
-							<value xsi:type="CD" code="01" displayName="普通饮食" codeSystem="2.16.156.10011.2.3.1.263" codeSystemName="饮食指导代码表"/>
+							<value xsi:type="CD" code="{Code}" displayName="{Name}" codeSystem="2.16.156.10011.2.3.1.263" codeSystemName="饮食指导代码表"/>
 						</observation>
 					</entry>
-				</section>
-			</component>
 	</xsl:template>
 	
 	<!--出院评估与指导-->

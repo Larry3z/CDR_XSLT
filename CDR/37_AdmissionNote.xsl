@@ -26,6 +26,18 @@
 					</patient>
 				</patientRole>
 			</recordTarget>
+
+			<!--以下省略很多机构签名等等 -->
+			<relatedDocument typeCode="RPLC">
+				<!--文档中医疗卫生事件的就诊场景,即入院场景记录-->
+				<parentDocument>
+					<id/>
+					<setId/>
+					<versionNumber/>
+				</parentDocument>
+			</relatedDocument>
+			<!-- 病床号、病房、病区、科室和医院的关联 -->
+
 			<!--作者，保管机构-->
 			<xsl:apply-templates select="Author" mode="Author1"/>
 			<xsl:apply-templates select="Custodian" mode="Custodian"/>
@@ -39,55 +51,141 @@
 			<componentOf>
 			<xsl:apply-templates select="Encounter" mode="Hosipitalization1"/>
 			</componentOf>
-			<!--文档体-->
+
+
+
+<!--文档体-->
 			<component>
-				<structuredBody>
-					<!--主诉章节-->
-					<xsl:apply-templates select="Sections/Section[SectionCode='DE04.01.119.00']" mode="ChiefComplaint"/>
-					<!--诊断章节-->
-					<xsl:comment>诊断章节</xsl:comment>
-					<component>
-						<section>
-							<code code="29548-5" displayName="Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-							<text/>
-							<!--病例特点描述条目1..1 R-->
-							<entry>
-								<observation classCode="OBS" moodCode="EVN ">
-									<code code="DE05.10.133.00" displayName="病例特点" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
-									<value xsi:type="ST">
-										<xsl:value-of select="Sections/Section[SectionCode='DE05.10.133.00']"/>
-									</value>
-								</observation>
-							</entry>
-							<!--中医四诊 0..1 O-->
-							<!--诊断依据 1..1 R-->
-							<!--说明，虽然是必须，但医学里没有诊断依据这个东西，标准里哦例子是中医的，但所有中医有关的条目又是可选的，所以这里一定是有错误-->
-							<!--初步诊断 1..1 R-->
-							<xsl:apply-templates select="Diagnoses/Diagnosis[DiagnosisType='初步诊断']" mode="DiagnosisEntry1"/>
-							<!--初步诊断 中医 0..1 O-->
-							<!--初步诊断 中医症候代码 0..1 O-->
-							<!--西医诊断 1..1 R-->
-							<!--说明，要求文档里只能有一个诊断，另外上面还要了一个初步诊断，那这个诊断不知道怎么选，暂时用isPrimary处理-->
-							<xsl:apply-templates select="Diagnoses/Diagnosis[IsPrimary='true']" mode="DiagnosisEntry2"/>
-							<!--xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/-->
-							<!--中医病名 0..1 O-->
-							<!--中医症候名 0..1 O-->
-						</section>
-					</component>
-					<!--治疗计划章节-->
-					<xsl:comment>治疗计划章节</xsl:comment>
-					<component>
-						<section>
-							<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-							<text/>
-							<!--诊疗计划 1..1 R-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE05.01.025.00']" mode="TreatmentPlanEntry"/>
-							<!--治则治法 0..1 R2-->
-							<xsl:apply-templates select="Sections/Section[SectionCode='DE06.00.300.00']" mode="TreatmentPlanEntry"/>
-						</section>
-					</component>
-				</structuredBody>
+		<structuredBody>
+			<!--
+**********************************
+主诉章节
+**********************************
+-->
+			<component>
+				<section>
+					<code code="10154-3" displayName="CHIEF COMPLAINT" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<entry>
+						<!-- 主诉-->
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE04.01.119.00" displayName="主诉" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="Cc/Record"/></value>
+						</observation>
+					</entry>
+				</section>
 			</component>
+			<!--
+*************************************
+诊断章节
+*************************************
+-->
+			<component>
+				<section>
+					<code code="29548-5" displayName="Diagnosis" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN ">
+							<code code="DE05.10.133.00" displayName="病历特点" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="Diagnosis/characteristics"/></value>
+						</observation>
+					</entry>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE02.10.028.00" displayName="中医“四诊”观察结果" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="Diagnosis/TCPsizhen"/></value>
+						</observation>
+					</entry>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.01.070.00" displayName="诊断依据" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="Diagnosis/Basis"/></value>
+						</observation>
+					</entry>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.01.024.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="初步诊断-西医诊断编码"/>
+							<value xsi:type="CD" code="{MajorHealthProblems/cz/CurrentDiagnosis/code}" displayName="{MajorHealthProblems/cz/CurrentDiagnosis/displayName}" codeSystem="2.16.156.10011.2.3.3.11" codeSystemName="ICD-10"/>
+						</observation>
+					</entry>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.10.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="初步诊断-中医病名代码">
+								<qualifier>
+									<name displayName="中医病名代码"/>
+								</qualifier>
+							</code>
+							<value xsi:type="CD" code="{MajorHealthProblems/cz/TCM/code}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表( GB/T 15657)" displayName="{MajorHealthProblems/cz/TCM/displayName}"/>
+						</observation>
+					</entry>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE05.10.130.00" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录" displayName="初步诊断-中医证候代码">
+								<qualifier>
+									<name displayName="中医证候代码"/>
+								</qualifier>
+							</code>
+							<value xsi:type="CD" code="{MajorHealthProblems/cz/TCM/zhcode}" codeSystem="2.16.156.10011.2.3.3.14" codeSystemName="中医病证分类与代码表（ GB/T 15657-1995）" displayName="{MajorHealthProblems/cz/TCM/zhdisplayName}"/>
+						</observation>
+					</entry>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN ">
+							<code code="DE05.01.025.00" displayName="鉴别诊断-西医诊断名称" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="MajorHealthProblems/jb/xyName"/></value>
+						</observation>
+					</entry>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN ">
+							<code code="DE05.10.172.00" displayName="鉴别诊断-中医病名名称" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录">
+								<qualifier>
+									<name displayName="中医病名名称"/>
+								</qualifier>
+							</code>
+							<value xsi:type="ST"><xsl:value-of select="MajorHealthProblems/jb/zyName"/></value>
+						</observation>
+					</entry>
+					<entry>
+						<observation classCode="OBS" moodCode="EVN ">
+							<code code="DE05.10.172.00" displayName="鉴别诊断-中医证候名称" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录">
+								<qualifier>
+									<name displayName="中医证候名称"/>
+								</qualifier>
+							</code>
+							<value xsi:type="ST"><xsl:value-of select="MajorHealthProblems/jb/zhName"/></value>
+						</observation>
+					</entry>
+				</section>
+			</component>
+			<!--
+**********************************
+治疗计划章节
+**********************************
+-->
+			<component>
+				<section>
+					<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+					<text/>
+					<entry>
+						<observation classCode="OBS" moodCode="GOL ">
+							<code code="DE05.01.025.00" displayName="诊疗计划" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="TreatmentPlan/zlPlan"/></value>
+						</observation>
+					</entry>
+					<!--治则治法-->
+					<entry>
+						<observation classCode="OBS" moodCode="EVN">
+							<code code="DE06.00.300.00" displayName="治则治法" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
+							<value xsi:type="ST"><xsl:value-of select="TreatmentPlan/Accountability"/></value>
+						</observation>
+					</entry>
+				</section>
+			</component>
+		</structuredBody>
+	</component>
+
+			
+			
+			
 		</ClinicalDocument>
 	</xsl:template>
 </xsl:stylesheet>

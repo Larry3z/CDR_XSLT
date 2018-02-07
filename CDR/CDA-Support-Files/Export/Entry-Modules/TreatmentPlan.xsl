@@ -294,28 +294,7 @@
 			</section>
 		</component>
 	</xsl:template>
-	<!--首次病程，治疗计划-->
-	<xsl:template match="TreatmentPlan" mode="TP11">
-		<component>
-			<section>
-				<code code="18776-5" displayName="TREATMENT PLAN" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-				<text/>
-				<entry>
-					<observation classCode="OBS" moodCode="GOL ">
-						<code code="DE05.01.025.00" displayName="诊疗计划" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
-						<value xsi:type="ST">（1）完善各项常规检查:生化免疫全套、凝血五项、 肿瘤12项等。（3）予外科护理常规、禁食、胃肠减压，灌肠，予头孢匹胺、替硝唑BID静滴消炎、维持水电 解质平衡。密切观察病情变化，急查血细胞分析+血型、血电解质、肾功能、心电图、腹部B超、胸片及腹部 平片必要时查腹部CT检查等，根据生化报告情况进一步调节治疗方案。闵美林</value>
-					</observation>
-				</entry>
-				<!--治则治法-->
-				<entry>
-					<observation classCode="OBS" moodCode="EVN">
-						<code code="DE06.00.300.00" displayName="治则治法" codeSystem="2.16.156.10011.2.2.1" codeSystemName="卫生信息数据元目录"/>
-						<value xsi:type="ST">目前予患者综合保守治疗</value>
-					</observation>
-				</entry>
-			</section>
-		</component>
-	</xsl:template>
+	
 	<!--日常病程，疑难病例讨论记录,治疗计划-->
 	<xsl:template match="TreatmentPlan " mode="TP12">
 		<component>

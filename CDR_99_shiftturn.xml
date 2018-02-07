@@ -352,13 +352,13 @@
 			<textContent>病例特点描述</textContent>
 		</Section>
 		<Section>
-			<SectionCode>DE05.01.025.00</SectionCode>
-			<SectionName>诊疗计划</SectionName>
+			<SectionCode>DE06.00.298.00</SectionCode>
+			<SectionName>接班诊疗计划</SectionName>
 			<textContent>完善各项常规检查:生化免疫全套、凝血五项</textContent>
 		</Section>
 		<Section>
-			<SectionCode>DE06.00.300.00</SectionCode>
-			<SectionName>治则治法</SectionName>
+			<SectionCode>DE09.00.119.00</SectionCode>
+			<SectionName>注意事项</SectionName>
 			<textContent>目前予患者综合保守治疗</textContent>
 		</Section>
 	</Sections>

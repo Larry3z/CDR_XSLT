@@ -9,7 +9,7 @@
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientInformation.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Common/PatientMedicalHistories.xsl"/>
 	<xsl:include href="CDA-Support-Files/Export/Section-Modules/Encounter.xsl"/>
-	<xsl:template match="/Encounter">
+	<xsl:template match="/Document">
 		<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:mif="urn:hl7-org:v3/mif" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 			<xsl:call-template name="CDAHeader">
 				<xsl:with-param name="documentTypeNumber" select="'1'"/>
